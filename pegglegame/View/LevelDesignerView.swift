@@ -42,7 +42,7 @@ struct LevelDesignerView: View {
                     .gesture(
                         placePegGesture(bounds: bounds)
                     )
-                    .ignoresSafeArea()
+//                    .ignoresSafeArea()
                 ForEach(levelDesignerViewModel.objArr) { entity in
                     GameObjectView(gameObject: entity, bounds: bounds)
                 }
