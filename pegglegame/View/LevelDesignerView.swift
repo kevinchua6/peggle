@@ -42,7 +42,6 @@ struct LevelDesignerView: View {
                     .gesture(
                         placePegGesture(bounds: bounds)
                     )
-//                    .ignoresSafeArea()
                 ForEach(levelDesignerViewModel.objArr) { entity in
                     GameObjectView(gameObject: entity, bounds: bounds)
                 }
@@ -158,16 +157,7 @@ struct LevelDesignerView: View {
                 Text("LOAD")
             }
             .sheet(isPresented: $showLoadPopover) {
-                List {
-                    ForEach(levelDesignerViewModel.boardList.toSortedArray(), id: \.name) { board in
-                        Button(action: {
-                            levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
-                            showLoadPopover = false
-                        }, label: {
-                            Text(board.name)
-                        })
-                    }
-                }
+                LoadLevelView()
             }
             Button(action: save) {
                 Text("SAVE")
@@ -182,6 +172,26 @@ struct LevelDesignerView: View {
             }
         }
         .padding(.horizontal, 8)
+    }
+
+    @ViewBuilder
+    private func LoadLevelView() -> some View {
+        if levelDesignerViewModel.boardList.boards.isEmpty {
+            Text("No levels currently! Go save a level by pressing the SAVE button!")
+                .font(.title)
+                .multilineTextAlignment(.center)
+        } else {
+            List {
+                ForEach(levelDesignerViewModel.boardList.toSortedArray(), id: \.name) { board in
+                    Button(action: {
+                        levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
+                        showLoadPopover = false
+                    }, label: {
+                        Text(board.name)
+                    })
+                }
+            }
+        }
     }
 
     private func SelectionBarView() -> some View {

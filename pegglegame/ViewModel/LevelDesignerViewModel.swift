@@ -109,7 +109,6 @@ class LevelDesignerViewModel: ObservableObject {
             decodedBoardlist.boards[trimmedName] = board
 
             let data = try encoder.encode(decodedBoardlist)
-            print(String(data: data, encoding: .utf8)!)
             UserDefaults.standard.set(data, forKey: PersistenceUtils.databaseUserDefaultKey)
             alert = AlertBox(visible: true, title: "Saved", message: "Level \(trimmedName) saved!")
         } else {
