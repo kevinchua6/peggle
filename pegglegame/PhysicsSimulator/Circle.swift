@@ -31,7 +31,8 @@ class Circle: PhysicsBody {
 
 extension Circle {
     // swiftlint:disable force_cast
-    // Because we know it is a Circle, in the switch statement, it is okay to cast it to Circle
+    // Because we know it is a Circle in the switch statement, it is okay to cast it to Circle
+    // I need to cast it because I need the same method signature to override isIntersecting
     func isIntersecting(with gameObject: GameObject) -> Bool {
         let physicsBody = gameObject.physicsBody
         switch physicsBody {
