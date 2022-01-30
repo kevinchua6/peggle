@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// swiftlint:disable identifier_name
 struct LevelDesignerView: View {
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
 
@@ -23,16 +22,16 @@ struct LevelDesignerView: View {
 
     var body: some View {
         VStack {
-            GameBoardView()
-            SelectionBarView()
-            MenuBarView()
+            generateGameBoardView()
+            generateSelectionBarView()
+            generateMenuBarView()
         }
         .alert(isPresented: $levelDesignerViewModel.alert.visible) {
             Alert(title: Text(levelDesignerViewModel.alert.title), message: Text(levelDesignerViewModel.alert.message))
         }
     }
 
-    private func GameBoardView() -> some View {
+    private func generateGameBoardView() -> some View {
         GeometryReader { geometry in
             let bounds = geometry.frame(in: .local)
             ZStack {
@@ -43,9 +42,9 @@ struct LevelDesignerView: View {
                         placePegGesture(bounds: bounds)
                     )
                 ForEach(levelDesignerViewModel.objArr) { entity in
-                    GameObjectView(gameObject: entity, bounds: bounds)
+                    generateGameObjectView(gameObject: entity, bounds: bounds)
                 }
-                PlaceholderObjView()
+                generatePlaceholderObjView()
             }
         }
     }
@@ -76,7 +75,7 @@ struct LevelDesignerView: View {
             })
     }
 
-    private func GameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
+    private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
         Image(gameObject.imageName)
             .resizable()
             .frame(width: 40, height: 40)
@@ -128,7 +127,7 @@ struct LevelDesignerView: View {
     }
 
     @ViewBuilder
-    private func PlaceholderObjView() -> some View {
+    private func generatePlaceholderObjView() -> some View {
         if case .add = levelDesignerViewModel.selectionMode {
             // If not visible or not in add mode, hide it
             if self.placeholderObj.isVisible {
@@ -151,13 +150,13 @@ struct LevelDesignerView: View {
         }
     }
 
-    private func MenuBarView() -> some View {
+    private func generateMenuBarView() -> some View {
         HStack {
             Button(action: load) {
                 Text("LOAD")
             }
             .sheet(isPresented: $showLoadPopover) {
-                LoadLevelView()
+                generateLoadLevelView()
             }
             Button(action: save) {
                 Text("SAVE")
@@ -175,7 +174,7 @@ struct LevelDesignerView: View {
     }
 
     @ViewBuilder
-    private func LoadLevelView() -> some View {
+    private func generateLoadLevelView() -> some View {
         if levelDesignerViewModel.boardList.boards.isEmpty {
             Text("No levels currently! Go save a level by pressing the SAVE button!")
                 .font(.title)
@@ -194,18 +193,18 @@ struct LevelDesignerView: View {
         }
     }
 
-    private func SelectionBarView() -> some View {
+    private func generateSelectionBarView() -> some View {
         HStack {
-            CreatePegButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
-            CreatePegButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
+            generateCreatePegButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
+            generateCreatePegButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
             Spacer()
-            DeleteButtonView()
+            generateDeleteButtonView()
         }
         .padding(.horizontal, 8)
     }
 
     // Delete button
-    private func DeleteButtonView() -> some View {
+    private func generateDeleteButtonView() -> some View {
         Button(action: {
             levelDesignerViewModel.selectionMode = .delete
         }, label: {
@@ -216,7 +215,8 @@ struct LevelDesignerView: View {
         })
     }
 
-    private func CreatePegButtonView(selection: LevelDesignerViewModel.SelectionMode, imageName: String) -> some View {
+    private func generateCreatePegButtonView
+        (selection: LevelDesignerViewModel.SelectionMode, imageName: String) -> some View {
         Button(action: {
             levelDesignerViewModel.selectionMode = selection
             placeholderObj.imageName = imageName
