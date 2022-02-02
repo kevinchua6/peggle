@@ -16,10 +16,10 @@ class PlaceholderObj: ObservableObject {
     @Published var isValid: Bool
     @Published var isVisible: Bool
 
-    init(imageName: String, object: GameObject) {
+    init(imageName: String, object: GameObject, isVisible: Bool) {
         self.imageName = imageName
         self.object = object
         self.isValid = true
-        self.isVisible = true
+        self.isVisible = isVisible
     }
 }

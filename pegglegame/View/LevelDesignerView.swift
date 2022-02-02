@@ -18,17 +18,26 @@ struct LevelDesignerView: View {
 
     // Properties of the placeholder
     @StateObject private var placeholderObj =
-    PlaceholderObj(imageName: BluePeg.imageName, object: BluePeg(coordinates: CGPoint(x: -100, y: -100), radius: 20.0))
+        PlaceholderObj(imageName: BluePeg.imageName, object: BluePeg(coordinates: CGPoint(x: 0, y: 0)), isVisible: false)
 
     var body: some View {
-        VStack {
-            generateGameBoardView()
-            generateSelectionBarView()
-            generateMenuBarView()
+        NavigationView {
+            VStack {
+                generateGameBoardView()
+                generateBottomBarView()
+            }
+            .alert(isPresented: $levelDesignerViewModel.alert.visible) {
+                Alert(
+                    title:
+                        Text(
+                            levelDesignerViewModel.alert.title
+                        ),
+                    message: Text(levelDesignerViewModel.alert.message)
+                )
+            }
+            .navigationBarHidden(true)
         }
-        .alert(isPresented: $levelDesignerViewModel.alert.visible) {
-            Alert(title: Text(levelDesignerViewModel.alert.title), message: Text(levelDesignerViewModel.alert.message))
-        }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
     private func generateGameBoardView() -> some View {
@@ -41,6 +50,7 @@ struct LevelDesignerView: View {
                     .gesture(
                         placePegGesture(bounds: bounds)
                     )
+                    .ignoresSafeArea(.keyboard)
                 ForEach(levelDesignerViewModel.objArr) { entity in
                     generateGameObjectView(gameObject: entity, bounds: bounds)
                 }
@@ -80,7 +90,7 @@ struct LevelDesignerView: View {
             .resizable()
             .frame(width: 40, height: 40)
             // we want it to adjust by the keyboard amount
-            .position(x: gameObject.physicsBody.coordinates.x, y: gameObject.physicsBody.coordinates.y)
+            .position(gameObject.physicsBody.coordinates)
             .offset(y: -keyboardResponder.currentHeight * 0.9)
             .gesture(
                 ExclusiveGesture(
@@ -166,7 +176,7 @@ struct LevelDesignerView: View {
             }
             TextField("Level Name", text: $levelName)
                 .textFieldStyle(.roundedBorder)
-            Button(action: start) {
+            NavigationLink(destination: StartGameView(startGameViewModel: StartGameViewModel(objArr: levelDesignerViewModel.objArr))) {
                 Text("START")
             }
         }
@@ -191,6 +201,14 @@ struct LevelDesignerView: View {
                 }
             }
         }
+    }
+    
+    private func generateBottomBarView() -> some View {
+        VStack {
+            generateSelectionBarView()
+            generateMenuBarView()
+        }
+        .background(Color.white)
     }
 
     private func generateSelectionBarView() -> some View {
