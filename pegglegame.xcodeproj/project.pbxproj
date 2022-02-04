@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6F19293A27AD7CD500E74D57 /* GameObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F19293927AD7CD500E74D57 /* GameObjectList.swift */; };
+		6F19293C27AD8BED00E74D57 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F19293B27AD8BED00E74D57 /* Ball.swift */; };
 		6F1C9E91279BEEF60058C36A /* PhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */; };
 		6F1C9E93279BF2A70058C36A /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */; };
 		6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E94279BF4B50058C36A /* Circle.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		6F19293927AD7CD500E74D57 /* GameObjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameObjectList.swift; path = "../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/GameObjectList.swift"; sourceTree = "<group>"; };
+		6F19293B27AD8BED00E74D57 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Ball.swift; path = Pegglegame/Model/Ball.swift; sourceTree = SOURCE_ROOT; };
 		6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBody.swift; sourceTree = "<group>"; };
 		6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		6F1C9E94279BF4B50058C36A /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				6FD6FF7A27997C2D0050141E /* Peg.swift */,
+				6F19293B27AD8BED00E74D57 /* Ball.swift */,
 				6FD6FF7C27997D320050141E /* BluePeg.swift */,
 				6FD6FF7E27997E5A0050141E /* OrangePeg.swift */,
 				6F19293927AD7CD500E74D57 /* GameObjectList.swift */,
@@ -375,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F19293C27AD8BED00E74D57 /* Ball.swift in Sources */,
 				6FD6FF7F27997E5A0050141E /* OrangePeg.swift in Sources */,
 				6FF0C36E27A368070036BE11 /* BoardList.swift in Sources */,
 				6FD6FF7B27997C2D0050141E /* Peg.swift in Sources */,

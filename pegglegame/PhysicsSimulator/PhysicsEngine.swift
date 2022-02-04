@@ -50,13 +50,17 @@ class PhysicsEngine: ObservableObject {
         var res: [GameObject] = []
         for gameobject in gameObjList {
 //            gameobject.objectWillChange.send()
-            let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update()
+            let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update(deltaTime: seconds)
             let newGameObj = GameObject(physicsBody: newPhysicsBody, imageName: gameobject.imageName)
             res.append(newGameObj)
         }
 //        self.bodies = res
         gameObjList = res
         return res
+    }
+    
+    func addObj(obj: GameObject) {
+        gameObjList.append(obj)
     }
 
 }

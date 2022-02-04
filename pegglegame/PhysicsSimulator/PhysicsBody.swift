@@ -24,5 +24,5 @@ protocol PhysicsBody {
     var boundingBox: CGRect { get }
     
     // Update body to next position
-    func update() -> PhysicsBody
+    func update(deltaTime seconds: CGFloat) -> PhysicsBody
 }

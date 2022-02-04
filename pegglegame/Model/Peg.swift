@@ -13,7 +13,7 @@ class Peg: GameObject {
     init(coordinates: CGPoint, radius: Double, imageName: String) {
         super.init(
             physicsBody: Circle(
-                coordinates: coordinates, radius: radius, mass: 1.0, hasGravity: false, isDynamic: false
+                coordinates: coordinates, radius: radius, mass: 1.0, hasGravity: false, isDynamic: false, velocity: CGVector(), forces: []
             ), imageName: imageName
         )
     }
@@ -21,7 +21,7 @@ class Peg: GameObject {
     init(coordinates: CGPoint, imageName: String) {
         super.init(
             physicsBody: Circle(
-                coordinates: coordinates, radius: defaultRadius, mass: 1.0, hasGravity: false, isDynamic: false
+                coordinates: coordinates, radius: defaultRadius, mass: 1.0, hasGravity: false, isDynamic: false, velocity: CGVector(), forces: []
             ), imageName: imageName
         )
     }

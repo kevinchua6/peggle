@@ -48,4 +48,11 @@ class StartGameViewModel: ObservableObject {
         
         return cannonAngle
     }
+    
+    func placeObj(at coordinates: CGPoint) {
+        let bluePeg = Ball(coordinates: coordinates)
+
+//        objArr.append(bluePeg)
+        gameRenderer.addObj(obj: bluePeg)
+    }
 }

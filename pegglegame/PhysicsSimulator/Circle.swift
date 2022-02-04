@@ -16,6 +16,10 @@ struct Circle: PhysicsBody {
     var radius: CGFloat
     
     var isDynamic: Bool
+    
+    // Physics stuff
+    var velocity: CGVector
+    var forces: [CGVector]
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
@@ -23,22 +27,49 @@ struct Circle: PhysicsBody {
         CGRect(x: coordinates.x - radius, y: coordinates.y - radius, width: radius * 2, height: radius * 2)
     }
 
-    init(coordinates: CGPoint, radius: CGFloat, mass: CGFloat, hasGravity: Bool, isDynamic: Bool) {
+    init(coordinates: CGPoint, radius: CGFloat, mass: CGFloat, hasGravity: Bool, isDynamic: Bool, velocity: CGVector, forces: [CGVector]) {
         self.coordinates = coordinates
         self.radius = radius
         self.mass = mass
         self.hasGravity = hasGravity
         self.isDynamic = isDynamic
+        
+        self.forces = forces
+        self.velocity = velocity
     }
     
-    func update() -> PhysicsBody {
+    func update(deltaTime seconds: CGFloat) -> PhysicsBody {
         // If not dynamic, just return itself
         if !self.isDynamic {
             return self
         }
-
-        let newCoordinates = CGPoint(x: coordinates.x, y: coordinates.y + 1)
-        return Circle(coordinates: newCoordinates, radius: radius, mass: mass+1, hasGravity: hasGravity, isDynamic: isDynamic)
+        
+        var currForces = forces
+        
+        // Add a force downwards if theres gravity
+        if hasGravity {
+            currForces.append(CGVector(dx: 0, dy: 100))
+        }
+        
+        // Get resultant force
+        let resultantForce = currForces.reduce(CGVector.zero, {CGVector(dx: $0.dx + $1.dx, dy: $0.dy + $1.dy)})
+        let netAccel = CGVector(dx: resultantForce.dx / mass, dy: resultantForce.dy / mass)
+        
+        // Next position
+        let xIncrease = 0.5 * netAccel.dx * seconds * seconds
+        let xCoord = coordinates.x + velocity.dx * seconds + xIncrease
+        
+        let yIncrease = 0.5 * netAccel.dy * seconds * seconds
+        let yCoord = coordinates.y + velocity.dy * seconds + yIncrease
+        
+        let newCoord =
+            CGPoint(x: xCoord,
+                    y: yCoord
+                )
+        
+        let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
+        
+        return Circle(coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, velocity: newVelocity, forces: [])
     }
 }
 

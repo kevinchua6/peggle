@@ -61,6 +61,9 @@ struct StartGameView: View {
                             .onChanged { value in
                                 position = value.location
                             }
+                            .onEnded { value in
+                                startGameViewModel.placeObj(at: value.location)
+                            }
                     )
                 ForEach(startGameViewModel.objArr) { gameObject in
                     generateGameObjectView(gameObject: gameObject, bounds: bounds)
