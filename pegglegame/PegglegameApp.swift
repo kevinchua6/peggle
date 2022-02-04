@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 @main
 struct PegglegameApp: App {
     var body: some Scene {

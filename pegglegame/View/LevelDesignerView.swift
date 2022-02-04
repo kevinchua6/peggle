@@ -176,7 +176,9 @@ struct LevelDesignerView: View {
             }
             TextField("Level Name", text: $levelName)
                 .textFieldStyle(.roundedBorder)
-            NavigationLink(destination: StartGameView(startGameViewModel: StartGameViewModel(objArr: levelDesignerViewModel.objArr))) {
+            NavigationLink(destination: LazyView {
+                StartGameView(startGameViewModel: StartGameViewModel(objArr: levelDesignerViewModel.objArr))
+            }) {
                 Text("START")
             }
         }

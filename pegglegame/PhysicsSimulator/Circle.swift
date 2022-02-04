@@ -7,13 +7,15 @@
 
 import CoreGraphics
 
-class Circle: PhysicsBody {
+struct Circle: PhysicsBody {
 
     var coordinates: CGPoint
     var mass: CGFloat
     var hasGravity: Bool
 
     var radius: CGFloat
+    
+    var isDynamic: Bool
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
@@ -21,11 +23,22 @@ class Circle: PhysicsBody {
         CGRect(x: coordinates.x - radius, y: coordinates.y - radius, width: radius * 2, height: radius * 2)
     }
 
-    init(coordinates: CGPoint, radius: CGFloat, mass: CGFloat, hasGravity: Bool) {
+    init(coordinates: CGPoint, radius: CGFloat, mass: CGFloat, hasGravity: Bool, isDynamic: Bool) {
         self.coordinates = coordinates
         self.radius = radius
         self.mass = mass
         self.hasGravity = hasGravity
+        self.isDynamic = isDynamic
+    }
+    
+    func update() -> PhysicsBody {
+        // If not dynamic, just return itself
+        if !self.isDynamic {
+            return self
+        }
+
+        let newCoordinates = CGPoint(x: coordinates.x, y: coordinates.y + 1)
+        return Circle(coordinates: newCoordinates, radius: radius, mass: mass+1, hasGravity: hasGravity, isDynamic: isDynamic)
     }
 }
 

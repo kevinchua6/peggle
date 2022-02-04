@@ -7,27 +7,45 @@
 
 import Foundation
 import CoreGraphics
+import Combine
 
-// TODO: make model more accurate to the angle and improve algo
 class StartGameViewModel: ObservableObject {
+    
+    //
+    private var cancellable: AnyCancellable?
     
     @Published var objArr: [GameObject] = []
     
+    var gameRenderer: GameRenderer
+    
+    let MAX_ANGLE = Double.pi / 2
+    
     init(objArr: [GameObject]) {
-        self.objArr = objArr
+//        let currGameObjList = GameObjectList(objArr: objArr)
+        
+        gameRenderer = GameRenderer(gameObjList: objArr)
+        cancellable = gameRenderer.publisher.sink { objArr in
+            self.objArr = objArr
+        }
     }
     
-    func getAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
-        if source == dest {
-            return 0.0
+    private func getAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
+        atan((dest.x - source.x)/(source.y - dest.y))
+    }
+    
+    func getCannonAngle(cannonLoc: CGPoint, gestureLoc: CGPoint) -> CGFloat {
+        // only detect the bottom two quadrants
+        if gestureLoc.y < cannonLoc.y {
+            if gestureLoc.x > cannonLoc.x {
+                return -MAX_ANGLE
+            } else {
+                return MAX_ANGLE
+            }
         }
-        let hey = atan((source.y - dest.y) / (-source.x + dest.x))
         
-        if hey >= 0 {
-            return 3.142/2 - hey
-        } else {
-            return  -abs(hey + 3.142/2)
-        }
-
+        // keep cannon between two values
+        let cannonAngle = max(-MAX_ANGLE, min(MAX_ANGLE, getAngle(from: cannonLoc, to: gestureLoc)))
+        
+        return cannonAngle
     }
 }

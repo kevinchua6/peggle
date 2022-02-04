@@ -15,9 +15,14 @@ protocol PhysicsBody {
     var mass: CGFloat { get set }
     var hasGravity: Bool { get set }
 
+//    var isDynamic: Bool { get set }
+
     // Detect collisions and overlaps
     func isIntersecting(with physicsBody: GameObject) -> Bool
     func isIntersecting(with entityArr: [GameObject]) -> Bool
 
     var boundingBox: CGRect { get }
+    
+    // Update body to next position
+    func update() -> PhysicsBody
 }

@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F19293A27AD7CD500E74D57 /* GameObjectList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F19293927AD7CD500E74D57 /* GameObjectList.swift */; };
 		6F1C9E91279BEEF60058C36A /* PhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */; };
 		6F1C9E93279BF2A70058C36A /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */; };
 		6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E94279BF4B50058C36A /* Circle.swift */; };
 		6F1C9E97279C03210058C36A /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E96279C03210058C36A /* GameObject.swift */; };
 		6F2F5EE527A94E8F00D3F9B6 /* StartGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F5EE427A94E8F00D3F9B6 /* StartGameView.swift */; };
 		6F374B5927A9B7BF0098F78E /* StartGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F374B5827A9B7BF0098F78E /* StartGameViewModel.swift */; };
+		6F374B5C27AA21150098F78E /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F374B5B27AA21150098F78E /* GameRenderer.swift */; };
 		6F5BD97F27A5582900988D75 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5BD97E27A5582900988D75 /* KeyboardResponder.swift */; };
 		6F67843B2796584F0086CC9A /* PegglegameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F67843A2796584F0086CC9A /* PegglegameApp.swift */; };
 		6F67843F279658510086CC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F67843E279658510086CC9A /* Assets.xcassets */; };
@@ -25,6 +27,7 @@
 		6FD6FF7B27997C2D0050141E /* Peg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF7A27997C2D0050141E /* Peg.swift */; };
 		6FD6FF7D27997D320050141E /* BluePeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF7C27997D320050141E /* BluePeg.swift */; };
 		6FD6FF7F27997E5A0050141E /* OrangePeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF7E27997E5A0050141E /* OrangePeg.swift */; };
+		6FDBB80C27AC37670014463B /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDBB80B27AC37670014463B /* LazyView.swift */; };
 		6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C36B27A2EC5F0036BE11 /* PersistenceUtils.swift */; };
 		6FF0C36E27A368070036BE11 /* BoardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C36D27A368070036BE11 /* BoardList.swift */; };
 		6FF0C37427A3EEC90036BE11 /* PhysicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */; };
@@ -48,12 +51,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6F19293927AD7CD500E74D57 /* GameObjectList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameObjectList.swift; path = "../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/GameObjectList.swift"; sourceTree = "<group>"; };
 		6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBody.swift; sourceTree = "<group>"; };
 		6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		6F1C9E94279BF4B50058C36A /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		6F1C9E96279C03210058C36A /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		6F2F5EE427A94E8F00D3F9B6 /* StartGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StartGameView.swift; path = Pegglegame/View/StartGameView.swift; sourceTree = SOURCE_ROOT; };
 		6F374B5827A9B7BF0098F78E /* StartGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StartGameViewModel.swift; path = Pegglegame/ViewModel/StartGameViewModel.swift; sourceTree = SOURCE_ROOT; };
+		6F374B5B27AA21150098F78E /* GameRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameRenderer.swift; path = Pegglegame/GameRenderer/GameRenderer.swift; sourceTree = SOURCE_ROOT; };
 		6F5BD97E27A5582900988D75 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		6F6784372796584F0086CC9A /* pegglegame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pegglegame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F67843A2796584F0086CC9A /* PegglegameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegglegameApp.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		6FD6FF7A27997C2D0050141E /* Peg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peg.swift; sourceTree = "<group>"; };
 		6FD6FF7C27997D320050141E /* BluePeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluePeg.swift; sourceTree = "<group>"; };
 		6FD6FF7E27997E5A0050141E /* OrangePeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrangePeg.swift; sourceTree = "<group>"; };
+		6FDBB80B27AC37670014463B /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LazyView.swift; path = Pegglegame/LazyView.swift; sourceTree = SOURCE_ROOT; };
 		6FF0C36B27A2EC5F0036BE11 /* PersistenceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceUtils.swift; sourceTree = "<group>"; };
 		6FF0C36D27A368070036BE11 /* BoardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardList.swift; sourceTree = "<group>"; };
 		6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsTests.swift; sourceTree = "<group>"; };
@@ -109,6 +115,14 @@
 			path = PhysicsSimulator;
 			sourceTree = "<group>";
 		};
+		6F374B5A27AA21090098F78E /* GameRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				6F374B5B27AA21150098F78E /* GameRenderer.swift */,
+			);
+			path = GameRenderer;
+			sourceTree = "<group>";
+		};
 		6F67842E2796584F0086CC9A = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +145,7 @@
 		6F6784392796584F0086CC9A /* pegglegame */ = {
 			isa = PBXGroup;
 			children = (
+				6F374B5A27AA21090098F78E /* GameRenderer */,
 				6FB8010E27A29BB400B82496 /* Persistence */,
 				6F35ED10279BEE6C004E2CDE /* PhysicsSimulator */,
 				6FD6FF7927997A6F0050141E /* Model */,
@@ -139,6 +154,7 @@
 				6F67843A2796584F0086CC9A /* PegglegameApp.swift */,
 				6F67843E279658510086CC9A /* Assets.xcassets */,
 				6F678440279658510086CC9A /* Preview Content */,
+				6FDBB80B27AC37670014463B /* LazyView.swift */,
 			);
 			path = pegglegame;
 			sourceTree = "<group>";
@@ -196,6 +212,7 @@
 				6FD6FF7A27997C2D0050141E /* Peg.swift */,
 				6FD6FF7C27997D320050141E /* BluePeg.swift */,
 				6FD6FF7E27997E5A0050141E /* OrangePeg.swift */,
+				6F19293927AD7CD500E74D57 /* GameObjectList.swift */,
 				6F1C9E96279C03210058C36A /* GameObject.swift */,
 			);
 			path = Model;
@@ -364,6 +381,8 @@
 				6F5BD97F27A5582900988D75 /* KeyboardResponder.swift in Sources */,
 				6FB8011027A29BC300B82496 /* Board.swift in Sources */,
 				6FD6FF7D27997D320050141E /* BluePeg.swift in Sources */,
+				6FDBB80C27AC37670014463B /* LazyView.swift in Sources */,
+				6F19293A27AD7CD500E74D57 /* GameObjectList.swift in Sources */,
 				6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */,
 				6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */,
 				6FD6FF7827996E100050141E /* LevelDesignerViewModel.swift in Sources */,
@@ -373,6 +392,7 @@
 				6F1C9E97279C03210058C36A /* GameObject.swift in Sources */,
 				6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */,
 				6FD6FF75279955DD0050141E /* LevelDesignerView.swift in Sources */,
+				6F374B5C27AA21150098F78E /* GameRenderer.swift in Sources */,
 				6F1C9E91279BEEF60058C36A /* PhysicsBody.swift in Sources */,
 				6F1C9E93279BF2A70058C36A /* PhysicsEngine.swift in Sources */,
 				6F374B5927A9B7BF0098F78E /* StartGameViewModel.swift in Sources */,

@@ -6,6 +6,7 @@
 //
 
 import CoreGraphics
+import Foundation
 
 class GameObject: Identifiable {
     // Types of game objects to be stored in the database
@@ -17,7 +18,7 @@ class GameObject: Identifiable {
     var imageName: String
     var coordinates: CGPoint {
         get {
-            physicsBody.coordinates
+            return physicsBody.coordinates
         }
         set {
             physicsBody.coordinates = newValue
@@ -28,4 +29,6 @@ class GameObject: Identifiable {
         self.physicsBody = physicsBody
         self.imageName = imageName
     }
+    
 }
+
