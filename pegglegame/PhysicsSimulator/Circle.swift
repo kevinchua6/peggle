@@ -20,6 +20,8 @@ struct Circle: PhysicsBody {
     // Physics stuff
     var velocity: CGVector
     var forces: [CGVector]
+    
+    var restitution: CGFloat
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
@@ -36,6 +38,7 @@ struct Circle: PhysicsBody {
         
         self.forces = forces
         self.velocity = velocity
+        self.restitution = 0.1
     }
     
     func update(deltaTime seconds: CGFloat) -> PhysicsBody {
@@ -68,6 +71,8 @@ struct Circle: PhysicsBody {
                 )
         
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
+        
+        // Add forces for each thing that I am colliding with
         
         return Circle(coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, velocity: newVelocity, forces: [])
     }
@@ -108,5 +113,49 @@ extension Circle {
             isIntersectingAll = isIntersectingAll || self.isIntersecting(with: obj)
         }
         return isIntersectingAll
+    }
+    
+    mutating func handleCollision(with physicsBody: PhysicsBody) {
+        switch physicsBody {
+        case is Circle:
+            handleCollision(with: physicsBody as! Circle)
+        default:
+            return
+        }
+    }
+    
+    mutating func handleCollision(with circle: Circle) {
+        // The smaller the distance between the two, the larger the force vector
+        let distanceSquared = PhysicsEngine.CGPointDistanceSquared(
+            fromPoint: self.coordinates, toPoint: circle.coordinates
+        )
+        
+        let minRestitution = min(self.restitution, circle.restitution)
+        let forceMagnitude = distanceSquared * minRestitution
+        
+        // get diff between the two
+        let dy = (self.coordinates.y - circle.coordinates.y) * forceMagnitude
+        let dx = (self.coordinates.x - circle.coordinates.x) * forceMagnitude
+        
+        
+        if !dx.isNaN && !dy.isNaN {
+            forces.append(CGVector(dx: dx, dy: dy))
+        }
+//        let angle = PhysicsEngine.getHorizAcuteAngle(from: circle.coordinates, to: self.coordinates)
+//
+//        // Apply force in the opposite direction of the two
+//        let forceMagnitude = distanceSquared * minRestitution * 100
+//
+////        let dx = forceMagnitude * acos(angle)
+//
+////        let dy = -forceMagnitude * asin(angle)
+//
+//        let dx = -forceMagnitude * cos(2 * angle)
+//        let dy = -forceMagnitude * sin(2 * angle)
+//
+//
+//        if !dx.isNaN && !dy.isNaN {
+//            forces.append(CGVector(dx: dx, dy: dy))
+//        }
     }
 }

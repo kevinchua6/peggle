@@ -35,6 +35,14 @@ class PhysicsEngine: ObservableObject {
         sqrt(CGPointDistanceSquared(fromPoint: fromPoint, toPoint: toPoint))
     }
     
+    static func getVertAcuteAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
+        atan((dest.x - source.x)/(source.y - dest.y))
+    }
+    
+    static func getHorizAcuteAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
+        atan((dest.y - source.y)/(source.x - dest.x))
+    }
+    
 //    func setPhysicsBodies(objArr: [GameObject]) {
 //        /// Here, I am modifying an array of physics bodies
 ////        var phyBodyArr: [PhysicsBody] = []
@@ -49,12 +57,29 @@ class PhysicsEngine: ObservableObject {
     func update(deltaTime seconds: CGFloat) -> [GameObject] {
         var res: [GameObject] = []
         for gameobject in gameObjList {
-//            gameobject.objectWillChange.send()
+            // Update bodies to next coordinates
             let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update(deltaTime: seconds)
+            
             let newGameObj = GameObject(physicsBody: newPhysicsBody, imageName: gameobject.imageName)
+            
             res.append(newGameObj)
         }
-//        self.bodies = res
+        
+        // Update the forces array for each dynamic object
+        for dynamicObject in res.filter({ $0.physicsBody.isDynamic }) {
+            for gameObject in res {
+                if dynamicObject === gameObject {
+                    continue
+                }
+                
+                // If intersecting,
+                if dynamicObject.physicsBody.isIntersecting(with: gameObject) {
+                    dynamicObject.physicsBody.handleCollision(with: gameObject.physicsBody)
+                }
+            }
+        }
+        
+        
         gameObjList = res
         return res
     }

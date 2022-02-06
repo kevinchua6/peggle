@@ -29,10 +29,6 @@ class StartGameViewModel: ObservableObject {
         }
     }
     
-    private func getAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
-        atan((dest.x - source.x)/(source.y - dest.y))
-    }
-    
     func getCannonAngle(cannonLoc: CGPoint, gestureLoc: CGPoint) -> CGFloat {
         // only detect the bottom two quadrants
         if gestureLoc.y < cannonLoc.y {
@@ -44,7 +40,7 @@ class StartGameViewModel: ObservableObject {
         }
         
         // keep cannon between two values
-        let cannonAngle = max(-MAX_ANGLE, min(MAX_ANGLE, getAngle(from: cannonLoc, to: gestureLoc)))
+        let cannonAngle = max(-MAX_ANGLE, min(MAX_ANGLE, PhysicsEngine.getVertAcuteAngle(from: cannonLoc, to: gestureLoc)))
         
         return cannonAngle
     }

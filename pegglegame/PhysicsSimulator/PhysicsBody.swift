@@ -11,9 +11,11 @@ import CoreGraphics
 protocol PhysicsBody {
     var coordinates: CGPoint { get set }
 
-    // Will come in handy later when I build the physics engine
     var mass: CGFloat { get set }
     var hasGravity: Bool { get set }
+    var forces: [CGVector] { get }
+    
+    var isDynamic: Bool { get }
 
 //    var isDynamic: Bool { get set }
 
@@ -25,4 +27,7 @@ protocol PhysicsBody {
     
     // Update body to next position
     func update(deltaTime seconds: CGFloat) -> PhysicsBody
+    
+    // Adds the force when two bodies are colliding
+    mutating func handleCollision(with: PhysicsBody)
 }
