@@ -12,6 +12,7 @@ struct Circle: PhysicsBody {
     var coordinates: CGPoint
     var mass: CGFloat
     var hasGravity: Bool
+    let gravity = 1.0
 
     var radius: CGFloat
     
@@ -38,7 +39,7 @@ struct Circle: PhysicsBody {
         
         self.forces = forces
         self.velocity = velocity
-        self.restitution = 0.1
+        self.restitution = 0.7
     }
     
     func update(deltaTime seconds: CGFloat) -> PhysicsBody {
@@ -51,7 +52,7 @@ struct Circle: PhysicsBody {
         
         // Add a force downwards if theres gravity
         if hasGravity {
-            currForces.append(CGVector(dx: 0, dy: 100))
+            currForces.append(CGVector(dx: 0.0, dy: 1000))
         }
         
         // Get resultant force
@@ -97,8 +98,8 @@ extension Circle {
         // And check if the radius < the distance between the two
 
         // Compare the square as squareroot has a performance hit
-        let distanceSquared = PhysicsEngine.CGPointDistanceSquared(
-            fromPoint: self.coordinates, toPoint: circle.coordinates
+        let distanceSquared = PhysicsEngineUtils.CGPointDistanceSquared(
+            from: self.coordinates, to: circle.coordinates
         )
 
         let totalRadius: CGFloat = self.radius + circle.radius
@@ -126,21 +127,37 @@ extension Circle {
     
     mutating func handleCollision(with circle: Circle) {
         // The smaller the distance between the two, the larger the force vector
-        let distanceSquared = PhysicsEngine.CGPointDistanceSquared(
-            fromPoint: self.coordinates, toPoint: circle.coordinates
+        let distance = PhysicsEngineUtils.CGPointDistance(
+            from: self.coordinates, to: circle.coordinates
         )
         
+        let totalWidth = self.radius + circle.radius
+        
+        let collisionUnitVector = (self.coordinates - circle.coordinates) / distance
+        
+        let relativeVelocity = self.velocity - circle.velocity
+        
         let minRestitution = min(self.restitution, circle.restitution)
-        let forceMagnitude = distanceSquared * minRestitution
         
-        // get diff between the two
-        let dy = (self.coordinates.y - circle.coordinates.y) * forceMagnitude
-        let dx = (self.coordinates.x - circle.coordinates.x) * forceMagnitude
+        let speed = abs(relativeVelocity * collisionUnitVector) * minRestitution
         
+        self.velocity = collisionUnitVector * speed
         
-        if !dx.isNaN && !dy.isNaN {
-            forces.append(CGVector(dx: dx, dy: dy))
-        }
+        // When collide, shift the position back to prevent overlapping
+        let difference: CGFloat = totalWidth - distance + 1
+        let differenceVector: CGVector = collisionUnitVector * difference
+        
+        self.coordinates = self.coordinates + differenceVector
+
+//        let forceMagnitude = self.radius + circle.radius - distance + 10
+//
+//        // get diff between the two
+//        let dy = (self.coordinates.y - circle.coordinates.y) * forceMagnitude * forceMagnitude
+//        let dx = (self.coordinates.x - circle.coordinates.x) * forceMagnitude * forceMagnitude
+//
+//        if !dx.isNaN && !dy.isNaN {
+//            forces.append(CGVector(dx: dx, dy: dy))
+//        }
 //        let angle = PhysicsEngine.getHorizAcuteAngle(from: circle.coordinates, to: self.coordinates)
 //
 //        // Apply force in the opposite direction of the two

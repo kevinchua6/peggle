@@ -22,26 +22,7 @@ class PhysicsEngine: ObservableObject {
         self.gameObjList = gameObjList
     }
     
-    /*
-     Credit to
-     https://www.hackingwithswift.com/example-code/core-graphics/how-to-calculate-the-distance-between-two-cgpoints
-     for fast and easy distance calculation
-     */
-    static func CGPointDistanceSquared(fromPoint: CGPoint, toPoint: CGPoint) -> CGFloat {
-        (fromPoint.x - toPoint.x) * (fromPoint.x - toPoint.x) + (fromPoint.y - toPoint.y) * (fromPoint.y - toPoint.y)
-    }
 
-    static func CGPointDistance(fromPoint: CGPoint, toPoint: CGPoint) -> CGFloat {
-        sqrt(CGPointDistanceSquared(fromPoint: fromPoint, toPoint: toPoint))
-    }
-    
-    static func getVertAcuteAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
-        atan((dest.x - source.x)/(source.y - dest.y))
-    }
-    
-    static func getHorizAcuteAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
-        atan((dest.y - source.y)/(source.x - dest.x))
-    }
     
 //    func setPhysicsBodies(objArr: [GameObject]) {
 //        /// Here, I am modifying an array of physics bodies
@@ -75,10 +56,10 @@ class PhysicsEngine: ObservableObject {
                 // If intersecting,
                 if dynamicObject.physicsBody.isIntersecting(with: gameObject) {
                     dynamicObject.physicsBody.handleCollision(with: gameObject.physicsBody)
+//                    print(dynamicObject.physicsBody.forces)
                 }
             }
         }
-        
         
         gameObjList = res
         return res

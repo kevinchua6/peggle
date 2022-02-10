@@ -20,6 +20,8 @@
 		6F67843B2796584F0086CC9A /* PegglegameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F67843A2796584F0086CC9A /* PegglegameApp.swift */; };
 		6F67843F279658510086CC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F67843E279658510086CC9A /* Assets.xcassets */; };
 		6F678442279658510086CC9A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F678441279658510086CC9A /* Preview Assets.xcassets */; };
+		6F8DC7A927B50B0A00B7D01A /* CoreGraphics+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */; };
+		6F8DC7AB27B5238200B7D01A /* PhysicsEngineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */; };
 		6FB8011027A29BC300B82496 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8010F27A29BC300B82496 /* Board.swift */; };
 		6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8011127A29D1F00B82496 /* EncodableObject.swift */; };
 		6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */; };
@@ -68,6 +70,8 @@
 		6F678441279658510086CC9A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6F678447279658520086CC9A /* pegglegameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pegglegameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F678451279658520086CC9A /* pegglegameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pegglegameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CoreGraphics+Extensions.swift"; path = "Pegglegame/Extensions/CoreGraphics+Extensions.swift"; sourceTree = SOURCE_ROOT; };
+		6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsEngineUtils.swift; path = Pegglegame/PhysicsSimulator/PhysicsEngineUtils.swift; sourceTree = SOURCE_ROOT; };
 		6FB8010F27A29BC300B82496 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		6FB8011127A29D1F00B82496 /* EncodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableObject.swift; sourceTree = "<group>"; };
 		6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderObj.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 				6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */,
 				6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */,
 				6F1C9E94279BF4B50058C36A /* Circle.swift */,
+				6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */,
 			);
 			path = PhysicsSimulator;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 		6F6784392796584F0086CC9A /* pegglegame */ = {
 			isa = PBXGroup;
 			children = (
+				6F8DC7A727B50AA100B7D01A /* Extensions */,
 				6F374B5A27AA21090098F78E /* GameRenderer */,
 				6FB8010E27A29BB400B82496 /* Persistence */,
 				6F35ED10279BEE6C004E2CDE /* PhysicsSimulator */,
@@ -175,6 +181,14 @@
 				6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */,
 			);
 			path = pegglegameTests;
+			sourceTree = "<group>";
+		};
+		6F8DC7A727B50AA100B7D01A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		6FB8010E27A29BB400B82496 /* Persistence */ = {
@@ -389,7 +403,9 @@
 				6F19293A27AD7CD500E74D57 /* GameObjectList.swift in Sources */,
 				6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */,
 				6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */,
+				6F8DC7A927B50B0A00B7D01A /* CoreGraphics+Extensions.swift in Sources */,
 				6FD6FF7827996E100050141E /* LevelDesignerViewModel.swift in Sources */,
+				6F8DC7AB27B5238200B7D01A /* PhysicsEngineUtils.swift in Sources */,
 				6F2F5EE527A94E8F00D3F9B6 /* StartGameView.swift in Sources */,
 				6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */,
 				6F67843B2796584F0086CC9A /* PegglegameApp.swift in Sources */,

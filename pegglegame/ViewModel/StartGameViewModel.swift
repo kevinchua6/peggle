@@ -11,7 +11,6 @@ import Combine
 
 class StartGameViewModel: ObservableObject {
     
-    //
     private var cancellable: AnyCancellable?
     
     @Published var objArr: [GameObject] = []
@@ -40,7 +39,7 @@ class StartGameViewModel: ObservableObject {
         }
         
         // keep cannon between two values
-        let cannonAngle = max(-MAX_ANGLE, min(MAX_ANGLE, PhysicsEngine.getVertAcuteAngle(from: cannonLoc, to: gestureLoc)))
+        let cannonAngle = max(-MAX_ANGLE, min(MAX_ANGLE, PhysicsEngineUtils.getVertAcuteAngle(from: cannonLoc, to: gestureLoc)))
         
         return cannonAngle
     }
