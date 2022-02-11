@@ -60,8 +60,9 @@ class StartGameViewModel: ObservableObject {
 
     func shootBall(from: CGPoint, to: CGPoint) {
         let ball = Ball(coordinates: from)
-        let distance = PhysicsEngineUtils.CGPointDistance(from: from, to: to)
-        let unitVector = (to - from) / distance
+        
+        let angle = getCannonAngle(cannonLoc: from, gestureLoc: to)
+        let unitVector = CGVector(dx: -sin(angle), dy: cos(angle))
 
         let speed = 1_000.0
 

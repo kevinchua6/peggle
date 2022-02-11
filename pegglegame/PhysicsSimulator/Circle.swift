@@ -189,7 +189,7 @@ extension Circle {
         let totalWidth = self.radius + rectangle.width / 2
         let difference: CGFloat = totalWidth - xdistance
 
-        let differenceVector = CGVector(dx: 1.0, dy: 0) * difference
+        let differenceVector: CGVector = CGVector(dx: 1.0, dy: 0) * difference
 
         // Only support sideways collision for now
         self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy)
