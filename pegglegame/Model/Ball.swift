@@ -27,12 +27,4 @@ class Ball: GameObject {
             imageName: Ball.imageName
         )
     }
-
-//    init(coordinates: CGPoint, imageName: String) {
-//        super.init(
-//            physicsBody: Circle(
-//                coordinates: coordinates, radius: defaultRadius, mass: 1.0, hasGravity: true, isDynamic: true, velocity: CGVector(), forces: []
-//            ), imageName: imageName
-//        )
-//    }
 }

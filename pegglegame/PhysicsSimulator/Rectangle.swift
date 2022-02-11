@@ -30,8 +30,8 @@ struct Rectangle: PhysicsBody {
     var boundingBox: CGRect {
         // Set center of bounding box to center of Square
         CGRect(
-            x: coordinates.x + width / 2,
-            y: coordinates.y + height / 2,
+            x: coordinates.x,
+            y: coordinates.y,
             width: width,
             height: height
         )

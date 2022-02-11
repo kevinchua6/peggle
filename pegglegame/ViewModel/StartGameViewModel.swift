@@ -18,6 +18,7 @@ class StartGameViewModel: ObservableObject {
     var gameRenderer: GameRenderer
 
     let MAX_ANGLE = Double.pi / 2
+    let INITIAL_BALL_SPEED = 1_000.0
 
     init(objArr: [GameObject]) {
         gameRenderer = GameRenderer(gameObjList: objArr)
@@ -25,17 +26,11 @@ class StartGameViewModel: ObservableObject {
         cancellable = gameRenderer.publisher.sink { objArr in
             self.objArr = objArr
         }
-
-        for wall in createWalls() {
-            gameRenderer.addObj(obj: wall)
-        }
     }
 
-    func createWalls() -> [GameObject] {
-        [
-//            SideWall(coordinates: CGPoint(x: 0, y: 0)),
-            SideWall(coordinates: CGPoint(x: 0, y: 0))
-        ]
+    func createWalls(bounds: CGRect) {
+        gameRenderer.addObj(obj: SideWall(coordinates: CGPoint(x: 0, y: 0), height: bounds.height))
+        gameRenderer.addObj(obj: SideWall(coordinates: CGPoint(x: bounds.width, y: 0), height: bounds.height))
     }
 
     func getCannonAngle(cannonLoc: CGPoint, gestureLoc: CGPoint) -> CGFloat {
@@ -51,7 +46,8 @@ class StartGameViewModel: ObservableObject {
         // keep cannon between two values
         let cannonAngle = max(
             -MAX_ANGLE, min(
-                MAX_ANGLE, PhysicsEngineUtils.getVertAcuteAngle(from: cannonLoc, to: gestureLoc)
+                MAX_ANGLE,
+                PhysicsEngineUtils.getVertAcuteAngle(from: cannonLoc, to: gestureLoc)
             )
         )
 
@@ -60,16 +56,13 @@ class StartGameViewModel: ObservableObject {
 
     func shootBall(from: CGPoint, to: CGPoint) {
         let ball = Ball(coordinates: from)
-        
+
         let angle = getCannonAngle(cannonLoc: from, gestureLoc: to)
         let unitVector = CGVector(dx: -sin(angle), dy: cos(angle))
 
-        let speed = 1_000.0
-
         gameRenderer.addObj(obj: ball)
-        ball.physicsBody.velocity = unitVector * speed
+        ball.physicsBody.velocity = unitVector * INITIAL_BALL_SPEED
         print(ball.physicsBody.velocity)
-
     }
 
     func placeObj(at coordinates: CGPoint) {

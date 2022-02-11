@@ -184,16 +184,18 @@ extension Circle {
         // The smaller the distance between the two, the larger the force vector
         let minRestitution = min(self.restitution, rectangle.restitution)
 
-        let xdistance = abs(self.coordinates.x - rectangle.coordinates.x)
+        let xdistance = self.coordinates.x - rectangle.coordinates.x
 
         let totalWidth = self.radius + rectangle.width / 2
-        let difference: CGFloat = totalWidth - xdistance
+        let difference: CGFloat = totalWidth - abs(xdistance)
 
-        let differenceVector: CGVector = CGVector(dx: 1.0, dy: 0) * difference
+        let differenceUnitVector = CGVector(dx: xdistance, dy: 0) / abs(xdistance)
+
+        let differenceVector: CGVector = differenceUnitVector * difference
 
         // Only support sideways collision for now
-        self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy)
+        self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy) * minRestitution
 
-        self.nextCoordinates += differenceVector * minRestitution
+        self.nextCoordinates += differenceVector
     }
 }

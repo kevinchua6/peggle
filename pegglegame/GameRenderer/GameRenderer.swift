@@ -10,7 +10,7 @@ import Foundation
 import QuartzCore
 import SwiftUI
 
-class GameRenderer: ObservableObject {
+class GameRenderer {
     var publisher: AnyPublisher<[GameObject], Never> {
         subject.eraseToAnyPublisher()
     }

@@ -10,12 +10,6 @@ import Combine
 
 class PhysicsEngine: ObservableObject {
 
-    var publisher: AnyPublisher<[GameObject], Never> {
-        subject.eraseToAnyPublisher()
-    }
-
-    private let subject = PassthroughSubject<[GameObject], Never>()
-
     var gameObjList: [GameObject]
 
     init(gameObjList: [GameObject]) {
@@ -59,5 +53,4 @@ class PhysicsEngine: ObservableObject {
     func addObj(obj: GameObject) {
         gameObjList.append(obj)
     }
-
 }

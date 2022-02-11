@@ -15,7 +15,7 @@ class GameObject: Identifiable {
     }
 
     var physicsBody: PhysicsBody
-    var imageName: String
+    var imageName: String?
     var coordinates: CGPoint {
         get {
             physicsBody.coordinates
@@ -25,7 +25,7 @@ class GameObject: Identifiable {
         }
     }
 
-    init(physicsBody: PhysicsBody, imageName: String) {
+    init(physicsBody: PhysicsBody, imageName: String? = nil) {
         self.physicsBody = physicsBody
         self.imageName = imageName
     }

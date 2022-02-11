@@ -24,6 +24,7 @@
 		6F8DC7AB27B5238200B7D01A /* PhysicsEngineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */; };
 		6F8DC7AD27B52B5400B7D01A /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */; };
 		6F8DC7AF27B5EC6F00B7D01A /* SideWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AE27B5EC6F00B7D01A /* SideWall.swift */; };
+		6F9B27CD27B6B880001EBF82 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B27CC27B6B880001EBF82 /* GameEngine.swift */; };
 		6FB8011027A29BC300B82496 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8010F27A29BC300B82496 /* Board.swift */; };
 		6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8011127A29D1F00B82496 /* EncodableObject.swift */; };
 		6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */; };
@@ -76,6 +77,7 @@
 		6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsEngineUtils.swift; path = Pegglegame/PhysicsSimulator/PhysicsEngineUtils.swift; sourceTree = SOURCE_ROOT; };
 		6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Rectangle.swift; path = Pegglegame/PhysicsSimulator/Rectangle.swift; sourceTree = SOURCE_ROOT; };
 		6F8DC7AE27B5EC6F00B7D01A /* SideWall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SideWall.swift; path = Pegglegame/Model/SideWall.swift; sourceTree = SOURCE_ROOT; };
+		6F9B27CC27B6B880001EBF82 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Pegglegame/GameRenderer/GameEngine.swift; sourceTree = SOURCE_ROOT; };
 		6FB8010F27A29BC300B82496 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		6FB8011127A29D1F00B82496 /* EncodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableObject.swift; sourceTree = "<group>"; };
 		6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderObj.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				6F374B5B27AA21150098F78E /* GameRenderer.swift */,
+				6F9B27CC27B6B880001EBF82 /* GameEngine.swift */,
 			);
 			path = GameRenderer;
 			sourceTree = "<group>";
@@ -165,9 +168,9 @@
 				6FD6FF7627996DFA0050141E /* ViewModel */,
 				6FD6FF73279955C10050141E /* View */,
 				6F67843A2796584F0086CC9A /* PegglegameApp.swift */,
+				6FDBB80B27AC37670014463B /* LazyView.swift */,
 				6F67843E279658510086CC9A /* Assets.xcassets */,
 				6F678440279658510086CC9A /* Preview Content */,
-				6FDBB80B27AC37670014463B /* LazyView.swift */,
 			);
 			path = pegglegame;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				6F5BD97F27A5582900988D75 /* KeyboardResponder.swift in Sources */,
 				6FB8011027A29BC300B82496 /* Board.swift in Sources */,
 				6FD6FF7D27997D320050141E /* BluePeg.swift in Sources */,
+				6F9B27CD27B6B880001EBF82 /* GameEngine.swift in Sources */,
 				6FDBB80C27AC37670014463B /* LazyView.swift in Sources */,
 				6F19293A27AD7CD500E74D57 /* GameObjectList.swift in Sources */,
 				6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */,

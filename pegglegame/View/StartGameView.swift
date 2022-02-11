@@ -15,17 +15,14 @@ struct StartGameView: View {
     var noOrangePegHit = 0
     @State var gCannonPos = CGPoint(x: 0.0, y: 0.0)
     @State var gesturePos = CGPoint(x: 0.0, y: 0.0)
-//    @State var hey: GameRenderer = startGameViewModel.gameRenderer
 
     var body: some View {
-//        print(startGameViewModel.gameRenderer.toUpdate)
         return VStack {
             ZStack {
                 generateGameBoardView()
                 VStack {
                     HStack {
                         Spacer()
-//                        generateCannonView()
                         Spacer()
                     }.fixedSize()
                     Spacer()
@@ -64,29 +61,36 @@ struct StartGameView: View {
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea(.keyboard)
-                    .gesture(
-                        DragGesture(minimumDistance: 0)
-                            .onChanged { value in
-                                gesturePos = value.location
-                            }
-                            .onEnded { value in
-                                startGameViewModel.shootBall(from: cannonLoc, to: value.location)
-                            }
-                    )
+
                 ForEach(startGameViewModel.objArr) { gameObject in
                     generateGameObjectView(gameObject: gameObject, bounds: bounds)
                 }
                 generateCannonView(position: cannonLoc)
             }
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        gesturePos = value.location
+                    }
+                    .onEnded { value in
+                        startGameViewModel.placeObj(at: value.location)
+                        startGameViewModel.shootBall(from: cannonLoc, to: value.location)
+                    }
+            )
+            .onAppear {
+                startGameViewModel.createWalls(bounds: bounds)
+            }
         }
     }
 
+    @ViewBuilder
     private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
-//        print(hey.toUpdate)
-        return Image(gameObject.imageName)
-            .resizable()
-            .frame(width: 40, height: 40)
-            .position(gameObject.coordinates)
+        if let gameObjectImage = gameObject.imageName {
+            Image(gameObjectImage)
+                .resizable()
+                .frame(width: 40, height: 40)
+                .position(gameObject.coordinates)
+        }
     }
 
     private func generateBottomBarView() -> some View {
@@ -102,7 +106,6 @@ struct StartGameView: View {
                     .font(.body)
             }
         }
-//        .frame(height: 200)
         .background(Color.white)
     }
 

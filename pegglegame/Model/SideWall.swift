@@ -9,20 +9,16 @@ import Foundation
 import CoreGraphics
 
 class SideWall: GameObject {
-    let defaultRadius = 20.0
-    // Side walls are invisible
-    static let imageName: String = ""
-
-    init(coordinates: CGPoint) {
+    init(coordinates: CGPoint, height: CGFloat) {
         super.init(
             physicsBody: Rectangle(
                 coordinates: coordinates,
-                width: 1.0,
-                height: 99.0,
+                width: 0.1,
+                height: height,
                 mass: 1.0,
                 isDynamic: false
             ),
-            imageName: Ball.imageName
+            imageName: nil
         )
     }
 }

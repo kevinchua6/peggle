@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreGraphics
 
 struct LevelDesignerView: View {
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
@@ -84,56 +85,63 @@ struct LevelDesignerView: View {
                 self.placeholderObj.isValid = true
             })
     }
+    
+    private func dragObjGesture(gameObjectImage: String,  gameObject: GameObject, bounds: CGRect) -> ExclusiveGesture<_EndedGesture<LongPressGesture>, _EndedGesture<_ChangedGesture<DragGesture>>> {
+        ExclusiveGesture(
+            LongPressGesture(minimumDuration: 0.5)
+                .onEnded({ _ in
+                    levelDesignerViewModel.deleteObj(obj: gameObject)
+                }),
+            DragGesture(minimumDistance: 0)
+                .onChanged { value in
+                    if keyboardResponder.isKeyboardOpen {
+                        return
+                    }
 
-    private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
-        Image(gameObject.imageName)
-            .resizable()
-            .frame(width: 40, height: 40)
-            // we want it to adjust by the keyboard amount
-            .position(gameObject.physicsBody.coordinates)
-            .offset(y: -keyboardResponder.currentHeight * 0.9)
-            .gesture(
-                ExclusiveGesture(
-                    LongPressGesture(minimumDuration: 0.5)
-                        .onEnded({ _ in
-                            levelDesignerViewModel.deleteObj(obj: gameObject)
-                        }),
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { value in
-                            if keyboardResponder.isKeyboardOpen {
-                                return
-                            }
-
-                            levelDesignerViewModel.dragObj(
-                                obj: placeholderObj.object,
-                                from: gameObject.physicsBody.coordinates, by: value.translation
-                            )
-
-                            // The current peg's location stays there, except the
-                            // placeholder peg will follow a translation of the current location
-                            placeholderObj.imageName = gameObject.imageName
-                            placeholderObj.isVisible = true
-
-                            placeholderObj.isValid = levelDesignerViewModel.isValidDrag(
-                                object: placeholderObj.object, originalObj: gameObject, bounds: bounds
-                            )
-                        }
-                        .onEnded({ _ in
-                            if keyboardResponder.isKeyboardOpen {
-                                return
-                            }
-
-                            placeholderObj.isVisible = false
-                            // Add peg at that location if it is valid
-                            // And delete the current peg
-                            if placeholderObj.isValid {
-                                levelDesignerViewModel.deleteObj(obj: gameObject)
-                                levelDesignerViewModel.placeObj(at: placeholderObj.object.physicsBody.coordinates)
-                            }
-                            self.placeholderObj.isValid = true
-                        })
+                    levelDesignerViewModel.dragObj(
+                        obj: placeholderObj.object,
+                        from: gameObject.physicsBody.coordinates, by: value.translation
                     )
+
+                    // The current peg's location stays there, except the
+                    // placeholder peg will follow a translation of the current location
+                    placeholderObj.imageName = gameObjectImage
+                    placeholderObj.isVisible = true
+
+                    placeholderObj.isValid = levelDesignerViewModel.isValidDrag(
+                        object: placeholderObj.object, originalObj: gameObject, bounds: bounds
+                    )
+                }
+                .onEnded({ _ in
+                    if keyboardResponder.isKeyboardOpen {
+                        return
+                    }
+
+                    placeholderObj.isVisible = false
+                    // Add peg at that location if it is valid
+                    // And delete the current peg
+                    if placeholderObj.isValid {
+                        levelDesignerViewModel.deleteObj(obj: gameObject)
+                        levelDesignerViewModel.placeObj(at: placeholderObj.object.physicsBody.coordinates)
+                    }
+                    self.placeholderObj.isValid = true
+                })
             )
+    }
+
+    @ViewBuilder
+    private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
+        if let gameObjectImage = gameObject.imageName {
+            Image(gameObjectImage)
+                .resizable()
+                .frame(width: 40, height: 40)
+                // we want it to adjust by the keyboard amount
+                .position(gameObject.physicsBody.coordinates)
+                .offset(y: -keyboardResponder.currentHeight * 0.9)
+                .gesture(
+                    dragObjGesture(gameObjectImage: gameObjectImage, gameObject: gameObject, bounds: bounds)
+                )
+        }
     }
 
     @ViewBuilder
