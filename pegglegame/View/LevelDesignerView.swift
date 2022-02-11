@@ -204,7 +204,7 @@ struct LevelDesignerView: View {
             }
         }
     }
-    
+
     private func generateBottomBarView() -> some View {
         VStack {
             generateSelectionBarView()

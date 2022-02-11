@@ -1,5 +1,5 @@
 //
-//  Circle.swift
+//  Square.swift
 //  pegglegame
 //
 //  Created by kevin chua on 22/1/22.
@@ -7,15 +7,13 @@
 
 import CoreGraphics
 
-struct Circle: PhysicsBody {
+struct Rectangle: PhysicsBody {
 
     var coordinates: CGPoint
     var nextCoordinates: CGPoint
     var mass: CGFloat
     var hasGravity: Bool
     let gravity = 1.0
-
-    var radius: CGFloat
 
     var isDynamic: Bool
 
@@ -25,30 +23,35 @@ struct Circle: PhysicsBody {
 
     var restitution: CGFloat
 
+    let width: CGFloat
+    let height: CGFloat
+
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
-        // Set center of bounding box to center of circle
+        // Set center of bounding box to center of Square
         CGRect(
-            x: coordinates.x - radius,
-            y: coordinates.y - radius,
-            width: radius * 2,
-            height: radius * 2
+            x: coordinates.x + width / 2,
+            y: coordinates.y + height / 2,
+            width: width,
+            height: height
         )
     }
 
     init(
         coordinates: CGPoint,
-        radius: CGFloat,
+        width: CGFloat,
+        height: CGFloat,
         mass: CGFloat,
         hasGravity: Bool = false,
         isDynamic: Bool,
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
-        forces: [CGVector],
+        forces: [CGVector] = [],
         restitution: CGFloat = 0.7
     ) {
         self.coordinates = coordinates
         self.nextCoordinates = coordinates
-        self.radius = radius
+        self.width = width
+        self.height = height
         self.mass = mass
         self.hasGravity = hasGravity
         self.isDynamic = isDynamic
@@ -83,54 +86,45 @@ struct Circle: PhysicsBody {
         let yCoord = coordinates.y + velocity.dy * seconds + yIncrease
 
         let newCoord =
-            CGPoint(
-                x: xCoord,
-                y: yCoord
-            )
+            CGPoint(x: xCoord,
+                    y: yCoord
+                )
 
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
 
-        return Circle(
-            coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, velocity: newVelocity, forces: []
+        return Rectangle(
+            coordinates: newCoord,
+            width: width,
+            height: height,
+            mass: mass,
+            hasGravity: hasGravity,
+            isDynamic: isDynamic,
+            velocity: newVelocity,
+            forces: []
         )
     }
 }
 
-extension Circle {
+extension Rectangle {
     // swiftlint:disable force_cast
-    // Because we know it is a Circle in the switch statement, it is okay to cast it to Circle
+    // Because we know it is a Rectangle in the switch statement, it is okay to cast it to Square
     // I need to cast it because I need the same method signature to override isIntersecting
     func isIntersecting(with gameObject: GameObject) -> Bool {
         let physicsBody = gameObject.physicsBody
         switch physicsBody {
-        case is Rectangle:
-            return isIntersecting(with: physicsBody as! Rectangle)
         case is Circle:
             return isIntersecting(with: physicsBody as! Circle)
+        case is Rectangle:
+            return false
         default:
             return false
         }
     }
 
-    func isIntersecting(with rectangle: Rectangle) -> Bool {
+    func isIntersecting(with circle: Circle) -> Bool {
         // Do the more trivial version of collision first
         // For now, don't handle the corner case
-        self.boundingBox.intersects(rectangle.boundingBox)
-    }
-
-    func isIntersecting(with circle: Circle) -> Bool {
-        // Find the distance between the two pegs
-        // And check if the radius < the distance between the two
-
-        // Compare the square as squareroot has a performance hit
-        let distanceSquared = PhysicsEngineUtils.CGPointDistanceSquared(
-            from: self.coordinates, to: circle.coordinates
-        )
-
-        let totalRadius: CGFloat = self.radius + circle.radius
-        let totalRadiusSquared: CGFloat = totalRadius * totalRadius
-
-        return distanceSquared < totalRadiusSquared
+        self.boundingBox.intersects(circle.boundingBox)
     }
 
     func isIntersecting(with entityArr: [GameObject]) -> Bool {
@@ -145,55 +139,37 @@ extension Circle {
         switch physicsBody {
         case is Rectangle:
             handleCollision(with: physicsBody as! Rectangle)
-        case is Circle:
-            handleCollision(with: physicsBody as! Circle)
         default:
             return
         }
     }
 
-    mutating func handleCollision(with circle: Circle) {
-        let distance = PhysicsEngineUtils.CGPointDistance(
-            from: self.coordinates, to: circle.coordinates
-        )
-
-        let totalWidth = self.radius + circle.radius
-
-        let collisionUnitVector = (self.coordinates - circle.coordinates) / distance
-
-        let relativeVelocity = self.velocity - circle.velocity
-
-        let minRestitution = min(self.restitution, circle.restitution)
-
-        let speed = abs(relativeVelocity * collisionUnitVector) * minRestitution
-
-        self.velocity = collisionUnitVector * speed
-
-        // When collide, shift the position back to prevent overlapping
-        let difference: CGFloat = totalWidth - distance
-        let differenceVector: CGVector = collisionUnitVector * difference
-
-        self.nextCoordinates += differenceVector
-    }
+//    mutating func handleCollision(with Square: Rectangle) {
+//        // The smaller the distance between the two, the larger the force vector
+//        let distance = PhysicsEngineUtils.CGPointDistance(
+//            from: self.coordinates, to: Square.coordinates
+//        )
+//
+//        let totalWidth = self.radius + Square.radius
+//
+//        let collisionUnitVector = (self.coordinates - Square.coordinates) / distance
+//
+//        let relativeVelocity = self.velocity - Square.velocity
+//
+//        let minRestitution = min(self.restitution, Square.restitution)
+//
+//        let speed = abs(relativeVelocity * collisionUnitVector) * minRestitution
+//
+//        self.velocity = collisionUnitVector * speed
+//
+//        // When collide, shift the position back to prevent overlapping
+//        let difference: CGFloat = totalWidth - distance + 1
+//        let differenceVector: CGVector = collisionUnitVector * difference
+//
+//        self.coordinates += differenceVector
+//    }
 
     mutating func preventOverlapBodies() {
         self.coordinates = self.nextCoordinates
-    }
-
-    mutating func handleCollision(with rectangle: Rectangle) {
-        // The smaller the distance between the two, the larger the force vector
-        let minRestitution = min(self.restitution, rectangle.restitution)
-
-        let xdistance = abs(self.coordinates.x - rectangle.coordinates.x)
-
-        let totalWidth = self.radius + rectangle.width / 2
-        let difference: CGFloat = totalWidth - xdistance
-
-        let differenceVector = CGVector(dx: 1.0, dy: 0) * difference
-
-        // Only support sideways collision for now
-        self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy)
-
-        self.nextCoordinates += differenceVector * minRestitution
     }
 }

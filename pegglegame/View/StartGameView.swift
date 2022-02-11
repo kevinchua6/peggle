@@ -9,13 +9,14 @@ import SwiftUI
 
 struct StartGameView: View {
     @ObservedObject var startGameViewModel: StartGameViewModel
-    
+
     var score = 0
     var noBluePegHit = 0
     var noOrangePegHit = 0
-    @State var position: CGPoint = CGPoint(x: 0.0, y: 0.0)
+    @State var gCannonPos = CGPoint(x: 0.0, y: 0.0)
+    @State var gesturePos = CGPoint(x: 0.0, y: 0.0)
 //    @State var hey: GameRenderer = startGameViewModel.gameRenderer
-    
+
     var body: some View {
 //        print(startGameViewModel.gameRenderer.toUpdate)
         return VStack {
@@ -24,7 +25,7 @@ struct StartGameView: View {
                 VStack {
                     HStack {
                         Spacer()
-                        generateCannonView()
+//                        generateCannonView()
                         Spacer()
                     }.fixedSize()
                     Spacer()
@@ -35,22 +36,29 @@ struct StartGameView: View {
         // TODO: Find a way to make the pegs consistent without hiding the back button
         .navigationBarHidden(true)
     }
-    
-    private func generateCannonView() -> some View {
-        GeometryReader { geometry in
-            let cannonPos = geometry.frame(in: .global).origin
-            Image("Cannon")
-                .resizable()
-                .frame(width: 70, height: 70)
-                .rotationEffect(
-                    .radians(Double(startGameViewModel.getCannonAngle(cannonLoc: cannonPos, gestureLoc: self.position)))
+
+    private func generateCannonView(position: CGPoint) -> some View {
+        Image("Cannon")
+            .resizable()
+            .frame(width: 90, height: 90)
+            .rotationEffect(
+                .radians(Double(
+                    startGameViewModel.getCannonAngle(cannonLoc: position, gestureLoc: self.gesturePos
+                                                     )
                 )
-            }
+                        )
+            )
+            .gesture(DragGesture(minimumDistance: 0)
+                        .onEnded({ value in
+                            print(value)
+            }))
+            .position(position)
     }
-    
+
     private func generateGameBoardView() -> some View {
         GeometryReader { geometry in
             let bounds = geometry.frame(in: .local)
+            let cannonLoc = CGPoint(x: bounds.width / 2, y: bounds.height / 12)
             ZStack {
                 Image("Background")
                     .resizable()
@@ -59,19 +67,20 @@ struct StartGameView: View {
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onChanged { value in
-                                position = value.location
+                                gesturePos = value.location
                             }
                             .onEnded { value in
-                                startGameViewModel.placeObj(at: value.location)
+                                startGameViewModel.shootBall(from: cannonLoc, to: value.location)
                             }
                     )
                 ForEach(startGameViewModel.objArr) { gameObject in
                     generateGameObjectView(gameObject: gameObject, bounds: bounds)
                 }
+                generateCannonView(position: cannonLoc)
             }
         }
     }
-    
+
     private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
 //        print(hey.toUpdate)
         return Image(gameObject.imageName)
@@ -79,7 +88,7 @@ struct StartGameView: View {
             .frame(width: 40, height: 40)
             .position(gameObject.coordinates)
     }
-    
+
     private func generateBottomBarView() -> some View {
         HStack {
             Text("Score: \(score)")
@@ -96,7 +105,7 @@ struct StartGameView: View {
 //        .frame(height: 200)
         .background(Color.white)
     }
-    
+
 }
 
 struct StartGameView_Previews: PreviewProvider {

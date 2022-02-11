@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import CoreGraphics
 
 // For now, it's basically a blue peg but dynamic
@@ -17,8 +16,15 @@ class Ball: GameObject {
     init(coordinates: CGPoint) {
         super.init(
             physicsBody: Circle(
-                coordinates: coordinates, radius: defaultRadius, mass: 1.0, hasGravity: true, isDynamic: true, velocity: CGVector(), forces: []
-            ), imageName: Ball.imageName
+                coordinates: coordinates,
+                radius: defaultRadius,
+                mass: 1.0,
+                hasGravity: true,
+                isDynamic: true,
+                velocity: CGVector(),
+                forces: []
+            ),
+            imageName: Ball.imageName
         )
     }
 
@@ -30,4 +36,3 @@ class Ball: GameObject {
 //        )
 //    }
 }
-
