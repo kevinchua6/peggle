@@ -11,7 +11,7 @@ import CoreGraphics
 // For now, it's basically a blue peg but dynamic
 class Ball: GameObject {
     let defaultRadius = 20.0
-    static let imageName: String = "BluePeg"
+    static let imageName: String = "Ball"
 
     init(coordinates: CGPoint) {
         super.init(

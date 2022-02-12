@@ -56,8 +56,22 @@ class PhysicsEngine: ObservableObject {
     func gameObjListSatisfy(lambdaFunc: (GameObject) -> Bool) {
         gameObjList = gameObjList.filter { lambdaFunc($0) }
     }
+    
+    func gameObjListSatisfyReturn(lambdaFunc: (GameObject) -> Bool) -> [GameObject] {
+        gameObjList.filter { lambdaFunc($0) }
+    }
+    
+    func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
+        gameObjList.contains(where: lambdaFunc)
+    }
 
     func addObj(obj: GameObject) {
         gameObjList.append(obj)
+    }
+    
+    func setOpacityOfObj(gameObj: GameObject, opacity: Double) {
+        gameObjList = gameObjList.filter { $0 !== gameObj }
+        gameObj.opacity = opacity
+        gameObjList.append(gameObj)
     }
 }

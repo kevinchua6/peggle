@@ -43,4 +43,8 @@ class GameRenderer {
     func setBoundaries(bounds: CGRect) {
         gameEngine.setBoundaries(bounds: bounds)
     }
+    
+    func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
+        gameEngine.hasObj(lambdaFunc: lambdaFunc)
+    }
 }

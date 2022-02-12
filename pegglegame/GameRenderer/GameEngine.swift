@@ -21,8 +21,11 @@ class GameEngine {
     }
     
     func update() -> [GameObject] {
-        removeObjOutsideBoundaries()
-        removeLightedUpPegs()
+        if let myBounds = self.bounds {
+            removeObjOutsideBoundaries(bounds: myBounds)
+            removeLightedUpPegs(bounds: myBounds)
+        }
+
         return self.physicsEngine.update(deltaTime: CGFloat(1 / framesPerSecond))
     }
     
@@ -30,23 +33,27 @@ class GameEngine {
         physicsEngine.addObj(obj: obj)
     }
     
+    func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
+        physicsEngine.hasObj(lambdaFunc: lambdaFunc)
+    }
+    
     func setBoundaries(bounds: CGRect) {
         self.bounds = bounds
     }
     
-    private func removeLightedUpPegs() {
-        physicsEngine.gameObjListSatisfy(lambdaFunc: {
-            !$0.isHit
-        })
+    private func removeLightedUpPegs(bounds: CGRect) {
+        if !physicsEngine.gameObjList.contains(where: { $0.imageName == Ball.imageName }) {
+            
+            
+            physicsEngine.gameObjListSatisfy(lambdaFunc: {
+                !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
+            })
+        }
     }
     
-    private func removeObjOutsideBoundaries() {
-        guard let myBounds = self.bounds else {
-            return
-        }
-        
+    private func removeObjOutsideBoundaries(bounds: CGRect) {
         physicsEngine.gameObjListSatisfy(lambdaFunc: {
-            myBounds.contains($0.physicsBody.boundingBox)
+            bounds.contains($0.physicsBody.boundingBox)
         })
     }
 }
