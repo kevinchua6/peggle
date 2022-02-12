@@ -11,7 +11,7 @@ class KeyboardResponder: ObservableObject {
     @Published var currentHeight: CGFloat = 0
     @Published var isKeyboardOpen = false
 
-    var myCenter: NotificationCenter
+    private var myCenter: NotificationCenter
 
     init(center: NotificationCenter = .default) {
         myCenter = center

@@ -29,7 +29,7 @@ class GameRenderer {
     @objc func update() {
         subject.send(gameEngine.update())
     }
- 
+
     func addObj(obj: GameObject) {
         self.gameEngine.addObj(obj: obj)
     }
@@ -39,11 +39,11 @@ class GameRenderer {
         displaylink.remove(from: .current, forMode: .default)
         displaylink = nil
     }
-    
+
     func setBoundaries(bounds: CGRect) {
         gameEngine.setBoundaries(bounds: bounds)
     }
-    
+
     func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
         gameEngine.hasObj(lambdaFunc: lambdaFunc)
     }

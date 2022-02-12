@@ -21,8 +21,8 @@ protocol PhysicsBody {
 //    var isDynamic: Bool { get set }
 
     // Detect collisions and overlaps
-    func isIntersecting(with physicsBody: GameObject) -> Bool
-    func isIntersecting(with entityArr: [GameObject]) -> Bool
+    func isIntersecting(with physicsBody: PhysicsBody) -> Bool
+    func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool
 
     var boundingBox: CGRect { get }
 

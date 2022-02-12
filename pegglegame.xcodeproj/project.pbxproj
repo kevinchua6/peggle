@@ -27,6 +27,8 @@
 		6FB8011027A29BC300B82496 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8010F27A29BC300B82496 /* Board.swift */; };
 		6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8011127A29D1F00B82496 /* EncodableObject.swift */; };
 		6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */; };
+		6FC3CFA127B80A6A001FC7CC /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC3CFA027B80A6A001FC7CC /* GameBoardView.swift */; };
+		6FC3CFA327B80DA6001FC7CC /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC3CFA227B80DA6001FC7CC /* BottomBarView.swift */; };
 		6FD6FF75279955DD0050141E /* LevelDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF74279955DD0050141E /* LevelDesignerView.swift */; };
 		6FD6FF7827996E100050141E /* LevelDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF7727996E100050141E /* LevelDesignerViewModel.swift */; };
 		6FD6FF7B27997C2D0050141E /* Peg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF7A27997C2D0050141E /* Peg.swift */; };
@@ -79,6 +81,8 @@
 		6FB8010F27A29BC300B82496 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		6FB8011127A29D1F00B82496 /* EncodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableObject.swift; sourceTree = "<group>"; };
 		6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderObj.swift; sourceTree = "<group>"; };
+		6FC3CFA027B80A6A001FC7CC /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameBoardView.swift; path = Pegglegame/View/LevelDesigner/GameBoardView.swift; sourceTree = SOURCE_ROOT; };
+		6FC3CFA227B80DA6001FC7CC /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BottomBarView.swift; path = Pegglegame/View/LevelDesigner/BottomBarView.swift; sourceTree = SOURCE_ROOT; };
 		6FD6FF74279955DD0050141E /* LevelDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerView.swift; sourceTree = "<group>"; };
 		6FD6FF7727996E100050141E /* LevelDesignerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerViewModel.swift; sourceTree = "<group>"; };
 		6FD6FF7A27997C2D0050141E /* Peg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peg.swift; sourceTree = "<group>"; };
@@ -218,10 +222,20 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
-		6FD6FF73279955C10050141E /* View */ = {
+		6FC3CF9F27B80A51001FC7CC /* LevelDesigner */ = {
 			isa = PBXGroup;
 			children = (
 				6FD6FF74279955DD0050141E /* LevelDesignerView.swift */,
+				6FC3CFA027B80A6A001FC7CC /* GameBoardView.swift */,
+				6FC3CFA227B80DA6001FC7CC /* BottomBarView.swift */,
+			);
+			path = LevelDesigner;
+			sourceTree = "<group>";
+		};
+		6FD6FF73279955C10050141E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6FC3CF9F27B80A51001FC7CC /* LevelDesigner */,
 				6F2F5EE427A94E8F00D3F9B6 /* StartGameView.swift */,
 			);
 			path = View;
@@ -396,7 +410,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if test -d \"/opt/homebrew/bin/\"; then\n#  PATH=\"/opt/homebrew/bin/:${PATH}\"\n#fi\n#\n#export PATH\n\n#if which swiftlint >/dev/null; then\n#  swiftlint\n#else\n#  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -419,10 +433,12 @@
 				6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */,
 				6F8DC7A927B50B0A00B7D01A /* CoreGraphics+Extensions.swift in Sources */,
 				6FD6FF7827996E100050141E /* LevelDesignerViewModel.swift in Sources */,
+				6FC3CFA127B80A6A001FC7CC /* GameBoardView.swift in Sources */,
 				6F8DC7AB27B5238200B7D01A /* PhysicsEngineUtils.swift in Sources */,
 				6F2F5EE527A94E8F00D3F9B6 /* StartGameView.swift in Sources */,
 				6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */,
 				6F67843B2796584F0086CC9A /* PegglegameApp.swift in Sources */,
+				6FC3CFA327B80DA6001FC7CC /* BottomBarView.swift in Sources */,
 				6F1C9E97279C03210058C36A /* GameObject.swift in Sources */,
 				6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */,
 				6FD6FF75279955DD0050141E /* LevelDesignerView.swift in Sources */,

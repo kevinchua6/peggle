@@ -27,17 +27,36 @@ class StartGameViewModel: ObservableObject {
             self.objArr = objArr
         }
     }
-    
+
     func setBoundaries(bounds: CGRect) {
-        createSideWalls(bounds: bounds)
+        createWalls(bounds: bounds)
         gameRenderer.setBoundaries(bounds: bounds)
     }
 
-    func createSideWalls(bounds: CGRect) {
-        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 1, y: 0), width: 1, height: bounds.height))
-        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: bounds.maxX-1, y: 0), width: 1, height: bounds.height))
+    func createWalls(bounds: CGRect) {
+        let thickness = 2.0
+
+        gameRenderer.addObj(
+            obj: Wall(
+                coordinates: CGPoint(x: -thickness, y: 0),
+                width: thickness,
+                height: bounds.height
+                     )
+        )
+        gameRenderer.addObj(
+            obj: Wall(coordinates: CGPoint(x: bounds.maxX + thickness, y: 0),
+                      width: thickness,
+                      height: bounds.height
+                     )
+        )
+        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0,
+                                                           y: -thickness
+                                                          ),
+                                      width: bounds.width,
+                                      height: thickness)
+        )
     }
-    
+
     func getCannonAngle(cannonLoc: CGPoint, gestureLoc: CGPoint) -> CGFloat {
         // only detect the bottom two quadrants
         if gestureLoc.y < cannonLoc.y {
@@ -60,10 +79,10 @@ class StartGameViewModel: ObservableObject {
     }
 
     func shootBall(from: CGPoint, to: CGPoint) {
-        if gameRenderer.hasObj(lambdaFunc: {$0.imageName == Ball.imageName}) {
+        if gameRenderer.hasObj(lambdaFunc: { $0.imageName == Ball.imageName }) {
             return
         }
-        
+
         let ball = Ball(coordinates: from)
 
         let angle = getCannonAngle(cannonLoc: from, gestureLoc: to)
@@ -79,7 +98,7 @@ class StartGameViewModel: ObservableObject {
 
         gameRenderer.addObj(obj: bluePeg)
     }
-    
+
     deinit {
         gameRenderer.stop()
     }

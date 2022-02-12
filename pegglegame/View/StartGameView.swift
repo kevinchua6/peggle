@@ -17,7 +17,7 @@ struct StartGameView: View {
     @State var gesturePos = CGPoint(x: 0.0, y: 0.0)
 
     var body: some View {
-        return VStack {
+        VStack {
             ZStack {
                 generateGameBoardView()
                 VStack {
@@ -29,9 +29,7 @@ struct StartGameView: View {
                 }
             }
             generateBottomBarView()
-        }
-        // TODO: Find a way to make the pegs consistent without hiding the back button
-        .navigationBarHidden(true)
+        }.navigationBarTitleDisplayMode(.inline)
     }
 
     private func generateCannonView(position: CGPoint) -> some View {
@@ -56,7 +54,7 @@ struct StartGameView: View {
         GeometryReader { geometry in
             let bounds = geometry.frame(in: .local)
             let cannonLoc = CGPoint(x: bounds.width / 2, y: bounds.height / 12)
-            ZStack {
+            ZStack(alignment: .leading) {
                 Image("Background")
                     .resizable()
                     .scaledToFill()

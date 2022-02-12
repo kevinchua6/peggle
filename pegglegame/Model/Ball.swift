@@ -8,7 +8,6 @@
 import Foundation
 import CoreGraphics
 
-// For now, it's basically a blue peg but dynamic
 class Ball: GameObject {
     let defaultRadius = 20.0
     static let imageName: String = "Ball"
@@ -21,8 +20,8 @@ class Ball: GameObject {
                 mass: 1.0,
                 hasGravity: true,
                 isDynamic: true,
-                velocity: CGVector(),
-                forces: []
+                forces: [],
+                velocity: CGVector()
             ),
             imageName: Ball.imageName,
             imageNameHit: Ball.imageName

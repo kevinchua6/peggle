@@ -1,10 +1,3 @@
-//
-//  CGPoint+Extensions.swift
-//  pegglegame
-//
-//  Created by kevin chua on 10/2/22.
-//
-
 import CoreGraphics
 
 extension CGPoint {
@@ -28,20 +21,24 @@ extension CGPoint {
         CGPoint(x: lhs.x - rhs, y: lhs.y - rhs)
     }
 
+    // Shifting a point back by a vector
     static func - (lhs: CGPoint, rhs: CGVector) -> CGPoint {
         CGPoint(x: lhs.x - rhs.dx, y: lhs.y - rhs.dy)
     }
 }
 
 extension CGVector {
+    // Check if a length of a vector is less than a value
     static func <= (lhs: CGVector, rhs: CGFloat) -> Bool {
         sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) <= rhs
     }
-    
+
+    // Return a vector divided by the distance
     static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
         CGVector(dx: lhs.dx / rhs, dy: lhs.dy / rhs)
     }
 
+    // Return a vector sum of a negative of another vector
     static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
         CGVector(dx: lhs.dx - rhs.dx, dy: lhs.dy - rhs.dy)
     }
@@ -64,7 +61,7 @@ extension CGVector {
     }
 
     static func += (lhs: inout CGPoint, rhs: CGVector) {
-        // This is done to avoid swiftlint shorthand_operator
+        // This is done to avoid swiftlint shorthand_operator violation
         let left = lhs
 
         lhs = left + rhs

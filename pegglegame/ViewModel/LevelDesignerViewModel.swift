@@ -39,17 +39,20 @@ class LevelDesignerViewModel: ObservableObject {
             return
         }
 
+        // Convert to physics body array to check for intersection
+        let physicsBodyArr = objArr.map { $0.physicsBody }
+
         switch color {
         case Peg.Color.blue:
             let bluePeg = BluePeg(coordinates: coordinates)
-            if bluePeg.physicsBody.isIntersecting(with: objArr) {
+            if bluePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
             objArr.append(bluePeg)
         case Peg.Color.orange:
             let orangePeg = OrangePeg(coordinates: coordinates)
-            if orangePeg.physicsBody.isIntersecting(with: objArr) {
+            if orangePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
@@ -65,7 +68,9 @@ class LevelDesignerViewModel: ObservableObject {
     // Checks whether when you click on the board, the thing is valid
     func isValidPlacement(object: GameObject, bounds: CGRect) -> Bool {
         let isWithinBounds = bounds.contains(object.physicsBody.boundingBox)
-        let isNotIntersecting = !object.physicsBody.isIntersecting(with: objArr)
+        let physicsBodyArr = objArr.map { $0.physicsBody }
+
+        let isNotIntersecting = !object.physicsBody.isIntersecting(with: physicsBodyArr)
         return isNotIntersecting && isWithinBounds
     }
 
@@ -74,9 +79,12 @@ class LevelDesignerViewModel: ObservableObject {
         let isWithinBounds = bounds.contains(object.physicsBody.boundingBox)
 
         let objArrWithoutCurr = objArr.filter { $0 !== originalObj }
+
+        let physicsBodyArr = objArrWithoutCurr.map { $0.physicsBody }
+
         // Placeholder must not intersect with all other objects
         // But placeholder can intersect with object
-        let isNotIntersectingOtherObjects = !object.physicsBody.isIntersecting(with: objArrWithoutCurr)
+        let isNotIntersectingOtherObjects = !object.physicsBody.isIntersecting(with: physicsBodyArr)
         return isNotIntersectingOtherObjects && isWithinBounds
     }
 

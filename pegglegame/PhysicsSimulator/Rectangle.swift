@@ -44,8 +44,8 @@ struct Rectangle: PhysicsBody {
         mass: CGFloat,
         hasGravity: Bool = false,
         isDynamic: Bool,
-        velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
         forces: [CGVector] = [],
+        velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
         restitution: CGFloat = 0.7
     ) {
         self.coordinates = coordinates
@@ -99,8 +99,7 @@ struct Rectangle: PhysicsBody {
             mass: mass,
             hasGravity: hasGravity,
             isDynamic: isDynamic,
-            velocity: newVelocity,
-            forces: []
+            forces: [], velocity: newVelocity
         )
     }
 }
@@ -109,8 +108,7 @@ extension Rectangle {
     // swiftlint:disable force_cast
     // Because we know it is a Rectangle in the switch statement, it is okay to cast it to Square
     // I need to cast it because I need the same method signature to override isIntersecting
-    func isIntersecting(with gameObject: GameObject) -> Bool {
-        let physicsBody = gameObject.physicsBody
+    func isIntersecting(with physicsBody: PhysicsBody) -> Bool {
         switch physicsBody {
         case is Circle:
             return isIntersecting(with: physicsBody as! Circle)
@@ -127,9 +125,9 @@ extension Rectangle {
         self.boundingBox.intersects(circle.boundingBox)
     }
 
-    func isIntersecting(with entityArr: [GameObject]) -> Bool {
+    func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool {
         var isIntersectingAll = false
-        for obj in entityArr {
+        for obj in physicsBodyArr {
             isIntersectingAll = isIntersectingAll || self.isIntersecting(with: obj)
         }
         return isIntersectingAll

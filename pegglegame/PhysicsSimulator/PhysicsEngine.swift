@@ -23,7 +23,12 @@ class PhysicsEngine: ObservableObject {
         for gameobject in gameObjList {
             let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update(deltaTime: seconds)
 
-            let newGameObj = GameObject(physicsBody: newPhysicsBody, imageName: gameobject.imageName, imageNameHit: gameobject.imageNameHit, isHit: gameobject.isHit)
+            let newGameObj = GameObject(
+                physicsBody: newPhysicsBody,
+                imageName: gameobject.imageName,
+                imageNameHit: gameobject.imageNameHit,
+                isHit: gameobject.isHit
+            )
 
             res.append(newGameObj)
         }
@@ -35,9 +40,9 @@ class PhysicsEngine: ObservableObject {
                     continue
                 }
 
-                if dynamicObject.physicsBody.isIntersecting(with: gameObject) {
+                if dynamicObject.physicsBody.isIntersecting(with: gameObject.physicsBody) {
                     dynamicObject.physicsBody.handleCollision(with: gameObject.physicsBody)
-                    
+
                     gameObject.isHit = true
                     dynamicObject.isHit = true
                 }
@@ -52,15 +57,15 @@ class PhysicsEngine: ObservableObject {
         gameObjList = res
         return res
     }
-    
+
     func gameObjListSatisfy(lambdaFunc: (GameObject) -> Bool) {
         gameObjList = gameObjList.filter { lambdaFunc($0) }
     }
-    
+
     func gameObjListSatisfyReturn(lambdaFunc: (GameObject) -> Bool) -> [GameObject] {
         gameObjList.filter { lambdaFunc($0) }
     }
-    
+
     func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
         gameObjList.contains(where: lambdaFunc)
     }
@@ -68,7 +73,7 @@ class PhysicsEngine: ObservableObject {
     func addObj(obj: GameObject) {
         gameObjList.append(obj)
     }
-    
+
     func setOpacityOfObj(gameObj: GameObject, opacity: Double) {
         gameObjList = gameObjList.filter { $0 !== gameObj }
         gameObj.opacity = opacity

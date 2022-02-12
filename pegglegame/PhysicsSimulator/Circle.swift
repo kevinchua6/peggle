@@ -25,6 +25,9 @@ struct Circle: PhysicsBody {
 
     var restitution: CGFloat
 
+    // A small number to ensure that the velocity does not equal to 0
+    let EPSILON = 1.0
+
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
         // Set center of bounding box to center of circle
@@ -42,8 +45,9 @@ struct Circle: PhysicsBody {
         mass: CGFloat,
         hasGravity: Bool = false,
         isDynamic: Bool,
-        velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
+        
         forces: [CGVector],
+        velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
         restitution: CGFloat = 0.7
     ) {
         self.coordinates = coordinates
@@ -91,17 +95,17 @@ struct Circle: PhysicsBody {
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
 
         return Circle(
-            coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, velocity: newVelocity, forces: []
+            coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, forces: [], velocity: newVelocity
         )
     }
 }
 
 extension Circle {
+
     // swiftlint:disable force_cast
     // Because we know it is a Circle in the switch statement, it is okay to cast it to Circle
     // I need to cast it because I need the same method signature to override isIntersecting
-    func isIntersecting(with gameObject: GameObject) -> Bool {
-        let physicsBody = gameObject.physicsBody
+    func isIntersecting(with physicsBody: PhysicsBody) -> Bool {
         switch physicsBody {
         case is Rectangle:
             return isIntersecting(with: physicsBody as! Rectangle)
@@ -133,9 +137,9 @@ extension Circle {
         return distanceSquared < totalRadiusSquared
     }
 
-    func isIntersecting(with entityArr: [GameObject]) -> Bool {
+    func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool {
         var isIntersectingAll = false
-        for obj in entityArr {
+        for obj in physicsBodyArr {
             isIntersectingAll = isIntersectingAll || self.isIntersecting(with: obj)
         }
         return isIntersectingAll
@@ -170,7 +174,7 @@ extension Circle {
         self.velocity = collisionUnitVector * speed
 
         // When collide, shift the position back to prevent overlapping
-        let difference: CGFloat = totalWidth - distance
+        let difference: CGFloat = totalWidth - distance + EPSILON
         let differenceVector: CGVector = collisionUnitVector * difference
 
         self.nextCoordinates += differenceVector
@@ -185,17 +189,27 @@ extension Circle {
         let minRestitution = min(self.restitution, rectangle.restitution)
 
         let xdistance = self.coordinates.x - rectangle.coordinates.x
+        let ydistance = self.coordinates.y - rectangle.coordinates.y
 
         let totalWidth = self.radius + rectangle.width / 2
-        let difference: CGFloat = totalWidth - abs(xdistance)
+        let totalHeight = self.radius + rectangle.height / 2
 
-        let differenceUnitVector = CGVector(dx: xdistance, dy: 0) / abs(xdistance)
+        let xdifference: CGFloat = totalWidth - abs(xdistance) + EPSILON
+        let ydifference: CGFloat = totalHeight - abs(ydistance) + EPSILON
 
-        let differenceVector: CGVector = differenceUnitVector * difference
+        // Do rotation in the future
+        if rectangle.boundingBox.minY <= self.coordinates.y && self.coordinates.y <= rectangle.boundingBox.maxY {
+            let differenceUnitVector = CGVector(dx: xdistance, dy: 0) / abs(xdistance)
+            let differenceVector: CGVector = differenceUnitVector * xdifference
 
-        // Only support sideways collision for now
-        self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy) * minRestitution
+            self.velocity = CGVector(dx: -self.velocity.dx, dy: self.velocity.dy) * minRestitution
+            self.nextCoordinates += differenceVector
+        } else {
+            let differenceUnitVector = CGVector(dx: 0, dy: ydistance) / abs(ydistance)
+            let differenceVector: CGVector = differenceUnitVector * ydifference
 
-        self.nextCoordinates += differenceVector
+            self.velocity = CGVector(dx: self.velocity.dx, dy: -self.velocity.dy) * minRestitution
+            self.nextCoordinates += differenceVector
+        }
     }
 }
