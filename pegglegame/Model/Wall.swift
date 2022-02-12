@@ -8,12 +8,12 @@
 import Foundation
 import CoreGraphics
 
-class SideWall: GameObject {
-    init(coordinates: CGPoint, height: CGFloat) {
+class Wall: GameObject {
+    init(coordinates: CGPoint, width: CGFloat, height: CGFloat) {
         super.init(
             physicsBody: Rectangle(
                 coordinates: coordinates,
-                width: 0.1,
+                width: width,
                 height: height,
                 mass: 1.0,
                 isDynamic: false

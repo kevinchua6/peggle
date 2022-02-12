@@ -17,28 +17,30 @@ class GameRenderer {
 
     private let subject = PassthroughSubject<[GameObject], Never>()
 
-    private let physicsEngine: PhysicsEngine
+    private let gameEngine: GameEngine
     private var displaylink: CADisplayLink!
 
-    let framesPerSecond: CGFloat = 60
-
     init(gameObjList: [GameObject]) {
-        self.physicsEngine = PhysicsEngine(gameObjList: gameObjList)
+        self.gameEngine = GameEngine(gameObjList: gameObjList)
         self.displaylink = CADisplayLink(target: self, selector: #selector(update))
         displaylink.add(to: .current, forMode: .default)
     }
 
     @objc func update() {
-        subject.send(self.physicsEngine.update(deltaTime: CGFloat(1 / framesPerSecond)))
+        subject.send(gameEngine.update())
     }
-
+ 
     func addObj(obj: GameObject) {
-        self.physicsEngine.addObj(obj: obj)
+        self.gameEngine.addObj(obj: obj)
     }
 
     func stop() {
         displaylink.invalidate()
         displaylink.remove(from: .current, forMode: .default)
         displaylink = nil
+    }
+    
+    func setBoundaries(bounds: CGRect) {
+        gameEngine.setBoundaries(bounds: bounds)
     }
 }

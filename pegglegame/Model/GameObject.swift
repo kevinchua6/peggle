@@ -16,6 +16,7 @@ class GameObject: Identifiable {
 
     var physicsBody: PhysicsBody
     var imageName: String?
+    var imageNameHit: String?
     var coordinates: CGPoint {
         get {
             physicsBody.coordinates
@@ -24,10 +25,21 @@ class GameObject: Identifiable {
             physicsBody.coordinates = newValue
         }
     }
+    
+    var isHit: Bool
+    
+    // Takes in a function that takes in what collides with it and returns
+    var onCollide: (GameObject)?
 
-    init(physicsBody: PhysicsBody, imageName: String? = nil) {
+    init(physicsBody: PhysicsBody, imageName: String? = nil, imageNameHit: String? = nil, onCollide: (GameObject)? = nil, isHit: Bool = false) {
         self.physicsBody = physicsBody
         self.imageName = imageName
+        self.imageNameHit = imageNameHit
+        if imageNameHit == nil {
+            self.imageNameHit = imageName
+        }
+        self.onCollide = onCollide
+        self.isHit = isHit
     }
-
 }
+

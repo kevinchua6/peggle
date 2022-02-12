@@ -27,10 +27,19 @@ class StartGameViewModel: ObservableObject {
             self.objArr = objArr
         }
     }
+    
+    func setBoundaries(bounds: CGRect) {
+        createSideWalls(bounds: bounds)
+        gameRenderer.setBoundaries(bounds: bounds)
+    }
 
-    func createWalls(bounds: CGRect) {
-        gameRenderer.addObj(obj: SideWall(coordinates: CGPoint(x: 0, y: 0), height: bounds.height))
-        gameRenderer.addObj(obj: SideWall(coordinates: CGPoint(x: bounds.width, y: 0), height: bounds.height))
+    func createSideWalls(bounds: CGRect) {
+        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0, y: 0), width: 1, height: bounds.height))
+        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: bounds.maxX-1, y: 0), width: 1, height: bounds.height))
+    }
+    
+    func createBottomDestrWall(bounds: CGRect) {
+        gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0, y: bounds.height), width: bounds.width, height: 0.1))
     }
 
     func getCannonAngle(cannonLoc: CGPoint, gestureLoc: CGPoint) -> CGFloat {
@@ -68,7 +77,10 @@ class StartGameViewModel: ObservableObject {
     func placeObj(at coordinates: CGPoint) {
         let bluePeg = Ball(coordinates: coordinates)
 
-//        objArr.append(bluePeg)
         gameRenderer.addObj(obj: bluePeg)
+    }
+    
+    deinit {
+        gameRenderer.stop()
     }
 }

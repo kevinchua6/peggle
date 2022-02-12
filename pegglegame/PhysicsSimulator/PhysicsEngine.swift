@@ -23,7 +23,7 @@ class PhysicsEngine: ObservableObject {
         for gameobject in gameObjList {
             let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update(deltaTime: seconds)
 
-            let newGameObj = GameObject(physicsBody: newPhysicsBody, imageName: gameobject.imageName)
+            let newGameObj = GameObject(physicsBody: newPhysicsBody, imageName: gameobject.imageName, imageNameHit: gameobject.imageNameHit, isHit: gameobject.isHit)
 
             res.append(newGameObj)
         }
@@ -37,6 +37,9 @@ class PhysicsEngine: ObservableObject {
 
                 if dynamicObject.physicsBody.isIntersecting(with: gameObject) {
                     dynamicObject.physicsBody.handleCollision(with: gameObject.physicsBody)
+                    
+                    gameObject.isHit = true
+                    dynamicObject.isHit = true
                 }
             }
         }
@@ -48,6 +51,10 @@ class PhysicsEngine: ObservableObject {
 
         gameObjList = res
         return res
+    }
+    
+    func gameObjListSatisfy(lambdaFunc: (GameObject) -> Bool) {
+        gameObjList = gameObjList.filter { lambdaFunc($0) }
     }
 
     func addObj(obj: GameObject) {

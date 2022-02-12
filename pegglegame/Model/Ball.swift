@@ -24,7 +24,8 @@ class Ball: GameObject {
                 velocity: CGVector(),
                 forces: []
             ),
-            imageName: Ball.imageName
+            imageName: Ball.imageName,
+            imageNameHit: Ball.imageName
         )
     }
 }

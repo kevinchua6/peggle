@@ -73,23 +73,33 @@ struct StartGameView: View {
                         gesturePos = value.location
                     }
                     .onEnded { value in
-                        startGameViewModel.placeObj(at: value.location)
+//                        startGameViewModel.placeObj(at: value.location)
                         startGameViewModel.shootBall(from: cannonLoc, to: value.location)
                     }
             )
             .onAppear {
-                startGameViewModel.createWalls(bounds: bounds)
+                startGameViewModel.setBoundaries(bounds: bounds)
             }
         }
     }
 
     @ViewBuilder
     private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
-        if let gameObjectImage = gameObject.imageName {
-            Image(gameObjectImage)
-                .resizable()
-                .frame(width: 40, height: 40)
-                .position(gameObject.coordinates)
+//        let fadeOut = AnyTransition.opacity.animation(.easeOut(duration: 0.2))
+        if let gameObjectImage = gameObject.imageName, let gameObjectImageHit = gameObject.imageNameHit {
+            if !gameObject.isHit {
+                Image(gameObjectImage)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .position(gameObject.coordinates)
+//                    .transition(.asymmetric(insertion: .identity, removal: fadeOut))
+            } else {
+                Image(gameObjectImageHit)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .position(gameObject.coordinates)
+//                    .transition(.asymmetric(insertion: .identity, removal: fadeOut))
+            }
         }
     }
 

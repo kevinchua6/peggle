@@ -75,8 +75,8 @@ struct Rectangle: PhysicsBody {
         }
 
         // Get resultant force
-        let resultantForce = currForces.reduce(CGVector.zero, { CGVector(dx: $0.dx + $1.dx, dy: $0.dy + $1.dy) })
-        let netAccel = CGVector(dx: resultantForce.dx / mass, dy: resultantForce.dy / mass)
+        let resultantForce = currForces.reduce(CGVector.zero, +)
+        let netAccel = resultantForce / mass
 
         // Next position
         let xIncrease = 0.5 * netAccel.dx * seconds * seconds

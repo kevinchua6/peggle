@@ -9,13 +9,14 @@ import CoreGraphics
 
 class OrangePeg: Peg {
     static let imageName: String = "OrangePeg"
+    static let imageNameHit: String = "OrangePegGlow"
     static let selectionObject: String = "AddOrangePeg"
 
     init(coordinates: CGPoint, radius: Double) {
-        super.init(coordinates: coordinates, radius: radius, imageName: OrangePeg.imageName)
+        super.init(coordinates: coordinates, radius: radius, imageName: OrangePeg.imageName, imageNameHit: OrangePeg.imageNameHit)
     }
 
     init(coordinates: CGPoint) {
-        super.init(coordinates: coordinates, imageName: OrangePeg.imageName)
+        super.init(coordinates: coordinates, imageName: OrangePeg.imageName, imageNameHit: OrangePeg.imageNameHit)
     }
 }

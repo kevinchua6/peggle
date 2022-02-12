@@ -9,13 +9,14 @@ import CoreGraphics
 
 class BluePeg: Peg {
     static let imageName: String = "BluePeg"
+    static let imageNameHit: String = "BluePegGlow"
     static let selectionObject: String = "AddBluePeg"
 
     init(coordinates: CGPoint, radius: Double) {
-        super.init(coordinates: coordinates, radius: radius, imageName: BluePeg.imageName)
+        super.init(coordinates: coordinates, radius: radius, imageName: BluePeg.imageName, imageNameHit: BluePeg.imageNameHit)
     }
 
     init(coordinates: CGPoint) {
-        super.init(coordinates: coordinates, imageName: BluePeg.imageName)
+        super.init(coordinates: coordinates, imageName: BluePeg.imageName, imageNameHit: BluePeg.imageNameHit)
     }
 }
