@@ -42,13 +42,19 @@ class GameEngine {
     }
     
     private func removeLightedUpPegs(bounds: CGRect) {
-        if !physicsEngine.gameObjList.contains(where: { $0.imageName == Ball.imageName }) {
-            
-            
+        guard let ball = physicsEngine.gameObjListSatisfyReturn(lambdaFunc: { $0.imageName == Ball.imageName }).first else {
+            physicsEngine.gameObjListSatisfy(lambdaFunc: {
+                !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
+            })
+            return
+        }
+        if ball.physicsBody.velocity <= 3 {
             physicsEngine.gameObjListSatisfy(lambdaFunc: {
                 !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
             })
         }
+//            !physicsEngine.gameObjList.contains(where: { $0 is Ball })
+
     }
     
     private func removeObjOutsideBoundaries(bounds: CGRect) {

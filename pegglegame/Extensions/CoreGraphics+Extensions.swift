@@ -34,6 +34,10 @@ extension CGPoint {
 }
 
 extension CGVector {
+    static func <= (lhs: CGVector, rhs: CGFloat) -> Bool {
+        sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) <= rhs
+    }
+    
     static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {
         CGVector(dx: lhs.dx / rhs, dy: lhs.dy / rhs)
     }
