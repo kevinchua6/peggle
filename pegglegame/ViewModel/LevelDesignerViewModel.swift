@@ -12,7 +12,7 @@ class LevelDesignerViewModel: ObservableObject {
     enum PegColor: String {
         case blue, orange
     }
-    
+
     enum SelectionMode: Equatable {
         case add(PegColor), delete
     }
@@ -48,14 +48,14 @@ class LevelDesignerViewModel: ObservableObject {
 
         switch color {
         case PegColor.blue:
-            let bluePeg = BluePeg(coordinates: coordinates)
+            let bluePeg = BluePeg(coordinates: coordinates, name: GameObject.Types.bluePeg.rawValue)
             if bluePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
             objArr.append(bluePeg)
         case PegColor.orange:
-            let orangePeg = OrangePeg(coordinates: coordinates)
+            let orangePeg = OrangePeg(coordinates: coordinates, name: GameObject.Types.orangePeg.rawValue)
             if orangePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }

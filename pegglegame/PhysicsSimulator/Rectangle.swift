@@ -42,11 +42,11 @@ struct Rectangle: PhysicsBody {
         width: CGFloat,
         height: CGFloat,
         mass: CGFloat,
-        hasGravity: Bool = false,
         isDynamic: Bool,
         forces: [CGVector] = [],
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
-        restitution: CGFloat = 0.7
+        restitution: CGFloat = 0.7,
+        hasGravity: Bool = false
     ) {
         self.coordinates = coordinates
         self.nextCoordinates = coordinates
@@ -97,9 +97,9 @@ struct Rectangle: PhysicsBody {
             width: width,
             height: height,
             mass: mass,
-            hasGravity: hasGravity,
             isDynamic: isDynamic,
-            forces: [], velocity: newVelocity
+            forces: [], velocity: newVelocity,
+            hasGravity: hasGravity
         )
     }
 }

@@ -43,12 +43,11 @@ struct Circle: PhysicsBody {
         coordinates: CGPoint,
         radius: CGFloat,
         mass: CGFloat,
-        hasGravity: Bool = false,
         isDynamic: Bool,
-        
         forces: [CGVector],
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
-        restitution: CGFloat = 0.7
+        restitution: CGFloat = 0.7,
+        hasGravity: Bool = false
     ) {
         self.coordinates = coordinates
         self.nextCoordinates = coordinates
@@ -95,7 +94,13 @@ struct Circle: PhysicsBody {
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
 
         return Circle(
-            coordinates: newCoord, radius: radius, mass: mass, hasGravity: hasGravity, isDynamic: isDynamic, forces: [], velocity: newVelocity
+            coordinates: newCoord,
+            radius: radius,
+            mass: mass,
+            isDynamic: isDynamic,
+            forces: [],
+            velocity: newVelocity,
+            hasGravity: hasGravity
         )
     }
 }

@@ -79,7 +79,7 @@ struct GameBoardView: View {
                                 gameObject: GameObject,
                                 bounds: CGRect
     ) -> ExclusiveGesture<_EndedGesture<LongPressGesture>, _EndedGesture<_ChangedGesture<DragGesture>>> {
-        
+
         ExclusiveGesture(
             LongPressGesture(minimumDuration: 0.5)
                 .onEnded({ _ in

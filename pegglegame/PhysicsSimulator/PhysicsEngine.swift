@@ -25,6 +25,7 @@ class PhysicsEngine: ObservableObject {
 
             let newGameObj = GameObject(
                 physicsBody: newPhysicsBody,
+                name: gameobject.name,
                 imageName: gameobject.imageName,
                 imageNameHit: gameobject.imageNameHit,
                 isHit: gameobject.isHit

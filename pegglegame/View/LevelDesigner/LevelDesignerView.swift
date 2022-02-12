@@ -13,7 +13,12 @@ struct LevelDesignerView: View {
 
     // Properties of the placeholder
     @StateObject private var placeholderObj =
-        PlaceholderObj(imageName: BluePeg.imageName, object: BluePeg(coordinates: CGPoint(x: 0, y: 0)), isVisible: false)
+        PlaceholderObj(
+            imageName: BluePeg.imageName,
+            object: BluePeg(coordinates: CGPoint(x: 0, y: 0),
+                            name: "placeholder"),
+            isVisible: false
+        )
 
     var body: some View {
         NavigationView {

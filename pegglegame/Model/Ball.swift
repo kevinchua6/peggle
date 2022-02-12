@@ -11,19 +11,19 @@ import CoreGraphics
 class Ball: GameObject {
     let defaultRadius = 20.0
     static let imageName: String = "Ball"
-//    let name = "ball"
 
-    init(coordinates: CGPoint) {
+    init(coordinates: CGPoint, name: String) {
         super.init(
             physicsBody: Circle(
                 coordinates: coordinates,
                 radius: defaultRadius,
                 mass: 1.0,
-                hasGravity: true,
                 isDynamic: true,
                 forces: [],
-                velocity: CGVector()
+                velocity: CGVector(),
+                hasGravity: true
             ),
+            name: name,
             imageName: Ball.imageName,
             imageNameHit: Ball.imageName
         )

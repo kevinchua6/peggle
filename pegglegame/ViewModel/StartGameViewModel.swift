@@ -40,20 +40,24 @@ class StartGameViewModel: ObservableObject {
             obj: Wall(
                 coordinates: CGPoint(x: -thickness, y: 0),
                 width: thickness,
-                height: bounds.height
+                height: bounds.height,
+                name: "leftWall"
                      )
         )
         gameRenderer.addObj(
             obj: Wall(coordinates: CGPoint(x: bounds.maxX + thickness, y: 0),
                       width: thickness,
-                      height: bounds.height
+                      height: bounds.height,
+                      name: "rightWall"
                      )
         )
         gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0,
                                                            y: -thickness
                                                           ),
                                       width: bounds.width,
-                                      height: thickness)
+                                      height: thickness,
+                                      name: "topWall"
+                                     )
         )
     }
 
@@ -83,7 +87,7 @@ class StartGameViewModel: ObservableObject {
             return
         }
 
-        let ball = Ball(coordinates: from)
+        let ball = Ball(coordinates: from, name: GameObject.Types.ball.rawValue)
 
         let angle = getCannonAngle(cannonLoc: from, gestureLoc: to)
         let unitVector = CGVector(dx: -sin(angle), dy: cos(angle))
@@ -91,12 +95,6 @@ class StartGameViewModel: ObservableObject {
         gameRenderer.addObj(obj: ball)
         ball.physicsBody.velocity = unitVector * INITIAL_BALL_SPEED
         print(ball.physicsBody.velocity)
-    }
-
-    func placeObj(at coordinates: CGPoint) {
-        let bluePeg = Ball(coordinates: coordinates)
-
-        gameRenderer.addObj(obj: bluePeg)
     }
 
     deinit {

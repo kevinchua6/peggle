@@ -12,11 +12,22 @@ class OrangePeg: Peg {
     static let imageNameHit: String = "OrangePegGlow"
     static let selectionObject: String = "AddOrangePeg"
 
-    init(coordinates: CGPoint, radius: Double) {
-        super.init(coordinates: coordinates, radius: radius, imageName: OrangePeg.imageName, imageNameHit: OrangePeg.imageNameHit)
+    init(coordinates: CGPoint, radius: Double, name: String) {
+        super.init(
+            coordinates: coordinates,
+            radius: radius,
+            imageName: OrangePeg.imageName,
+            imageNameHit: OrangePeg.imageNameHit,
+            name: name
+        )
     }
 
-    init(coordinates: CGPoint) {
-        super.init(coordinates: coordinates, imageName: OrangePeg.imageName, imageNameHit: OrangePeg.imageNameHit)
+    init(coordinates: CGPoint, name: String) {
+        super.init(
+            coordinates: coordinates,
+            imageName: OrangePeg.imageName,
+            imageNameHit: OrangePeg.imageNameHit,
+            name: name
+        )
     }
 }

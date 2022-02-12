@@ -59,9 +59,17 @@ class PersistenceUtils {
         for obj in board.objArr {
             switch obj.type {
             case GameObject.Types.bluePeg.rawValue:
-                gameObjBoard.append(BluePeg(coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord)))
+                gameObjBoard.append(
+                    BluePeg(
+                        coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
+                        name: GameObject.Types.bluePeg.rawValue)
+                )
             case GameObject.Types.orangePeg.rawValue:
-                gameObjBoard.append(OrangePeg(coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord)))
+                gameObjBoard.append(
+                    OrangePeg(
+                        coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
+                        name: GameObject.Types.orangePeg.rawValue)
+                )
             default:
                 continue
             }

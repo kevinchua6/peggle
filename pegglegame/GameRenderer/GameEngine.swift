@@ -42,7 +42,10 @@ class GameEngine {
     }
 
     private func removeLightedUpPegs(bounds: CGRect) {
-        guard let ball = physicsEngine.gameObjListSatisfyReturn(lambdaFunc: { $0.imageName == Ball.imageName }).first else {
+        guard let ball = physicsEngine.gameObjListSatisfyReturn(
+            lambdaFunc: {
+                $0.name == GameObject.Types.ball.rawValue
+            }).first else {
             physicsEngine.gameObjListSatisfy(lambdaFunc: {
                 !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
             })
