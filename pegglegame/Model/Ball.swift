@@ -11,6 +11,7 @@ import CoreGraphics
 class Ball: GameObject {
     let defaultRadius = 20.0
     static let imageName: String = "Ball"
+//    let name = "ball"
 
     init(coordinates: CGPoint) {
         super.init(

@@ -9,8 +9,12 @@ import Foundation
 import CoreGraphics
 
 class LevelDesignerViewModel: ObservableObject {
+    enum PegColor: String {
+        case blue, orange
+    }
+    
     enum SelectionMode: Equatable {
-        case add(Peg.Color), delete
+        case add(PegColor), delete
     }
 
     struct AlertBox {
@@ -43,14 +47,14 @@ class LevelDesignerViewModel: ObservableObject {
         let physicsBodyArr = objArr.map { $0.physicsBody }
 
         switch color {
-        case Peg.Color.blue:
+        case PegColor.blue:
             let bluePeg = BluePeg(coordinates: coordinates)
             if bluePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
             objArr.append(bluePeg)
-        case Peg.Color.orange:
+        case PegColor.orange:
             let orangePeg = OrangePeg(coordinates: coordinates)
             if orangePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return

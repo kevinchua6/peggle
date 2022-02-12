@@ -11,7 +11,7 @@ import Foundation
 class GameObject: Identifiable {
     // Types of game objects to be stored in the database
     enum Types: String {
-        case bluepeg, orangepeg
+        case bluePeg, orangePeg, ball, wall
     }
 
     var physicsBody: PhysicsBody
@@ -42,11 +42,12 @@ class GameObject: Identifiable {
         self.physicsBody = physicsBody
         self.imageName = imageName
         self.imageNameHit = imageNameHit
-        if imageNameHit == nil {
-            self.imageNameHit = imageName
-        }
         self.onCollide = onCollide
         self.isHit = isHit
         self.opacity = opacity
+
+        if imageNameHit == nil {
+            self.imageNameHit = imageName
+        }
     }
 }

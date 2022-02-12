@@ -26,9 +26,3 @@ class Peg: GameObject {
         )
     }
 }
-
-extension Peg {
-    enum Color: String {
-        case blue, orange
-    }
-}

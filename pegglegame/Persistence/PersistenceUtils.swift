@@ -36,9 +36,9 @@ class PersistenceUtils {
             var objType: String
             switch obj {
             case is BluePeg:
-                objType = GameObject.Types.bluepeg.rawValue
+                objType = GameObject.Types.bluePeg.rawValue
             case is OrangePeg:
-                objType = GameObject.Types.orangepeg.rawValue
+                objType = GameObject.Types.orangePeg.rawValue
             default:
                 continue
             }
@@ -58,9 +58,9 @@ class PersistenceUtils {
         var gameObjBoard: [GameObject] = []
         for obj in board.objArr {
             switch obj.type {
-            case GameObject.Types.bluepeg.rawValue:
+            case GameObject.Types.bluePeg.rawValue:
                 gameObjBoard.append(BluePeg(coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord)))
-            case GameObject.Types.orangepeg.rawValue:
+            case GameObject.Types.orangePeg.rawValue:
                 gameObjBoard.append(OrangePeg(coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord)))
             default:
                 continue
