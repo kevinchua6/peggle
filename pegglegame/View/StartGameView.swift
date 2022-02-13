@@ -69,7 +69,6 @@ struct StartGameView: View {
                         gesturePos = value.location
                     }
                     .onEnded { value in
-//                        startGameViewModel.placeObj(at: value.location)
                         startGameViewModel.shootBall(from: cannonLoc, to: value.location)
                     }
             )
