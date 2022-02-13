@@ -22,7 +22,13 @@ class StartGameViewModel: ObservableObject {
     let WALL_THICKNESS = 2.0
 
     init(objArr: [GameObject]) {
-        gameRenderer = GameRenderer(gameObjList: objArr)
+        // Whenever start is pressed, reset all properties
+        for gameObj in objArr {
+            gameObj.isHit = false
+            gameObj.opacity = 1.0
+        }
+
+        gameRenderer = GameRenderer(gameObjList: objArr )
 
         cancellable = gameRenderer.publisher.sink { objArr in
             self.objArr = objArr

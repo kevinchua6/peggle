@@ -16,7 +16,7 @@ class GameObject: Identifiable {
 
     // Allow easy identification of GameObjects
     let name: String
-    
+
     var physicsBody: PhysicsBody
     var opacity: Double
     var imageName: String?

@@ -9,89 +9,48 @@ import CoreGraphics
 import Combine
 
 class PhysicsEngine: ObservableObject {
-
-    // TODO: make it a PhysicsBody instead
-    var gameObjList: [GameObject]
-
-    init(gameObjList: [GameObject]) {
-        self.gameObjList = gameObjList
+    func updateCoordinates(physicsBody: PhysicsBody, deltaTime seconds: CGFloat) -> PhysicsBody {
+        physicsBody.update(deltaTime: seconds)
     }
 
-    func update(deltaTime seconds: CGFloat) -> [GameObject] {
-        var res: [GameObject] = []
+    // Returns whether it has collided as well
+    func updateVelocities(physicsBody: PhysicsBody,
+                          physicsBodyArr: [PhysicsBody],
+                          deltaTime seconds: CGFloat) -> (PhysicsBody, Bool) {
+        var dynamicBody = physicsBody
+        var hasCollided = false
 
-        // Update bodies to next coordinates based on vel and accel
-        for gameobject in gameObjList {
-            let newPhysicsBody: PhysicsBody = gameobject.physicsBody.update(deltaTime: seconds)
+        // To a dynamic body, all other bodies look static
+        for staticBody in physicsBodyArr {
+            if dynamicBody.coordinates == staticBody.coordinates {
+                continue
+            }
 
-            let newGameObj = GameObject(
-                physicsBody: newPhysicsBody,
-                name: gameobject.name,
-                imageName: gameobject.imageName,
-                imageNameHit: gameobject.imageNameHit,
-                isHit: gameobject.isHit,
-                opacity: gameobject.opacity
-            )
-
-            res.append(newGameObj)
-        }
-
-        // Update dynamic bodies' velocities upon collision
-        for dynamicObject in res.filter({ $0.physicsBody.isDynamic }) {
-            for gameObject in res {
-                if dynamicObject === gameObject {
-                    continue
-                }
-
-                if dynamicObject.physicsBody.isIntersecting(with: gameObject.physicsBody) {
-                    dynamicObject.physicsBody.handleCollision(with: gameObject.physicsBody)
-
-                    gameObject.isHit = true
-                    dynamicObject.isHit = true
-                }
+            if dynamicBody.isIntersecting(with: staticBody) {
+                dynamicBody.handleCollision(with: staticBody)
+                hasCollided = true
+//                gameObject.isHit = true
+//                dynamicObject.isHit = true
             }
         }
-        
-        // Update the coordinates to prevent overlapping
-        for dynamicObject in res.filter({ $0.physicsBody.isDynamic }) {
-            dynamicObject.physicsBody.preventOverlapBodies()
+
+        return (dynamicBody, hasCollided)
+    }
+
+    func updatePreventOverlapping(
+        physicsBody: PhysicsBody,
+        physicsBodyArr: [PhysicsBody],
+        deltaTime seconds: CGFloat) -> PhysicsBody {
+        guard physicsBody.isDynamic else {
+            return physicsBody
         }
 
-        res = fadeOutHitPegs(gameObjList: res)
-        
-        gameObjList = res
-        return res
-    }
-    
-    // TODO: remove
-    func fadeOutHitPegs(gameObjList: [GameObject]) -> [GameObject] {
-        var res: [GameObject] = []
-        for gameObj in gameObjList {
-            if gameObj.isHit {
-                if gameObj.name == GameObject.Types.bluePeg.rawValue && gameObj.opacity >= 0 {
-                    gameObj.opacity -= 0.005
-                }
-            }
-            res.append(gameObj)
-        }
-        return res
-    }
-    
+        var dynamicBody = physicsBody
 
-    func gameObjListSatisfy(lambdaFunc: (GameObject) -> Bool) {
-        gameObjList = gameObjList.filter { lambdaFunc($0) }
-    }
+        dynamicBody.preventOverlapBodies()
 
-    func gameObjListFilter(lambdaFunc: (GameObject) -> Bool) -> [GameObject] {
-        gameObjList.filter { lambdaFunc($0) }
-    }
+//        res = fadeOutHitPegs(gameObjList: res)
 
-    func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
-        gameObjList.contains(where: lambdaFunc)
+        return dynamicBody
     }
-
-    func addObj(obj: GameObject) {
-        gameObjList.append(obj)
-    }
-
 }

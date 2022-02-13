@@ -13,7 +13,7 @@ struct StartGameView: View {
     @State var score = 0
     var noBluePegHit = 0
     var noOrangePegHit = 0
-    
+
     // Initial positions
     @State var gCannonPos = CGPoint(x: 0.0, y: 0.0)
     @State var gesturePos = CGPoint(x: 0.0, y: 0.0)

@@ -10,31 +10,73 @@ import Foundation
 import QuartzCore
 import SwiftUI
 
+// A game engine stores the reference to all the moving and colliding things on the screen
 class GameEngine {
     private let physicsEngine: PhysicsEngine
     private var bounds: CGRect?
 
     private let framesPerSecond: CGFloat = 60
 
+    private let ADDITIONAL_WALL_LENGTH = 200.0
+    private let RATE_OF_FADING = 0.1
+
+    var gameObjList: [GameObject]
+
     init(gameObjList: [GameObject]) {
-        self.physicsEngine = PhysicsEngine(gameObjList: gameObjList)
+        self.gameObjList = gameObjList
+        self.physicsEngine = PhysicsEngine()
     }
 
     func update() -> [GameObject] {
         if let myBounds = self.bounds {
             removeObjOutsideBoundaries(bounds: myBounds)
-//            removeLightedUpPegsConditionally(bounds: myBounds)
+            removeLightedUpPegsConditionally(bounds: myBounds)
         }
 
-        return self.physicsEngine.update(deltaTime: CGFloat(1 / framesPerSecond))
+        simulatePhysics()
+
+        return self.gameObjList
+    }
+
+    private func simulatePhysics() {
+        // Update coordinates
+        for gameObj in gameObjList {
+            gameObj.physicsBody =
+                self.physicsEngine.updateCoordinates(
+                    physicsBody: gameObj.physicsBody,
+                    deltaTime: CGFloat(1 / framesPerSecond))
+        }
+
+        // Update dynamic bodies' velocities upon collision
+        for gameObj in gameObjList {
+            // Objects stay hit
+            var isHit: Bool
+            (gameObj.physicsBody, isHit) =
+                self.physicsEngine.updateVelocities(
+                    physicsBody: gameObj.physicsBody,
+                    physicsBodyArr: gameObjList.map { $0.physicsBody },
+                    deltaTime: CGFloat(1 / framesPerSecond))
+            if isHit {
+                gameObj.isHit = isHit
+            }
+        }
+
+        // Update the coordinates to prevent overlapping
+        for gameObj in gameObjList {
+            gameObj.physicsBody =
+                self.physicsEngine.updatePreventOverlapping(
+                    physicsBody: gameObj.physicsBody,
+                    physicsBodyArr: gameObjList.map { $0.physicsBody },
+                    deltaTime: CGFloat(1 / framesPerSecond))
+        }
     }
 
     func addObj(obj: GameObject) {
-        physicsEngine.addObj(obj: obj)
+        gameObjList.append(obj)
     }
 
     func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
-        physicsEngine.hasObj(lambdaFunc: lambdaFunc)
+        gameObjList.contains(where: lambdaFunc)
     }
 
     func setBoundaries(bounds: CGRect) {
@@ -42,40 +84,43 @@ class GameEngine {
     }
 
     private func removeLightedUpPegsConditionally(bounds: CGRect) {
-        guard let ball = physicsEngine.gameObjListFilter(lambdaFunc: {
+        guard let ball = gameObjList.first(where: {
             $0.name == GameObject.Types.ball.rawValue
-        }).first else {
+        }) else {
             removeLightedUpPegs()
             return
         }
 
-        let minVelocity = 5.0
+        let minVelocity = 3.5
         if ball.physicsBody.velocity <= minVelocity {
             removeLightedUpPegs()
         }
     }
 
     private func removeLightedUpPegs() {
-        physicsEngine.gameObjListSatisfy(lambdaFunc: {
-            !$0.isHit || !(
-                $0.name == GameObject.Types.bluePeg.rawValue ||
-                $0.name == GameObject.Types.orangePeg.rawValue
-            )
-        })
+        for gameObj in gameObjList where gameObj.isHit {
+            if gameObj.name == GameObject.Types.bluePeg.rawValue ||
+                gameObj.name == GameObject.Types.orangePeg.rawValue {
+                if gameObj.opacity >= 0 {
+                    gameObj.opacity -= RATE_OF_FADING
+                } else {
+                    gameObjList = gameObjList.filter { $0 !== gameObj }
+                }
+            }
+        }
     }
 
     private func removeObjOutsideBoundaries(bounds: CGRect) {
-        let addiLength = 200.0
         // Remove pegs only a certain amount away from the bounds
         let outerBounds = CGRect(
-            x: bounds.minX - addiLength,
-            y: bounds.minY - addiLength,
-            width: bounds.width + 2 * addiLength,
-            height: bounds.height + 2 * addiLength
+            x: bounds.minX - ADDITIONAL_WALL_LENGTH,
+            y: bounds.minY - ADDITIONAL_WALL_LENGTH,
+            width: bounds.width + 2 * ADDITIONAL_WALL_LENGTH,
+            height: bounds.height + 2 * ADDITIONAL_WALL_LENGTH
         )
 
-        physicsEngine.gameObjListSatisfy(lambdaFunc: {
+        gameObjList = gameObjList.filter {
             outerBounds.contains($0.physicsBody.boundingBox)
-        })
+        }
     }
 }
