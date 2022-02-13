@@ -18,8 +18,6 @@ protocol PhysicsBody {
 
     var isDynamic: Bool { get }
 
-//    var isDynamic: Bool { get set }
-
     // Detect collisions and overlaps
     func isIntersecting(with physicsBody: PhysicsBody) -> Bool
     func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool

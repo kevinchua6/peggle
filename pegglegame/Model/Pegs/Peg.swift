@@ -8,7 +8,7 @@
 import CoreGraphics
 
 class Peg: GameObject {
-    let defaultRadius = 20.0
+    private let defaultRadius = 20.0
 
     init(coordinates: CGPoint, radius: Double, imageName: String, imageNameHit: String, name: String) {
         super.init(

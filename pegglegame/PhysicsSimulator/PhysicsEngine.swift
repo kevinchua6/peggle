@@ -10,6 +10,7 @@ import Combine
 
 class PhysicsEngine: ObservableObject {
 
+    // TODO: make it a PhysicsBody instead
     var gameObjList: [GameObject]
 
     init(gameObjList: [GameObject]) {
@@ -28,7 +29,8 @@ class PhysicsEngine: ObservableObject {
                 name: gameobject.name,
                 imageName: gameobject.imageName,
                 imageNameHit: gameobject.imageNameHit,
-                isHit: gameobject.isHit
+                isHit: gameobject.isHit,
+                opacity: gameobject.opacity
             )
 
             res.append(newGameObj)
@@ -49,21 +51,38 @@ class PhysicsEngine: ObservableObject {
                 }
             }
         }
-
+        
         // Update the coordinates to prevent overlapping
         for dynamicObject in res.filter({ $0.physicsBody.isDynamic }) {
             dynamicObject.physicsBody.preventOverlapBodies()
         }
 
+        res = fadeOutHitPegs(gameObjList: res)
+        
         gameObjList = res
         return res
     }
+    
+    // TODO: remove
+    func fadeOutHitPegs(gameObjList: [GameObject]) -> [GameObject] {
+        var res: [GameObject] = []
+        for gameObj in gameObjList {
+            if gameObj.isHit {
+                if gameObj.name == GameObject.Types.bluePeg.rawValue && gameObj.opacity >= 0 {
+                    gameObj.opacity -= 0.005
+                }
+            }
+            res.append(gameObj)
+        }
+        return res
+    }
+    
 
     func gameObjListSatisfy(lambdaFunc: (GameObject) -> Bool) {
         gameObjList = gameObjList.filter { lambdaFunc($0) }
     }
 
-    func gameObjListSatisfyReturn(lambdaFunc: (GameObject) -> Bool) -> [GameObject] {
+    func gameObjListFilter(lambdaFunc: (GameObject) -> Bool) -> [GameObject] {
         gameObjList.filter { lambdaFunc($0) }
     }
 
@@ -75,9 +94,4 @@ class PhysicsEngine: ObservableObject {
         gameObjList.append(obj)
     }
 
-    func setOpacityOfObj(gameObj: GameObject, opacity: Double) {
-        gameObjList = gameObjList.filter { $0 !== gameObj }
-        gameObj.opacity = opacity
-        gameObjList.append(gameObj)
-    }
 }

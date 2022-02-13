@@ -23,7 +23,7 @@ class GameEngine {
     func update() -> [GameObject] {
         if let myBounds = self.bounds {
             removeObjOutsideBoundaries(bounds: myBounds)
-            removeLightedUpPegs(bounds: myBounds)
+//            removeLightedUpPegsConditionally(bounds: myBounds)
         }
 
         return self.physicsEngine.update(deltaTime: CGFloat(1 / framesPerSecond))
@@ -41,21 +41,27 @@ class GameEngine {
         self.bounds = bounds
     }
 
-    private func removeLightedUpPegs(bounds: CGRect) {
-        guard let ball = physicsEngine.gameObjListSatisfyReturn(
-            lambdaFunc: {
-                $0.name == GameObject.Types.ball.rawValue
-            }).first else {
-            physicsEngine.gameObjListSatisfy(lambdaFunc: {
-                !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
-            })
+    private func removeLightedUpPegsConditionally(bounds: CGRect) {
+        guard let ball = physicsEngine.gameObjListFilter(lambdaFunc: {
+            $0.name == GameObject.Types.ball.rawValue
+        }).first else {
+            removeLightedUpPegs()
             return
         }
-        if ball.physicsBody.velocity <= 3 {
-            physicsEngine.gameObjListSatisfy(lambdaFunc: {
-                !$0.isHit || !($0.imageName == BluePeg.imageName || $0.imageName == OrangePeg.imageName)
-            })
+
+        let minVelocity = 5.0
+        if ball.physicsBody.velocity <= minVelocity {
+            removeLightedUpPegs()
         }
+    }
+
+    private func removeLightedUpPegs() {
+        physicsEngine.gameObjListSatisfy(lambdaFunc: {
+            !$0.isHit || !(
+                $0.name == GameObject.Types.bluePeg.rawValue ||
+                $0.name == GameObject.Types.orangePeg.rawValue
+            )
+        })
     }
 
     private func removeObjOutsideBoundaries(bounds: CGRect) {

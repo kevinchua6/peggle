@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct BottomBarView: View {
+    let SIDE_PADDING = 8.0
+    let SELECTED_OPACITY = 1.0
+    let NOT_SELECTED_OPACITY = 0.5
+    let PEG_BUTTON_LENGTH = 100.0
+
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
 
     @State private var showLoadPopover = false
@@ -45,7 +50,7 @@ struct BottomBarView: View {
                 Text("START")
             }
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, SIDE_PADDING)
     }
 
     private func generateSelectionBarView() -> some View {
@@ -55,7 +60,7 @@ struct BottomBarView: View {
             Spacer()
             generateDeleteButtonView()
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, SIDE_PADDING)
     }
 
     @ViewBuilder
@@ -85,8 +90,8 @@ struct BottomBarView: View {
         }, label: {
             Image("DeleteButton")
                 .resizable()
-                .frame(width: 100, height: 100)
-                .opacity(levelDesignerViewModel.selectionMode == .delete ? 1 : 0.5)
+                .frame(width: PEG_BUTTON_LENGTH, height: PEG_BUTTON_LENGTH)
+                .opacity(levelDesignerViewModel.selectionMode == .delete ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
         })
     }
 
@@ -98,8 +103,8 @@ struct BottomBarView: View {
         }, label: {
             Image(imageName)
                 .resizable()
-                .frame(width: 100, height: 100)
-                .opacity(levelDesignerViewModel.selectionMode == selection ? 1 : 0.5)
+                .frame(width: PEG_BUTTON_LENGTH, height: PEG_BUTTON_LENGTH)
+                .opacity(levelDesignerViewModel.selectionMode == selection ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
         })
     }
 

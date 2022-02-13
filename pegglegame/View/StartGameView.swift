@@ -10,9 +10,11 @@ import SwiftUI
 struct StartGameView: View {
     @ObservedObject var startGameViewModel: StartGameViewModel
 
-    var score = 0
+    @State var score = 0
     var noBluePegHit = 0
     var noOrangePegHit = 0
+    
+    // Initial positions
     @State var gCannonPos = CGPoint(x: 0.0, y: 0.0)
     @State var gesturePos = CGPoint(x: 0.0, y: 0.0)
 
@@ -43,10 +45,6 @@ struct StartGameView: View {
                 )
                         )
             )
-            .gesture(DragGesture(minimumDistance: 0)
-                        .onEnded({ value in
-                            print(value)
-            }))
             .position(position)
     }
 

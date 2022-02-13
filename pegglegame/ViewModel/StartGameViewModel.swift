@@ -19,6 +19,7 @@ class StartGameViewModel: ObservableObject {
 
     let MAX_ANGLE = Double.pi / 2
     let INITIAL_BALL_SPEED = 1_000.0
+    let WALL_THICKNESS = 2.0
 
     init(objArr: [GameObject]) {
         gameRenderer = GameRenderer(gameObjList: objArr)
@@ -34,28 +35,26 @@ class StartGameViewModel: ObservableObject {
     }
 
     func createWalls(bounds: CGRect) {
-        let thickness = 2.0
-
         gameRenderer.addObj(
             obj: Wall(
-                coordinates: CGPoint(x: -thickness, y: 0),
-                width: thickness,
+                coordinates: CGPoint(x: -WALL_THICKNESS, y: 0),
+                width: WALL_THICKNESS,
                 height: bounds.height,
                 name: "leftWall"
                      )
         )
         gameRenderer.addObj(
-            obj: Wall(coordinates: CGPoint(x: bounds.maxX + thickness, y: 0),
-                      width: thickness,
+            obj: Wall(coordinates: CGPoint(x: bounds.maxX + WALL_THICKNESS, y: 0),
+                      width: WALL_THICKNESS,
                       height: bounds.height,
                       name: "rightWall"
                      )
         )
         gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0,
-                                                           y: -thickness
+                                                           y: -WALL_THICKNESS
                                                           ),
                                       width: bounds.width,
-                                      height: thickness,
+                                      height: WALL_THICKNESS,
                                       name: "topWall"
                                      )
         )

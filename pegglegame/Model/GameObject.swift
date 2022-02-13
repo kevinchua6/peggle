@@ -14,7 +14,9 @@ class GameObject: Identifiable {
         case bluePeg, orangePeg, ball, wall
     }
 
+    // Allow easy identification of GameObjects
     let name: String
+    
     var physicsBody: PhysicsBody
     var opacity: Double
     var imageName: String?
@@ -30,9 +32,6 @@ class GameObject: Identifiable {
 
     var isHit: Bool
 
-    // Takes in a function that takes in what collides with it and returns
-    var onCollide: (GameObject)?
-
     init(
         physicsBody: PhysicsBody,
         name: String = "",
@@ -46,7 +45,6 @@ class GameObject: Identifiable {
         self.physicsBody = physicsBody
         self.imageName = imageName
         self.imageNameHit = imageNameHit
-        self.onCollide = onCollide
         self.isHit = isHit
         self.opacity = opacity
 

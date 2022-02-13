@@ -9,6 +9,9 @@ import SwiftUI
 import CoreGraphics
 
 struct GameBoardView: View {
+    let OBJECT_LENGTH = 40.0
+    let PLACEHOLDER_OPACITY = 0.3
+
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
     // Check changes in keyboard to adjust pegs accordingly
     @ObservedObject var keyboardResponder = KeyboardResponder()
@@ -65,7 +68,7 @@ struct GameBoardView: View {
         if let gameObjectImage = gameObject.imageName {
             Image(gameObjectImage)
                 .resizable()
-                .frame(width: 40, height: 40)
+                .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
                 // we want it to adjust by the keyboard amount
                 .position(gameObject.physicsBody.coordinates)
                 .offset(y: -keyboardResponder.currentHeight * 0.9)
@@ -132,15 +135,15 @@ struct GameBoardView: View {
                     Image(placeholderObj.imageName)
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: 40, height: 40)
-                        .opacity(0.3)
+                        .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
+                        .opacity(PLACEHOLDER_OPACITY)
                         .position(placeholderObj.object.physicsBody.coordinates)
                         .foregroundColor(.red)
                 }
                 Image(placeholderObj.imageName)
                     .resizable()
-                    .frame(width: 40, height: 40)
-                    .opacity(0.3)
+                    .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
+                    .opacity(PLACEHOLDER_OPACITY)
                     .position(placeholderObj.object.physicsBody.coordinates)
             }
         }
