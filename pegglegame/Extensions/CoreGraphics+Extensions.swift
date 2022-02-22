@@ -52,6 +52,11 @@ extension CGVector {
     static func <= (lhs: CGVector, rhs: CGFloat) -> Bool {
         sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) <= rhs
     }
+    
+    // Check if a length of a vector is less than a value
+    static func > (lhs: CGVector, rhs: CGFloat) -> Bool {
+        sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) > rhs
+    }
 
     static func += (lhs: inout CGPoint, rhs: CGVector) {
         // This is done to avoid swiftlint shorthand_operator violation
