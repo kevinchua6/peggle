@@ -32,6 +32,7 @@ struct StartGameView: View {
             }
             generateBottomBarView()
         }.navigationBarTitleDisplayMode(.inline)
+
     }
 
     private func generateCannonView(position: CGPoint) -> some View {
@@ -54,16 +55,18 @@ struct StartGameView: View {
             let bounds = geometry.frame(in: .local)
             let cannonLoc = CGPoint(x: bounds.width / 2, y: bounds.height / 12)
             ZStack(alignment: .leading) {
-                Image("Background")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea(.keyboard)
-
                 ForEach(startGameViewModel.objArr) { gameObject in
                     generateGameObjectView(gameObject: gameObject, bounds: bounds)
                 }
                 generateCannonView(position: cannonLoc)
             }
+            .background(
+                Image("Background")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea(.keyboard),
+                alignment: .leading
+            )
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
@@ -88,12 +91,16 @@ struct StartGameView: View {
                     .frame(width: 40, height: 40)
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
+//                    .transition(AnyTransition.opacity
+//                                    .animation(.easeInOut(duration: 0.7)))
             } else {
                 Image(gameObjectImageHit)
                     .resizable()
                     .frame(width: 40, height: 40)
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
+                    .transition(AnyTransition.opacity
+                                    .animation(.easeOut(duration: 0.7)))
             }
         }
     }

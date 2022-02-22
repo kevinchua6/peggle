@@ -18,6 +18,8 @@ class GameObject: Identifiable {
     let name: String
 
     var physicsBody: PhysicsBody
+    
+    
     var opacity: Double
     var imageName: String?
     var imageNameHit: String?

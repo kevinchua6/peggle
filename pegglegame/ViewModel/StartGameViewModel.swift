@@ -29,8 +29,8 @@ class StartGameViewModel: ObservableObject {
 
         gameRenderer = GameRenderer(objArr: objArr)
 
-        cancellable = gameRenderer.publisher.sink { objArr in
-            self.objArr = objArr
+        cancellable = gameRenderer.publisher.sink { [weak self] objArr in
+            self?.objArr = objArr
         }
     }
 

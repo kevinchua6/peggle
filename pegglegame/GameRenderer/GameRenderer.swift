@@ -35,7 +35,6 @@ class GameRenderer {
 
     func stop() {
         displaylink.invalidate()
-        displaylink.remove(from: .current, forMode: .default)
         displaylink = nil
     }
 

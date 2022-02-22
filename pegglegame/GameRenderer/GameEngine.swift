@@ -111,11 +111,7 @@ class GameEngine {
         for gameObj in objArr where gameObj.isHit {
             if gameObj.name == GameObject.Types.bluePeg.rawValue ||
                 gameObj.name == GameObject.Types.orangePeg.rawValue {
-                if gameObj.opacity >= 0 {
-                    gameObj.opacity -= RATE_OF_FADING
-                } else {
                     objArr = objArr.filter { $0 !== gameObj }
-                }
             }
         }
     }
