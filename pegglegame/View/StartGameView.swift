@@ -91,8 +91,6 @@ struct StartGameView: View {
                     .frame(width: 40, height: 40)
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
-//                    .transition(AnyTransition.opacity
-//                                    .animation(.easeInOut(duration: 0.7)))
             } else {
                 Image(gameObjectImageHit)
                     .resizable()
@@ -100,7 +98,7 @@ struct StartGameView: View {
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
                     .transition(AnyTransition.opacity
-                                    .animation(.easeOut(duration: 0.7)))
+                                    .animation(.easeOut(duration: 0.3)))
             }
         }
     }

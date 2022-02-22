@@ -24,8 +24,7 @@ class Ball: GameObject {
                 hasGravity: true
             ),
             name: name,
-            imageName: Ball.imageName,
-            imageNameHit: Ball.imageName
+            imageName: Ball.imageName
         )
     }
 }

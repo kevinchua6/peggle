@@ -58,7 +58,9 @@ class GameEngine {
                     physicsBody: gameObj.physicsBody,
                     physicsBodyArr: objArr.map { $0.physicsBody },
                     deltaTime: CGFloat(1 / framesPerSecond))
-            if isHit {
+            
+            if (gameObj.name == GameObject.Types.bluePeg.rawValue ||
+                gameObj.name == GameObject.Types.orangePeg.rawValue) && isHit {
                 gameObj.isHit = isHit
             }
         }
