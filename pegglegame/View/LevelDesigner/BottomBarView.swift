@@ -70,14 +70,18 @@ struct BottomBarView: View {
                 .font(.title)
                 .multilineTextAlignment(.center)
         } else {
-            List {
-                ForEach(levelDesignerViewModel.boardList.toSortedArray(), id: \.name) { board in
-                    Button(action: {
-                        levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
-                        showLoadPopover = false
-                    }, label: {
-                        Text(board.name)
-                    })
+            VStack {
+                Text("Select a level:")
+                    .font(.title)
+                List {
+                    ForEach(levelDesignerViewModel.boardList.toSortedArray(), id: \.name) { board in
+                        Button(action: {
+                            levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
+                            showLoadPopover = false
+                        }, label: {
+                            Text(board.name)
+                        })
+                    }
                 }
             }
         }

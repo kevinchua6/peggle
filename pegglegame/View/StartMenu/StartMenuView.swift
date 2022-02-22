@@ -19,19 +19,14 @@ struct StartMenuView: View {
             .background(
                 AngularGradient(gradient: Gradient(colors: [.green, .cyan, .green, .yellow, .green]), center: .center)
             )
-
         }
-
         .navigationViewStyle(StackNavigationViewStyle())
-
-        
     }
-
     
     private func generateStartButtonView() -> some View {
         VStack(spacing: 40) {
             NavigationLink(destination: LazyView {
-                LevelDesignerView(levelDesignerViewModel: LevelDesignerViewModel())
+                SelectLevelView(selectLevelViewModel: SelectLevelViewModel())
             }) {
                 Text("START GAME")
                     .font(.title)

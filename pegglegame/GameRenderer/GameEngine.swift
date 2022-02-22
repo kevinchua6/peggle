@@ -20,6 +20,9 @@ class GameEngine {
     private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
     
+    private let MIN_VELOCITY = 20.0
+    private let REMOVE_BALL_INTERVAL = 2.0
+    
     private weak var timer: Timer?
 
     var objArr: [GameObject]
@@ -97,10 +100,9 @@ class GameEngine {
             return
         }
 
-        let minVelocity = 20.0
-        if ball.physicsBody.velocity <= minVelocity {
+        if ball.physicsBody.velocity <= MIN_VELOCITY {
             if timer == nil || !(timer?.isValid ?? true) {
-                timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { [self] _ in
+                timer = Timer.scheduledTimer(withTimeInterval: REMOVE_BALL_INTERVAL, repeats: false, block: { [self] _ in
                     self.removeLightedUpPegs()
                 })
             }
