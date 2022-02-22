@@ -21,7 +21,7 @@ struct GameBoardView: View {
     var body: some View {
         GeometryReader { geometry in
             let bounds = geometry.frame(in: .local)
-            ZStack {
+            ZStack(alignment: .leading) {
                 Image("Background")
                     .resizable()
                     .scaledToFill()

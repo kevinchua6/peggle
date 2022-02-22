@@ -32,7 +32,6 @@ struct StartGameView: View {
             }
             generateBottomBarView()
         }.navigationBarTitleDisplayMode(.inline)
-
     }
 
     private func generateCannonView(position: CGPoint) -> some View {

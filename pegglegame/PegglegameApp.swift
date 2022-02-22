@@ -10,7 +10,7 @@ import SwiftUI
 struct PegglegameApp: App {
     var body: some Scene {
         WindowGroup {
-            LevelDesignerView(levelDesignerViewModel: LevelDesignerViewModel())
+            StartMenuView()
         }
     }
 }

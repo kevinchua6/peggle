@@ -21,8 +21,7 @@ struct LevelDesignerView: View {
         )
 
     var body: some View {
-        NavigationView {
-            VStack {
+        VStack(alignment: .leading) {
                 GameBoardView(
                     levelDesignerViewModel: levelDesignerViewModel,
                     placeholderObj: placeholderObj
@@ -40,9 +39,7 @@ struct LevelDesignerView: View {
                     message: Text(levelDesignerViewModel.alert.message)
                 )
             }
-            .navigationBarHidden(true)
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
