@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import Combine
 
 class LevelDesignerViewModel: ObservableObject {
     enum PegColor: String {
@@ -22,6 +23,14 @@ class LevelDesignerViewModel: ObservableObject {
         var title: String
         var message: String
     }
+    
+    @Published var placeholderObj =
+        PlaceholderObj(
+            imageName: BluePeg.imageName,
+            object: BluePeg(coordinates: CGPoint(x: 0, y: 0),
+                            name: "placeholder"),
+            isVisible: false
+        )
 
     @Published var alert = AlertBox(visible: false, title: "", message: "")
 
