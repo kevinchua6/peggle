@@ -40,8 +40,9 @@ struct StartGameView: View {
             .frame(width: 90, height: 90)
             .rotationEffect(
                 .radians(Double(
-                    startGameViewModel.getCannonAngle(cannonLoc: position, gestureLoc: self.gesturePos
-                                                     )
+                    startGameViewModel.getCannonAngle(
+                        cannonLoc: position, gestureLoc: self.gesturePos
+                    )
                 )
                         )
             )

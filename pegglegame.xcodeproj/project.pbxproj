@@ -27,6 +27,7 @@
 		6FB8011027A29BC300B82496 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8010F27A29BC300B82496 /* Board.swift */; };
 		6FB8011227A29D2000B82496 /* EncodableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8011127A29D1F00B82496 /* EncodableObject.swift */; };
 		6FBA65D5279CCEB800F32DB4 /* PlaceholderObj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */; };
+		6FC1677C27B95ED50068B726 /* pegglegameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC1677B27B95ED50068B726 /* pegglegameTests.swift */; };
 		6FC3CFA127B80A6A001FC7CC /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC3CFA027B80A6A001FC7CC /* GameBoardView.swift */; };
 		6FC3CFA327B80DA6001FC7CC /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC3CFA227B80DA6001FC7CC /* BottomBarView.swift */; };
 		6FD6FF75279955DD0050141E /* LevelDesignerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FD6FF74279955DD0050141E /* LevelDesignerView.swift */; };
@@ -37,18 +38,10 @@
 		6FDBB80C27AC37670014463B /* LazyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDBB80B27AC37670014463B /* LazyView.swift */; };
 		6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C36B27A2EC5F0036BE11 /* PersistenceUtils.swift */; };
 		6FF0C36E27A368070036BE11 /* BoardList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C36D27A368070036BE11 /* BoardList.swift */; };
-		6FF0C37427A3EEC90036BE11 /* PhysicsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6F678448279658520086CC9A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6F67842F2796584F0086CC9A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6F6784362796584F0086CC9A;
-			remoteInfo = pegglegame;
-		};
-		6F678452279658520086CC9A /* PBXContainerItemProxy */ = {
+		6FC1677D27B95ED50068B726 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6F67842F2796584F0086CC9A /* Project object */;
 			proxyType = 1;
@@ -71,8 +64,6 @@
 		6F67843A2796584F0086CC9A /* PegglegameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegglegameApp.swift; sourceTree = "<group>"; };
 		6F67843E279658510086CC9A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6F678441279658510086CC9A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		6F678447279658520086CC9A /* pegglegameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pegglegameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6F678451279658520086CC9A /* pegglegameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pegglegameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CoreGraphics+Extensions.swift"; path = "Pegglegame/Extensions/CoreGraphics+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsEngineUtils.swift; path = Pegglegame/PhysicsSimulator/PhysicsEngineUtils.swift; sourceTree = SOURCE_ROOT; };
 		6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Rectangle.swift; path = Pegglegame/PhysicsSimulator/Rectangle.swift; sourceTree = SOURCE_ROOT; };
@@ -81,6 +72,8 @@
 		6FB8010F27A29BC300B82496 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		6FB8011127A29D1F00B82496 /* EncodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableObject.swift; sourceTree = "<group>"; };
 		6FBA65D4279CCEB800F32DB4 /* PlaceholderObj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderObj.swift; sourceTree = "<group>"; };
+		6FC1677927B95ED50068B726 /* pegglegameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pegglegameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6FC1677B27B95ED50068B726 /* pegglegameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pegglegameTests.swift; sourceTree = "<group>"; };
 		6FC3CFA027B80A6A001FC7CC /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameBoardView.swift; path = Pegglegame/View/LevelDesigner/GameBoardView.swift; sourceTree = SOURCE_ROOT; };
 		6FC3CFA227B80DA6001FC7CC /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BottomBarView.swift; path = Pegglegame/View/LevelDesigner/BottomBarView.swift; sourceTree = SOURCE_ROOT; };
 		6FD6FF74279955DD0050141E /* LevelDesignerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerView.swift; sourceTree = "<group>"; };
@@ -91,7 +84,6 @@
 		6FDBB80B27AC37670014463B /* LazyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LazyView.swift; path = Pegglegame/LazyView.swift; sourceTree = SOURCE_ROOT; };
 		6FF0C36B27A2EC5F0036BE11 /* PersistenceUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceUtils.swift; sourceTree = "<group>"; };
 		6FF0C36D27A368070036BE11 /* BoardList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardList.swift; sourceTree = "<group>"; };
-		6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,14 +94,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F678444279658520086CC9A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F67844E279658520086CC9A /* Frameworks */ = {
+		6FC1677627B95ED50068B726 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -144,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				6F6784392796584F0086CC9A /* pegglegame */,
-				6F67844A279658520086CC9A /* pegglegameTests */,
+				6FC1677A27B95ED50068B726 /* pegglegameTests */,
 				6F6784382796584F0086CC9A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -153,8 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				6F6784372796584F0086CC9A /* pegglegame.app */,
-				6F678447279658520086CC9A /* pegglegameTests.xctest */,
-				6F678451279658520086CC9A /* pegglegameUITests.xctest */,
+				6FC1677927B95ED50068B726 /* pegglegameTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,14 +169,6 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		6F67844A279658520086CC9A /* pegglegameTests */ = {
-			isa = PBXGroup;
-			children = (
-				6FF0C37327A3EEC90036BE11 /* PhysicsTests.swift */,
-			);
-			path = pegglegameTests;
-			sourceTree = "<group>";
-		};
 		6F8DC7A727B50AA100B7D01A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +196,14 @@
 				6FF0C36D27A368070036BE11 /* BoardList.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		6FC1677A27B95ED50068B726 /* pegglegameTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FC1677B27B95ED50068B726 /* pegglegameTests.swift */,
+			);
+			path = pegglegameTests;
 			sourceTree = "<group>";
 		};
 		6FC3CF9F27B80A51001FC7CC /* LevelDesigner */ = {
@@ -286,41 +270,23 @@
 			productReference = 6F6784372796584F0086CC9A /* pegglegame.app */;
 			productType = "com.apple.product-type.application";
 		};
-		6F678446279658520086CC9A /* pegglegameTests */ = {
+		6FC1677827B95ED50068B726 /* pegglegameTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6F67845E279658520086CC9A /* Build configuration list for PBXNativeTarget "pegglegameTests" */;
+			buildConfigurationList = 6FC1677F27B95ED50068B726 /* Build configuration list for PBXNativeTarget "pegglegameTests" */;
 			buildPhases = (
-				6F678443279658520086CC9A /* Sources */,
-				6F678444279658520086CC9A /* Frameworks */,
-				6F678445279658520086CC9A /* Resources */,
+				6FC1677527B95ED50068B726 /* Sources */,
+				6FC1677627B95ED50068B726 /* Frameworks */,
+				6FC1677727B95ED50068B726 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6F678449279658520086CC9A /* PBXTargetDependency */,
+				6FC1677E27B95ED50068B726 /* PBXTargetDependency */,
 			);
 			name = pegglegameTests;
 			productName = pegglegameTests;
-			productReference = 6F678447279658520086CC9A /* pegglegameTests.xctest */;
+			productReference = 6FC1677927B95ED50068B726 /* pegglegameTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		6F678450279658520086CC9A /* pegglegameUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F678461279658520086CC9A /* Build configuration list for PBXNativeTarget "pegglegameUITests" */;
-			buildPhases = (
-				6F67844D279658520086CC9A /* Sources */,
-				6F67844E279658520086CC9A /* Frameworks */,
-				6F67844F279658520086CC9A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				6F678453279658520086CC9A /* PBXTargetDependency */,
-			);
-			name = pegglegameUITests;
-			productName = pegglegameUITests;
-			productReference = 6F678451279658520086CC9A /* pegglegameUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -335,17 +301,13 @@
 					6F6784362796584F0086CC9A = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
-					6F678446279658520086CC9A = {
-						CreatedOnToolsVersion = 13.2.1;
-						TestTargetID = 6F6784362796584F0086CC9A;
-					};
-					6F678450279658520086CC9A = {
+					6FC1677827B95ED50068B726 = {
 						CreatedOnToolsVersion = 13.2.1;
 						TestTargetID = 6F6784362796584F0086CC9A;
 					};
 				};
 			};
-			buildConfigurationList = 6F6784322796584F0086CC9A /* Build configuration list for PBXProject "Pegglegame" */;
+			buildConfigurationList = 6F6784322796584F0086CC9A /* Build configuration list for PBXProject "pegglegame" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -361,8 +323,7 @@
 			projectRoot = "";
 			targets = (
 				6F6784362796584F0086CC9A /* pegglegame */,
-				6F678446279658520086CC9A /* pegglegameTests */,
-				6F678450279658520086CC9A /* pegglegameUITests */,
+				6FC1677827B95ED50068B726 /* pegglegameTests */,
 			);
 		};
 /* End PBXProject section */
@@ -377,14 +338,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F678445279658520086CC9A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F67844F279658520086CC9A /* Resources */ = {
+		6FC1677727B95ED50068B726 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -450,33 +404,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F678443279658520086CC9A /* Sources */ = {
+		6FC1677527B95ED50068B726 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FF0C37427A3EEC90036BE11 /* PhysicsTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6F67844D279658520086CC9A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				6FC1677C27B95ED50068B726 /* pegglegameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6F678449279658520086CC9A /* PBXTargetDependency */ = {
+		6FC1677E27B95ED50068B726 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6F6784362796584F0086CC9A /* pegglegame */;
-			targetProxy = 6F678448279658520086CC9A /* PBXContainerItemProxy */;
-		};
-		6F678453279658520086CC9A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6F6784362796584F0086CC9A /* pegglegame */;
-			targetProxy = 6F678452279658520086CC9A /* PBXContainerItemProxy */;
+			targetProxy = 6FC1677D27B95ED50068B726 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -536,6 +478,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACH_O_TYPE = mh_execute;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				NEW_SETTING = "";
@@ -595,6 +538,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACH_O_TYPE = mh_execute;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				NEW_SETTING = "";
@@ -627,7 +571,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegame;
+				PRODUCT_BUNDLE_IDENTIFIER = kevinchua.pegglegame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -657,7 +601,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegame;
+				PRODUCT_BUNDLE_IDENTIFIER = kevinchua.pegglegame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -665,16 +609,15 @@
 			};
 			name = Release;
 		};
-		6F67845F279658520086CC9A /* Debug */ = {
+		6FC1678027B95ED50068B726 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HN6GGKL69G;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACH_O_TYPE = mh_bundle;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegameTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -685,16 +628,15 @@
 			};
 			name = Debug;
 		};
-		6F678460279658520086CC9A /* Release */ = {
+		6FC1678127B95ED50068B726 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HN6GGKL69G;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MACH_O_TYPE = mh_bundle;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegameTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -702,49 +644,13 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pegglegame.app/pegglegame";
-			};
-			name = Release;
-		};
-		6F678462279658520086CC9A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HN6GGKL69G;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegameUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = pegglegame;
-			};
-			name = Debug;
-		};
-		6F678463279658520086CC9A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = HN6GGKL69G;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kevin.pegglegameUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = pegglegame;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6F6784322796584F0086CC9A /* Build configuration list for PBXProject "Pegglegame" */ = {
+		6F6784322796584F0086CC9A /* Build configuration list for PBXProject "pegglegame" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6F678459279658520086CC9A /* Debug */,
@@ -762,20 +668,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6F67845E279658520086CC9A /* Build configuration list for PBXNativeTarget "pegglegameTests" */ = {
+		6FC1677F27B95ED50068B726 /* Build configuration list for PBXNativeTarget "pegglegameTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6F67845F279658520086CC9A /* Debug */,
-				6F678460279658520086CC9A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6F678461279658520086CC9A /* Build configuration list for PBXNativeTarget "pegglegameUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6F678462279658520086CC9A /* Debug */,
-				6F678463279658520086CC9A /* Release */,
+				6FC1678027B95ED50068B726 /* Debug */,
+				6FC1678127B95ED50068B726 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

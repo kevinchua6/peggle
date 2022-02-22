@@ -5,7 +5,6 @@
 //  Created by kevin chua on 2/2/22.
 //
 
-import Foundation
 import CoreGraphics
 import Combine
 
@@ -28,7 +27,7 @@ class StartGameViewModel: ObservableObject {
             gameObj.opacity = 1.0
         }
 
-        gameRenderer = GameRenderer(gameObjList: objArr )
+        gameRenderer = GameRenderer(objArr: objArr)
 
         cancellable = gameRenderer.publisher.sink { objArr in
             self.objArr = objArr
@@ -45,14 +44,14 @@ class StartGameViewModel: ObservableObject {
             obj: Wall(
                 coordinates: CGPoint(x: -WALL_THICKNESS, y: 0),
                 width: WALL_THICKNESS,
-                height: bounds.height,
+                height: bounds.height * 1.5,
                 name: "leftWall"
                      )
         )
         gameRenderer.addObj(
             obj: Wall(coordinates: CGPoint(x: bounds.maxX + WALL_THICKNESS, y: 0),
                       width: WALL_THICKNESS,
-                      height: bounds.height,
+                      height: bounds.height * 1.5,
                       name: "rightWall"
                      )
         )

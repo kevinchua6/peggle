@@ -75,7 +75,7 @@ struct Rectangle: PhysicsBody {
         }
 
         // Get resultant force
-        let resultantForce = currForces.reduce(CGVector.zero, +)
+        let resultantForce = currForces.reduce(CGVector.zero, { CGVector(dx: $0.dx + $1.dx, dy: $0.dy + $1.dy) })
         let netAccel = resultantForce / mass
 
         // Next position
@@ -141,31 +141,6 @@ extension Rectangle {
             return
         }
     }
-
-//    mutating func handleCollision(with Square: Rectangle) {
-//        // The smaller the distance between the two, the larger the force vector
-//        let distance = PhysicsEngineUtils.CGPointDistance(
-//            from: self.coordinates, to: Square.coordinates
-//        )
-//
-//        let totalWidth = self.radius + Square.radius
-//
-//        let collisionUnitVector = (self.coordinates - Square.coordinates) / distance
-//
-//        let relativeVelocity = self.velocity - Square.velocity
-//
-//        let minRestitution = min(self.restitution, Square.restitution)
-//
-//        let speed = abs(relativeVelocity * collisionUnitVector) * minRestitution
-//
-//        self.velocity = collisionUnitVector * speed
-//
-//        // When collide, shift the position back to prevent overlapping
-//        let difference: CGFloat = totalWidth - distance + 1
-//        let differenceVector: CGVector = collisionUnitVector * difference
-//
-//        self.coordinates += differenceVector
-//    }
 
     mutating func preventOverlapBodies() {
         self.coordinates = self.nextCoordinates

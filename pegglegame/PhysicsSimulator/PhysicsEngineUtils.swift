@@ -29,4 +29,8 @@ class PhysicsEngineUtils {
     static func getHorizAcuteAngle(from source: CGPoint, to dest: CGPoint) -> CGFloat {
         atan((dest.y - source.y) / (source.x - dest.x))
     }
+    
+    static func dotProduct(vector1: CGVector, vector2: CGVector) -> CGFloat {
+        vector1.dx * vector2.dx + vector1.dy * vector2.dy
+    }
 }

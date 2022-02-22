@@ -42,6 +42,11 @@ extension CGVector {
     static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
         CGVector(dx: lhs.dx - rhs.dx, dy: lhs.dy - rhs.dy)
     }
+    
+    // Return negative of another vector
+    static prefix func - (lhs: CGVector) -> CGVector {
+        CGVector(dx: -lhs.dx, dy: -lhs.dy)
+    }
 
     // Check if a length of a vector is less than a value
     static func <= (lhs: CGVector, rhs: CGFloat) -> Bool {

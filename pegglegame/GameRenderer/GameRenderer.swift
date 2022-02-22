@@ -6,7 +6,6 @@
 //
 
 import Combine
-import Foundation
 import QuartzCore
 import SwiftUI
 
@@ -20,8 +19,8 @@ class GameRenderer {
     private let gameEngine: GameEngine
     private var displaylink: CADisplayLink!
 
-    init(gameObjList: [GameObject]) {
-        self.gameEngine = GameEngine(gameObjList: gameObjList)
+    init(objArr: [GameObject]) {
+        self.gameEngine = GameEngine(objArr: objArr)
         self.displaylink = CADisplayLink(target: self, selector: #selector(update))
         displaylink.add(to: .current, forMode: .default)
     }

@@ -46,7 +46,7 @@ struct Circle: PhysicsBody {
         isDynamic: Bool,
         forces: [CGVector],
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
-        restitution: CGFloat = 0.7,
+        restitution: CGFloat = 0.8,
         hasGravity: Bool = false
     ) {
         self.coordinates = coordinates
@@ -169,17 +169,17 @@ extension Circle {
         let totalWidth = self.radius + circle.radius
 
         let collisionUnitVector = (self.coordinates - circle.coordinates) / distance
-
-        let relativeVelocity = self.velocity - circle.velocity
+        
+        // find the length of the dot product of the normal and the velocity
+        // then multiply by the unit vector
+        let dotProduct = abs(PhysicsEngineUtils.dotProduct(vector1: collisionUnitVector, vector2: self.velocity))
 
         let minRestitution = min(self.restitution, circle.restitution)
 
-        let speed = abs(relativeVelocity * collisionUnitVector) * minRestitution
-
-        self.velocity = collisionUnitVector * speed
+        self.velocity = collisionUnitVector * dotProduct * minRestitution
 
         // When collide, shift the position back to prevent overlapping
-        let difference: CGFloat = totalWidth - distance + EPSILON
+        let difference: CGFloat = totalWidth - distance
         let differenceVector: CGVector = collisionUnitVector * difference
 
         self.nextCoordinates += differenceVector

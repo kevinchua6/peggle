@@ -29,8 +29,6 @@ class PhysicsEngine: ObservableObject {
             if dynamicBody.isIntersecting(with: staticBody) {
                 dynamicBody.handleCollision(with: staticBody)
                 hasCollided = true
-//                gameObject.isHit = true
-//                dynamicObject.isHit = true
             }
         }
 
@@ -48,8 +46,6 @@ class PhysicsEngine: ObservableObject {
         var dynamicBody = physicsBody
 
         dynamicBody.preventOverlapBodies()
-
-//        res = fadeOutHitPegs(gameObjList: res)
 
         return dynamicBody
     }

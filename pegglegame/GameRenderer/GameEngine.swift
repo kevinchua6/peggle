@@ -17,13 +17,13 @@ class GameEngine {
 
     private let framesPerSecond: CGFloat = 60
 
-    private let ADDITIONAL_WALL_LENGTH = 200.0
+    private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
 
-    var gameObjList: [GameObject]
+    var objArr: [GameObject]
 
-    init(gameObjList: [GameObject]) {
-        self.gameObjList = gameObjList
+    init(objArr: [GameObject]) {
+        self.objArr = objArr
         self.physicsEngine = PhysicsEngine()
     }
 
@@ -35,12 +35,12 @@ class GameEngine {
 
         simulatePhysics()
 
-        return self.gameObjList
+        return self.objArr
     }
 
     private func simulatePhysics() {
         // Update coordinates
-        for gameObj in gameObjList {
+        for gameObj in objArr {
             gameObj.physicsBody =
                 self.physicsEngine.updateCoordinates(
                     physicsBody: gameObj.physicsBody,
@@ -48,13 +48,13 @@ class GameEngine {
         }
 
         // Update dynamic bodies' velocities upon collision
-        for gameObj in gameObjList {
+        for gameObj in objArr {
             // Objects stay hit
             var isHit: Bool
             (gameObj.physicsBody, isHit) =
                 self.physicsEngine.updateVelocities(
                     physicsBody: gameObj.physicsBody,
-                    physicsBodyArr: gameObjList.map { $0.physicsBody },
+                    physicsBodyArr: objArr.map { $0.physicsBody },
                     deltaTime: CGFloat(1 / framesPerSecond))
             if isHit {
                 gameObj.isHit = isHit
@@ -62,21 +62,22 @@ class GameEngine {
         }
 
         // Update the coordinates to prevent overlapping
-        for gameObj in gameObjList {
+        for gameObj in objArr {
             gameObj.physicsBody =
                 self.physicsEngine.updatePreventOverlapping(
                     physicsBody: gameObj.physicsBody,
-                    physicsBodyArr: gameObjList.map { $0.physicsBody },
-                    deltaTime: CGFloat(1 / framesPerSecond))
+                    physicsBodyArr: objArr.map { $0.physicsBody },
+                    deltaTime: CGFloat(1 / framesPerSecond)
+                )
         }
     }
 
     func addObj(obj: GameObject) {
-        gameObjList.append(obj)
+        objArr.append(obj)
     }
 
     func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
-        gameObjList.contains(where: lambdaFunc)
+        objArr.contains(where: lambdaFunc)
     }
 
     func setBoundaries(bounds: CGRect) {
@@ -84,27 +85,27 @@ class GameEngine {
     }
 
     private func removeLightedUpPegsConditionally(bounds: CGRect) {
-        guard let ball = gameObjList.first(where: {
+        guard let ball = objArr.first(where: {
             $0.name == GameObject.Types.ball.rawValue
         }) else {
             removeLightedUpPegs()
             return
         }
 
-        let minVelocity = 3.5
+        let minVelocity = 5.0
         if ball.physicsBody.velocity <= minVelocity {
             removeLightedUpPegs()
         }
     }
 
     private func removeLightedUpPegs() {
-        for gameObj in gameObjList where gameObj.isHit {
+        for gameObj in objArr where gameObj.isHit {
             if gameObj.name == GameObject.Types.bluePeg.rawValue ||
                 gameObj.name == GameObject.Types.orangePeg.rawValue {
                 if gameObj.opacity >= 0 {
                     gameObj.opacity -= RATE_OF_FADING
                 } else {
-                    gameObjList = gameObjList.filter { $0 !== gameObj }
+                    objArr = objArr.filter { $0 !== gameObj }
                 }
             }
         }
@@ -119,8 +120,9 @@ class GameEngine {
             height: bounds.height + 2 * ADDITIONAL_WALL_LENGTH
         )
 
-        gameObjList = gameObjList.filter {
-            outerBounds.contains($0.physicsBody.boundingBox)
+        objArr = objArr.filter {
+            outerBounds.contains($0.physicsBody.boundingBox) ||
+                $0.name != GameObject.Types.ball.rawValue
         }
     }
 }
