@@ -61,7 +61,7 @@ struct GameBoardView: View {
                 
                 self.placeholderObj.isValid =
                     levelDesignerViewModel.isValidPlacement(
-                        object: self.placeholderObj.object, bounds: bounds
+                        physicsBody: self.placeholderObj.object.physicsBody, bounds: bounds
                     )
             }
             .onEnded({ value in

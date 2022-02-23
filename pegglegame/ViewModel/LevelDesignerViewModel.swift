@@ -93,11 +93,11 @@ class LevelDesignerViewModel: ObservableObject {
     }
 
     // Checks whether when you click on the board, the thing is valid
-    func isValidPlacement(object: GameObject, bounds: CGRect) -> Bool {
-        let isWithinBounds = bounds.contains(object.physicsBody.boundingBox)
+    func isValidPlacement(physicsBody: PhysicsBody, bounds: CGRect) -> Bool {
+        let isWithinBounds = bounds.contains(physicsBody.boundingBox)
         let physicsBodyArr = objArr.map { $0.physicsBody }
 
-        let isNotIntersecting = !object.physicsBody.isIntersecting(with: physicsBodyArr)
+        let isNotIntersecting = !physicsBody.isIntersecting(with: physicsBodyArr)
         return isNotIntersecting && isWithinBounds
     }
 
@@ -128,7 +128,7 @@ class LevelDesignerViewModel: ObservableObject {
         objectWillChange.send()
     }
     
-    func updateWidth(gameObject: GameObject, width: CGFloat) {
+    func updateWidth(gameObject: GameObject, width: CGFloat, bounds: CGRect) {
         guard width >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return
         }
@@ -136,7 +136,7 @@ class LevelDesignerViewModel: ObservableObject {
         var newPhysicsBody = gameObject.physicsBody
         newPhysicsBody.setWidth(width: width)
         
-        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) {
+        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) || !bounds.contains(newPhysicsBody.boundingBox) {
             return
         }
 
