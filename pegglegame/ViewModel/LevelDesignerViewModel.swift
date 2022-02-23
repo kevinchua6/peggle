@@ -148,6 +148,10 @@ class LevelDesignerViewModel: ObservableObject {
         newObjArr.append(gameObject)
         objArr = newObjArr
     }
+    
+    func showAlert(title: String, message: String) {
+        alert = AlertBox(visible: true, title: title, message: message)
+    }
 
     // Persistence functions
     func saveBoard(gameObjArr: [GameObject], as name: String) throws {
@@ -170,7 +174,7 @@ class LevelDesignerViewModel: ObservableObject {
 
             let data = try encoder.encode(decodedBoardlist)
             UserDefaults.standard.set(data, forKey: PersistenceUtils.databaseUserDefaultKey)
-            alert = AlertBox(visible: true, title: "Saved", message: "Level \(trimmedName) saved!")
+            showAlert(title: "Saved", message: "Level \(trimmedName) saved!")
         } else {
             // If no existing boardList, create one
             let newBoardList = BoardList(boards: [trimmedName: board])

@@ -69,6 +69,7 @@ struct BottomBarView: View {
             Text("No levels currently! Go save a level by pressing the SAVE button!")
                 .font(.title)
                 .multilineTextAlignment(.center)
+                .padding()
         } else {
             VStack {
                 Text("Select a level:")
@@ -79,7 +80,17 @@ struct BottomBarView: View {
                             levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
                             showLoadPopover = false
                         }, label: {
-                            Text(board.name)
+                            HStack {
+                                Text(board.name)
+                                
+                                if board.isProtected == true {
+                                    Spacer()
+                                    Image(systemName: "pencil.slash")
+                                        .font(.system(size: 30))
+                                        .foregroundColor(.black)
+                                }
+                            }
+
                         })
                     }
                 }
@@ -117,6 +128,11 @@ struct BottomBarView: View {
     }
 
     private func save() {
+        if PersistenceUtils.preloadedLevelNames.contains(levelName) {
+            levelDesignerViewModel.showAlert(title: "Error", message: "You can't override preloaded levels!")
+            return
+        }
+        
         do {
             try levelDesignerViewModel.saveBoard(gameObjArr: levelDesignerViewModel.objArr, as: levelName)
         } catch {

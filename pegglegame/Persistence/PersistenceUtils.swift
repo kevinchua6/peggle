@@ -10,8 +10,10 @@ import SwiftUI
 class PersistenceUtils {
     static let databaseUserDefaultKey = "boardList"
     
+    static let preloadedLevelNames = ["Blackrock Mountain", "Happy Land", "Big Block"]
+    
     static func createPreloadedLevel1() -> Board {
-        var board = Board(name: "Aligator Pit", objArr: [])
+        var board = Board(name: preloadedLevelNames[0], objArr: [], isProtected: true)
         
         for i in 0..<9 {
             for j in 0..<7 {
@@ -32,7 +34,7 @@ class PersistenceUtils {
     }
     
     static func createPreloadedLevel2() -> Board {
-        var board = Board(name: "Happy Land", objArr: [])
+        var board = Board(name: preloadedLevelNames[1], objArr: [], isProtected: true)
         
         for i in 0..<9 {
             board.objArr.append(
@@ -92,7 +94,7 @@ class PersistenceUtils {
     }
     
     static func createPreloadedLevel3() -> Board {
-        var board = Board(name: "Big Block", objArr: [])
+        var board = Board(name: preloadedLevelNames[2], objArr: [], isProtected: true)
         
         for i in 0..<13 {
             for j in 0..<10 {
@@ -116,11 +118,11 @@ class PersistenceUtils {
         // Decode data to object
         guard let boardList =
                 UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
-            var boardList = BoardList()
+                    var boardList = BoardList(boards: [:])
             
-            decodedBoardList.boards["preloaded1"] = createPreloadedLevel1()
-            decodedBoardList.boards["preloaded2"] = createPreloadedLevel2()
-            decodedBoardList.boards["preloaded3"] = createPreloadedLevel3()
+                    boardList.boards["preloaded1"] = createPreloadedLevel1()
+                    boardList.boards["preloaded2"] = createPreloadedLevel2()
+                    boardList.boards["preloaded3"] = createPreloadedLevel3()
 
             return BoardList(boards: [:])
         }
@@ -134,6 +136,7 @@ class PersistenceUtils {
             return decodedBoardList
         } catch {
             print(error)
+            return BoardList(boards: [:])
         }
     }
 

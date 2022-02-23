@@ -11,4 +11,5 @@ import UIKit
 struct Board: Codable {
     var name: String
     var objArr: [EncodableObject]
+    var isProtected: Bool = false
 }

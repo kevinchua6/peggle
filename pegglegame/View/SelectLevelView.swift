@@ -24,6 +24,7 @@ struct SelectLevelView: View {
             VStack {
                 Text("Select a level:")
                     .font(.title)
+                    .padding()
                 List {
                     ForEach(selectLevelViewModel.boardList.toSortedArray(), id: \.name) { board in
                         NavigationLink(destination: LazyView {
