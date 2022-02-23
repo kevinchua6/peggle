@@ -38,7 +38,8 @@ struct GameBoardView: View {
                 Image("Background")
                     .resizable()
                     .scaledToFill()
-                    .ignoresSafeArea(.keyboard)
+                    .ignoresSafeArea(.keyboard),
+                alignment: .leading
             )
             .gesture(
                 placePegGesture(bounds: bounds)
