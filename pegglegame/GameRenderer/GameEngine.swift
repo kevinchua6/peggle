@@ -20,8 +20,8 @@ class GameEngine {
     private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
     
-    private let MIN_VELOCITY = 20.0
-    private let REMOVE_BALL_INTERVAL = 2.0
+    private let MIN_VELOCITY = 50.0
+    private let REMOVE_BALL_INTERVAL = 0.8
     
     private weak var timer: Timer?
 

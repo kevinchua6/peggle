@@ -9,23 +9,132 @@ import SwiftUI
 
 class PersistenceUtils {
     static let databaseUserDefaultKey = "boardList"
+    
+    static func createPreloadedLevel1() -> Board {
+        var board = Board(name: "Aligator Pit", objArr: [])
+        
+        for i in 0..<9 {
+            for j in 0..<7 {
+                board.objArr.append(
+                    EncodableObject(
+                        xcoord: 40 + Double(i * 90),
+                        ycoord: 200 + Double(j * 100),
+                        width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        type: (i + j) % 2 == 0
+                            ? GameObject.Types.bluePeg.rawValue
+                            : GameObject.Types.orangePeg.rawValue
+                    )
+                )
+            }
+        }
+        return board
+    }
+    
+    static func createPreloadedLevel2() -> Board {
+        var board = Board(name: "Happy Land", objArr: [])
+        
+        for i in 0..<9 {
+            board.objArr.append(
+                EncodableObject(
+                    xcoord: 40 + Double(i * 90),
+                    ycoord: 80 + Double(i * 90),
+                    width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                    height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                    type: i % 2 == 0
+                        ? GameObject.Types.bluePeg.rawValue
+                        : GameObject.Types.orangePeg.rawValue
+                )
+            )
+            
+            if i == 4 {
+                board.objArr.append(
+                    EncodableObject(
+                        xcoord: 130,
+                        ycoord: 440,
+                        width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        type: i % 2 == 0
+                            ? GameObject.Types.bluePeg.rawValue
+                            : GameObject.Types.orangePeg.rawValue
+                    )
+                )
+                
+                board.objArr.append(
+                    EncodableObject(
+                        xcoord: 750,
+                        ycoord: 440,
+                        width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        type: i % 2 == 0
+                            ? GameObject.Types.bluePeg.rawValue
+                            : GameObject.Types.orangePeg.rawValue
+                    )
+                )
+                
+                continue
+            }
+            
+            board.objArr.append(
+                EncodableObject(
+                    xcoord: 40 + Double(i * 90),
+                    ycoord: 9.0 * 90.0 - Double(i * 90),
+                    width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                    height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                    type: i % 2 == 0
+                        ? GameObject.Types.bluePeg.rawValue
+                        : GameObject.Types.orangePeg.rawValue
+                )
+            )
+        }
+        
+        return board
+    }
+    
+    static func createPreloadedLevel3() -> Board {
+        var board = Board(name: "Big Block", objArr: [])
+        
+        for i in 0..<13 {
+            for j in 0..<10 {
+                board.objArr.append(
+                    EncodableObject(
+                        xcoord: 40 + Double(i * 60),
+                        ycoord: 200 + Double(j * 60),
+                        width: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        height: GameBoardView.DEFAULT_OBJ_LENGTH,
+                        type: (i + j) % 2 == 0
+                            ? GameObject.Types.bluePeg.rawValue
+                            : GameObject.Types.orangePeg.rawValue
+                    )
+                )
+            }
+        }
+        return board
+    }
 
     static func loadBoardList() -> BoardList {
         // Decode data to object
         guard let boardList =
                 UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
+            var boardList = BoardList()
+            
+            decodedBoardList.boards["preloaded1"] = createPreloadedLevel1()
+            decodedBoardList.boards["preloaded2"] = createPreloadedLevel2()
+            decodedBoardList.boards["preloaded3"] = createPreloadedLevel3()
+
             return BoardList(boards: [:])
         }
 
         do {
-            let decodedBoardList = try JSONDecoder().decode(BoardList.self, from: boardList)
+            var decodedBoardList = try JSONDecoder().decode(BoardList.self, from: boardList)
+            decodedBoardList.boards["preloaded1"] = createPreloadedLevel1()
+            decodedBoardList.boards["preloaded2"] = createPreloadedLevel2()
+            decodedBoardList.boards["preloaded3"] = createPreloadedLevel3()
 
             return decodedBoardList
         } catch {
             print(error)
         }
-
-        return BoardList(boards: [:])
     }
 
     static func encodeGameObjArrToBoard(gameObjArr: [GameObject], as name: String) -> Board {
