@@ -78,6 +78,7 @@ struct BottomBarView: View {
                     ForEach(levelDesignerViewModel.boardList.toSortedArray(), id: \.name) { board in
                         Button(action: {
                             levelDesignerViewModel.objArr = PersistenceUtils.decodeBoardToGameObjArr(board: board)
+                            levelName = board.name
                             showLoadPopover = false
                         }, label: {
                             HStack {
