@@ -13,7 +13,6 @@ class PhysicsEngine: ObservableObject {
         physicsBody.update(deltaTime: seconds)
     }
 
-    // Returns whether it has collided as well
     func updateVelocities(physicsBody: PhysicsBody,
                           physicsBodyArr: [PhysicsBody],
                           deltaTime seconds: CGFloat) -> (PhysicsBody, Bool) {

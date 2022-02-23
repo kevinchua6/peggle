@@ -41,7 +41,7 @@ struct RectangleBody: PhysicsBody {
         coordinates: CGPoint,
         width: CGFloat,
         height: CGFloat,
-        mass: CGFloat,
+        mass: CGFloat = 1.0,
         isDynamic: Bool,
         forces: [CGVector] = [],
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),

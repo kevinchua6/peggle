@@ -1,5 +1,5 @@
 //
-//  Entity.swift
+//  GameObject.swift
 //  pegglegame
 //
 //  Created by kevin chua on 22/1/22.
@@ -17,14 +17,11 @@ class GameObject: Identifiable {
     // Allow easy identification of GameObjects
     let name: String
 
-    var physicsBody: PhysicsBody
-    
     var boundingBox: CGRect {
         get {
             self.physicsBody.boundingBox
         }
     }
-    
     
     var opacity: Double
     var imageName: String?
@@ -37,8 +34,25 @@ class GameObject: Identifiable {
             physicsBody.coordinates = newValue
         }
     }
+    
+    var physicsBody: PhysicsBody {
+        get {
+            (self.components.getComponent(componentName: ComponentName.PhysicsComponent) as? PhysicsComponent)?.physicsBody
+            ??
+                RectangleBody(coordinates: coordinates, width: boundingBox.width, height: boundingBox.height, isDynamic: false)
+        }
+        set {
+            self.components.setComponent(componentName: ComponentName.PhysicsComponent,
+                                         as: PhysicsComponent(physicsBody: newValue)
+            )
+        }
+    }
 
     var isHit: Bool
+    
+    // Each GameObject contains a mapping from the component it has to
+    // it's respective data in each component
+    var components: EntityComponentSystem
 
     init(
         physicsBody: PhysicsBody,
@@ -50,12 +64,16 @@ class GameObject: Identifiable {
         opacity: Double = 1.0
     ) {
         self.name = name
-        self.physicsBody = physicsBody
         self.imageName = imageName
         self.imageNameHit = imageNameHit
         self.isHit = isHit
         self.opacity = opacity
+        self.components = EntityComponentSystem()
 
+        self.components.setComponent(componentName: ComponentName.PhysicsComponent,
+                                     as: PhysicsComponent(physicsBody: physicsBody)
+                                     )
+                                     
         if imageNameHit == nil {
             self.imageNameHit = imageName
         }
