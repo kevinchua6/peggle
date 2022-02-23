@@ -1,5 +1,5 @@
 //
-//  Circle.swift
+//  CircleBody.swift
 //  pegglegame
 //
 //  Created by kevin chua on 22/1/22.
@@ -7,7 +7,7 @@
 
 import CoreGraphics
 
-struct Circle: PhysicsBody {
+struct CircleBody: PhysicsBody {
 
     var coordinates: CGPoint
     var nextCoordinates: CGPoint
@@ -38,6 +38,8 @@ struct Circle: PhysicsBody {
             height: radius * 2
         )
     }
+    
+
 
     init(
         coordinates: CGPoint,
@@ -93,7 +95,7 @@ struct Circle: PhysicsBody {
 
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
 
-        return Circle(
+        return CircleBody(
             coordinates: newCoord,
             radius: radius,
             mass: mass,
@@ -103,31 +105,39 @@ struct Circle: PhysicsBody {
             hasGravity: hasGravity
         )
     }
+    
+    mutating func setWidth(width: CGFloat) {
+        self.radius = width / 2
+    }
+    
+    mutating func setHeight(height: CGFloat) {
+        self.radius = height / 2
+    }
 }
 
-extension Circle {
+extension CircleBody {
 
     // swiftlint:disable force_cast
-    // Because we know it is a Circle in the switch statement, it is okay to cast it to Circle
+    // Because we know it is a CircleBody in the switch statement, it is okay to cast it to CircleBody
     // I need to cast it because I need the same method signature to override isIntersecting
     func isIntersecting(with physicsBody: PhysicsBody) -> Bool {
         switch physicsBody {
-        case is Rectangle:
-            return isIntersecting(with: physicsBody as! Rectangle)
-        case is Circle:
-            return isIntersecting(with: physicsBody as! Circle)
+        case is RectangleBody:
+            return isIntersecting(with: physicsBody as! RectangleBody)
+        case is CircleBody:
+            return isIntersecting(with: physicsBody as! CircleBody)
         default:
             return false
         }
     }
 
-    func isIntersecting(with rectangle: Rectangle) -> Bool {
+    func isIntersecting(with rectangle: RectangleBody) -> Bool {
         // Do the more trivial version of collision first
         // For now, don't handle the corner case
         self.boundingBox.intersects(rectangle.boundingBox)
     }
 
-    func isIntersecting(with circle: Circle) -> Bool {
+    func isIntersecting(with circle: CircleBody) -> Bool {
         // Find the distance between the two pegs
         // And check if the radius < the distance between the two
 
@@ -152,16 +162,16 @@ extension Circle {
 
     mutating func handleCollision(with physicsBody: PhysicsBody) {
         switch physicsBody {
-        case is Rectangle:
-            handleCollision(with: physicsBody as! Rectangle)
-        case is Circle:
-            handleCollision(with: physicsBody as! Circle)
+        case is RectangleBody:
+            handleCollision(with: physicsBody as! RectangleBody)
+        case is CircleBody:
+            handleCollision(with: physicsBody as! CircleBody)
         default:
             return
         }
     }
 
-    mutating func handleCollision(with circle: Circle) {
+    mutating func handleCollision(with circle: CircleBody) {
         let distance = PhysicsEngineUtils.CGPointDistance(
             from: self.coordinates, to: circle.coordinates
         )
@@ -189,7 +199,7 @@ extension Circle {
         self.coordinates = self.nextCoordinates
     }
 
-    mutating func handleCollision(with rectangle: Rectangle) {
+    mutating func handleCollision(with rectangle: RectangleBody) {
         // The smaller the distance between the two, the larger the force vector
         let minRestitution = min(self.restitution, rectangle.restitution)
 

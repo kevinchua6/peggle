@@ -19,6 +19,12 @@ class GameObject: Identifiable {
 
     var physicsBody: PhysicsBody
     
+    var boundingBox: CGRect {
+        get {
+            self.physicsBody.boundingBox
+        }
+    }
+    
     
     var opacity: Double
     var imageName: String?

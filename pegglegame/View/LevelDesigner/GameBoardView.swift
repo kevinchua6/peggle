@@ -9,8 +9,8 @@ import SwiftUI
 import CoreGraphics
 
 struct GameBoardView: View {
-    let OBJECT_LENGTH = 40.0
-    let PLACEHOLDER_OPACITY = 0.3
+    static let DEFAULT_OBJ_LENGTH = 40.0
+    static let PLACEHOLDER_OPACITY = 0.3
 
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
     // Check changes in keyboard to adjust pegs accordingly
@@ -21,19 +21,28 @@ struct GameBoardView: View {
     var body: some View {
         GeometryReader { geometry in
             let bounds = geometry.frame(in: .local)
-            ZStack(alignment: .leading) {
-                Image("Background")
-                    .resizable()
-                    .scaledToFill()
-                    .gesture(
-                        placePegGesture(bounds: bounds)
-                    )
-                    .ignoresSafeArea(.keyboard)
+            ZStack {
                 ForEach(levelDesignerViewModel.objArr) { entity in
                     generateGameObjectView(gameObject: entity, bounds: bounds)
                 }
-                generatePlaceholderObjView()
+                
+                if let obj = levelDesignerViewModel.selectedObj {
+                    SelectObjectView(obj: obj, bounds: bounds, levelDesignerViewModel: levelDesignerViewModel)
+                        .offset(y: -keyboardResponder.currentHeight * 0.9)
+                }
+                
+                generatePlaceholderObjView(placeholderObj: placeholderObj)
             }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .background(
+                Image("Background")
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea(.keyboard)
+            )
+            .gesture(
+                placePegGesture(bounds: bounds)
+            )
         }
     }
 
@@ -45,6 +54,11 @@ struct GameBoardView: View {
                 }
                 placeholderObj.isVisible = true
                 placeholderObj.object.physicsBody.coordinates = value.location
+                
+                placeholderObj.object.physicsBody.setHeight(
+                    height: GameBoardView.DEFAULT_OBJ_LENGTH
+                )
+                
                 self.placeholderObj.isValid =
                     levelDesignerViewModel.isValidPlacement(
                         object: self.placeholderObj.object, bounds: bounds
@@ -68,8 +82,9 @@ struct GameBoardView: View {
         if let gameObjectImage = gameObject.imageName {
             Image(gameObjectImage)
                 .resizable()
-                .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
-                // we want it to adjust by the keyboard amount
+                .frame(width: gameObject.physicsBody.boundingBox.width,
+                       height: gameObject.physicsBody.boundingBox.height
+                )
                 .position(gameObject.physicsBody.coordinates)
                 .offset(y: -keyboardResponder.currentHeight * 0.9)
                 .gesture(
@@ -93,10 +108,19 @@ struct GameBoardView: View {
                     if keyboardResponder.isKeyboardOpen {
                         return
                     }
+                    
+//                    placeholderObj.object = gameObject
+                    if let gameObjImageName = gameObject.imageName {
+                        placeholderObj.imageName = gameObjImageName
+                    }
+                    placeholderObj.object.physicsBody.setHeight(
+                        height: gameObject.physicsBody.boundingBox.height
+                    )
 
                     levelDesignerViewModel.dragObj(
                         obj: placeholderObj.object,
-                        from: gameObject.physicsBody.coordinates, by: value.translation
+                        from: gameObject.physicsBody.coordinates,
+                        by: value.translation
                     )
 
                     // The current peg's location stays there, except the
@@ -112,21 +136,24 @@ struct GameBoardView: View {
                     if keyboardResponder.isKeyboardOpen {
                         return
                     }
+                    
+                    // on tap, select it
+                    levelDesignerViewModel.selectObj(obj: gameObject)
 
-                    placeholderObj.isVisible = false
                     // Add peg at that location if it is valid
                     // And delete the current peg
-                    if placeholderObj.isValid {
-                        levelDesignerViewModel.deleteObj(obj: gameObject)
-                        levelDesignerViewModel.placeObj(at: placeholderObj.object.physicsBody.coordinates)
+                    if placeholderObj.isVisible && placeholderObj.isValid {
+                        levelDesignerViewModel.moveObj(obj: gameObject, to: placeholderObj.object.coordinates)
                     }
+                    
+                    placeholderObj.isVisible = false
                     self.placeholderObj.isValid = true
                 })
             )
     }
 
     @ViewBuilder
-    private func generatePlaceholderObjView() -> some View {
+    private func generatePlaceholderObjView(placeholderObj: PlaceholderObj) -> some View {
         if case .add = levelDesignerViewModel.selectionMode {
             // If not visible or not in add mode, hide it
             if self.placeholderObj.isVisible {
@@ -135,15 +162,21 @@ struct GameBoardView: View {
                     Image(placeholderObj.imageName)
                         .renderingMode(.template)
                         .resizable()
-                        .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
-                        .opacity(PLACEHOLDER_OPACITY)
+                        .frame(
+                            width: placeholderObj.object.physicsBody.boundingBox.width,
+                            height: placeholderObj.object.physicsBody.boundingBox.height
+                        )
+                        .opacity(GameBoardView.PLACEHOLDER_OPACITY)
                         .position(placeholderObj.object.physicsBody.coordinates)
                         .foregroundColor(.red)
                 }
                 Image(placeholderObj.imageName)
                     .resizable()
-                    .frame(width: OBJECT_LENGTH, height: OBJECT_LENGTH)
-                    .opacity(PLACEHOLDER_OPACITY)
+                    .frame(
+                        width: placeholderObj.object.physicsBody.boundingBox.width,
+                        height: placeholderObj.object.physicsBody.boundingBox.height
+                    )
+                    .opacity(GameBoardView.PLACEHOLDER_OPACITY)
                     .position(placeholderObj.object.physicsBody.coordinates)
             }
         }

@@ -14,7 +14,7 @@ class Ball: GameObject {
 
     init(coordinates: CGPoint, name: String) {
         super.init(
-            physicsBody: Circle(
+            physicsBody: CircleBody(
                 coordinates: coordinates,
                 radius: defaultRadius,
                 mass: 1.0,

@@ -7,7 +7,7 @@
 
 import CoreGraphics
 
-struct Rectangle: PhysicsBody {
+struct RectangleBody: PhysicsBody {
 
     var coordinates: CGPoint
     var nextCoordinates: CGPoint
@@ -23,8 +23,8 @@ struct Rectangle: PhysicsBody {
 
     var restitution: CGFloat
 
-    let width: CGFloat
-    let height: CGFloat
+    var width: CGFloat
+    var height: CGFloat
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
@@ -92,7 +92,7 @@ struct Rectangle: PhysicsBody {
 
         let newVelocity = CGVector(dx: velocity.dx + netAccel.dx * seconds, dy: velocity.dy + netAccel.dy * seconds)
 
-        return Rectangle(
+        return RectangleBody(
             coordinates: newCoord,
             width: width,
             height: height,
@@ -102,24 +102,32 @@ struct Rectangle: PhysicsBody {
             hasGravity: hasGravity
         )
     }
+    
+    mutating func setWidth(width: CGFloat) {
+        self.width = width
+    }
+    
+    mutating func setHeight(height: CGFloat) {
+        self.height = height
+    }
 }
 
-extension Rectangle {
+extension RectangleBody {
     // swiftlint:disable force_cast
     // Because we know it is a Rectangle in the switch statement, it is okay to cast it to Square
     // I need to cast it because I need the same method signature to override isIntersecting
     func isIntersecting(with physicsBody: PhysicsBody) -> Bool {
         switch physicsBody {
-        case is Circle:
-            return isIntersecting(with: physicsBody as! Circle)
-        case is Rectangle:
+        case is CircleBody:
+            return isIntersecting(with: physicsBody as! CircleBody)
+        case is RectangleBody:
             return false
         default:
             return false
         }
     }
 
-    func isIntersecting(with circle: Circle) -> Bool {
+    func isIntersecting(with circle: CircleBody) -> Bool {
         // Do the more trivial version of collision first
         // For now, don't handle the corner case
         self.boundingBox.intersects(circle.boundingBox)
@@ -135,8 +143,8 @@ extension Rectangle {
 
     mutating func handleCollision(with physicsBody: PhysicsBody) {
         switch physicsBody {
-        case is Rectangle:
-            handleCollision(with: physicsBody as! Rectangle)
+        case is RectangleBody:
+            handleCollision(with: physicsBody as! RectangleBody)
         default:
             return
         }

@@ -59,6 +59,7 @@ struct StartGameView: View {
                 }
                 generateCannonView(position: cannonLoc)
             }
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             .background(
                 Image("Background")
                     .resizable()
@@ -87,13 +88,19 @@ struct StartGameView: View {
             if !gameObject.isHit {
                 Image(gameObjectImage)
                     .resizable()
-                    .frame(width: 40, height: 40)
+                    .frame(
+                        width: gameObject.boundingBox.width,
+                        height: gameObject.boundingBox.height
+                    )
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
             } else {
                 Image(gameObjectImageHit)
                     .resizable()
-                    .frame(width: 40, height: 40)
+                    .frame(
+                        width: gameObject.boundingBox.width,
+                        height: gameObject.boundingBox.height
+                    )
                     .position(gameObject.coordinates)
                     .opacity(gameObject.opacity)
                     .transition(AnyTransition.opacity

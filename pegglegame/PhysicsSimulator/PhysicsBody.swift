@@ -7,7 +7,6 @@
 
 import CoreGraphics
 
-// Does not make sense to instantiate a Physics Body
 protocol PhysicsBody {
     var coordinates: CGPoint { get set }
 
@@ -26,6 +25,9 @@ protocol PhysicsBody {
 
     // Update body to next position
     func update(deltaTime seconds: CGFloat) -> PhysicsBody
+    
+    mutating func setWidth(width: CGFloat)
+    mutating func setHeight(height: CGFloat)
 
     // Update the coordinates to prevent overlapping
     mutating func preventOverlapBodies()

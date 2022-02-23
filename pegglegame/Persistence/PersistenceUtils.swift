@@ -46,7 +46,10 @@ class PersistenceUtils {
             board.objArr.append(
                 EncodableObject(
                     xcoord: obj.physicsBody.coordinates.x,
-                    ycoord: obj.physicsBody.coordinates.y, type: objType
+                    ycoord: obj.physicsBody.coordinates.y,
+                    width: obj.boundingBox.width,
+                    height: obj.boundingBox.height,
+                    type: objType
                 )
             )
         }
@@ -59,16 +62,30 @@ class PersistenceUtils {
         for obj in board.objArr {
             switch obj.type {
             case GameObject.Types.bluePeg.rawValue:
+                // defensive checks
+                if obj.width != obj.height {
+                    continue
+                }
+                
                 gameObjBoard.append(
                     BluePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
-                        name: GameObject.Types.bluePeg.rawValue)
+                        radius: obj.width / 2,
+                        name: GameObject.Types.bluePeg.rawValue
+                    )
                 )
             case GameObject.Types.orangePeg.rawValue:
+                // defensive checks
+                if obj.width != obj.height {
+                    continue
+                }
+
                 gameObjBoard.append(
                     OrangePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
-                        name: GameObject.Types.orangePeg.rawValue)
+                        radius: obj.width / 2,
+                        name: GameObject.Types.orangePeg.rawValue
+                    )
                 )
             default:
                 continue

@@ -11,7 +11,7 @@ import CoreGraphics
 class Wall: GameObject {
     init(coordinates: CGPoint, width: CGFloat, height: CGFloat, name: String) {
         super.init(
-            physicsBody: Rectangle(
+            physicsBody: RectangleBody(
                 coordinates: coordinates,
                 width: width,
                 height: height,

@@ -10,7 +10,7 @@
 		6F19293C27AD8BED00E74D57 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F19293B27AD8BED00E74D57 /* Ball.swift */; };
 		6F1C9E91279BEEF60058C36A /* PhysicsBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */; };
 		6F1C9E93279BF2A70058C36A /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */; };
-		6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E94279BF4B50058C36A /* Circle.swift */; };
+		6F1C9E95279BF4B50058C36A /* CircleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E94279BF4B50058C36A /* CircleBody.swift */; };
 		6F1C9E97279C03210058C36A /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F1C9E96279C03210058C36A /* GameObject.swift */; };
 		6F2F5EE527A94E8F00D3F9B6 /* StartGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F5EE427A94E8F00D3F9B6 /* StartGameView.swift */; };
 		6F374B5927A9B7BF0098F78E /* StartGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F374B5827A9B7BF0098F78E /* StartGameViewModel.swift */; };
@@ -26,7 +26,7 @@
 		6F678442279658510086CC9A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F678441279658510086CC9A /* Preview Assets.xcassets */; };
 		6F8DC7A927B50B0A00B7D01A /* CoreGraphics+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */; };
 		6F8DC7AB27B5238200B7D01A /* PhysicsEngineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */; };
-		6F8DC7AD27B52B5400B7D01A /* Rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */; };
+		6F8DC7AD27B52B5400B7D01A /* RectangleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AC27B52B5400B7D01A /* RectangleBody.swift */; };
 		6F8DC7AF27B5EC6F00B7D01A /* Wall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8DC7AE27B5EC6F00B7D01A /* Wall.swift */; };
 		6F9B27CD27B6B880001EBF82 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9B27CC27B6B880001EBF82 /* GameEngine.swift */; };
 		6FB8011027A29BC300B82496 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FB8010F27A29BC300B82496 /* Board.swift */; };
@@ -59,7 +59,7 @@
 		6F19293B27AD8BED00E74D57 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Ball.swift; path = Pegglegame/Model/Ball.swift; sourceTree = SOURCE_ROOT; };
 		6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBody.swift; sourceTree = "<group>"; };
 		6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
-		6F1C9E94279BF4B50058C36A /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		6F1C9E94279BF4B50058C36A /* CircleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleBody.swift; sourceTree = "<group>"; };
 		6F1C9E96279C03210058C36A /* GameObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		6F2F5EE427A94E8F00D3F9B6 /* StartGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StartGameView.swift; path = Pegglegame/View/StartGameView.swift; sourceTree = SOURCE_ROOT; };
 		6F374B5827A9B7BF0098F78E /* StartGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StartGameViewModel.swift; path = Pegglegame/ViewModel/StartGameViewModel.swift; sourceTree = SOURCE_ROOT; };
@@ -76,7 +76,7 @@
 		6F678441279658510086CC9A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6F8DC7A827B50B0A00B7D01A /* CoreGraphics+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CoreGraphics+Extensions.swift"; path = "Pegglegame/Extensions/CoreGraphics+Extensions.swift"; sourceTree = SOURCE_ROOT; };
 		6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsEngineUtils.swift; path = Pegglegame/PhysicsSimulator/PhysicsEngineUtils.swift; sourceTree = SOURCE_ROOT; };
-		6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Rectangle.swift; path = Pegglegame/PhysicsSimulator/Rectangle.swift; sourceTree = SOURCE_ROOT; };
+		6F8DC7AC27B52B5400B7D01A /* RectangleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RectangleBody.swift; path = Pegglegame/PhysicsSimulator/RectangleBody.swift; sourceTree = SOURCE_ROOT; };
 		6F8DC7AE27B5EC6F00B7D01A /* Wall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Wall.swift; path = Pegglegame/Model/Wall.swift; sourceTree = SOURCE_ROOT; };
 		6F9B27CC27B6B880001EBF82 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameEngine.swift; path = Pegglegame/GameRenderer/GameEngine.swift; sourceTree = SOURCE_ROOT; };
 		6FB8010F27A29BC300B82496 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
@@ -119,8 +119,8 @@
 			children = (
 				6F1C9E90279BEEF60058C36A /* PhysicsBody.swift */,
 				6F1C9E92279BF2A70058C36A /* PhysicsEngine.swift */,
-				6F1C9E94279BF4B50058C36A /* Circle.swift */,
-				6F8DC7AC27B52B5400B7D01A /* Rectangle.swift */,
+				6F1C9E94279BF4B50058C36A /* CircleBody.swift */,
+				6F8DC7AC27B52B5400B7D01A /* RectangleBody.swift */,
 				6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */,
 			);
 			path = PhysicsSimulator;
@@ -387,7 +387,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n";
+			shellScript = "#if test -d \"/opt/homebrew/bin/\"; then\n#  PATH=\"/opt/homebrew/bin/:${PATH}\"\n#fi\n\n#export PATH\n\n#if which swiftlint >/dev/null; then\n#  swiftlint\n#else\n#  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -407,8 +407,8 @@
 				6F54930227C4F33000EB9568 /* StartMenuView.swift in Sources */,
 				6F9B27CD27B6B880001EBF82 /* GameEngine.swift in Sources */,
 				6FDBB80C27AC37670014463B /* LazyView.swift in Sources */,
-				6F1C9E95279BF4B50058C36A /* Circle.swift in Sources */,
-				6F8DC7AD27B52B5400B7D01A /* Rectangle.swift in Sources */,
+				6F1C9E95279BF4B50058C36A /* CircleBody.swift in Sources */,
+				6F8DC7AD27B52B5400B7D01A /* RectangleBody.swift in Sources */,
 				6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */,
 				6F8DC7A927B50B0A00B7D01A /* CoreGraphics+Extensions.swift in Sources */,
 				6FD6FF7827996E100050141E /* LevelDesignerViewModel.swift in Sources */,

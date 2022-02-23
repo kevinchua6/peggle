@@ -98,7 +98,6 @@ class StartGameViewModel: ObservableObject {
 
         gameRenderer.addObj(obj: ball)
         ball.physicsBody.velocity = unitVector * INITIAL_BALL_SPEED
-        print(ball.physicsBody.velocity)
     }
 
     deinit {

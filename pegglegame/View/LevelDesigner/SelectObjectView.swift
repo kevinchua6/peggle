@@ -6,15 +6,68 @@
 //
 
 import SwiftUI
+import CoreGraphics
 
 struct SelectObjectView: View {
+    let obj: GameObject
+    let bounds: CGRect
+    
+    @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
+
+    init(obj: GameObject, bounds: CGRect, levelDesignerViewModel: LevelDesignerViewModel) {
+        self.obj = obj
+        self.bounds = bounds
+        self.levelDesignerViewModel = levelDesignerViewModel
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Rectangle()
+                .rotation(.radians(Double(0.0)))
+                .stroke(.white, lineWidth: 2)
+                .frame(
+                    width: obj.physicsBody.boundingBox.width,
+                    height: obj.physicsBody.boundingBox.height
+                )
+                .position(obj.coordinates)
+            generateResizeCornersView()
+        }
+    }
+    
+    enum Corner {
+        case TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+    }
+    
+    private func generateResizeCornersView() -> some View {
+        ZStack {
+            generateResizeCornerView(corner: Corner.TOP_LEFT)
+                .position(x: obj.physicsBody.boundingBox.minX,
+                          y: obj.physicsBody.boundingBox.minY)
+            generateResizeCornerView(corner: Corner.TOP_RIGHT)
+                .position(x: obj.physicsBody.boundingBox.maxX,
+                          y: obj.physicsBody.boundingBox.minY)
+            generateResizeCornerView(corner: Corner.BOTTOM_LEFT)
+                .position(x: obj.physicsBody.boundingBox.minX,
+                          y: obj.physicsBody.boundingBox.maxY)
+            generateResizeCornerView(corner: Corner.BOTTOM_RIGHT)
+                .position(x: obj.physicsBody.boundingBox.maxX,
+                          y: obj.physicsBody.boundingBox.maxY)
+        }
+    }
+    
+    private func generateResizeCornerView(corner: Corner) -> some View {
+        Rectangle()
+            .frame(width: 12, height: 12)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged{ value in
+                        if corner == Corner.BOTTOM_LEFT || corner == Corner.TOP_LEFT {
+                            levelDesignerViewModel.updateWidth(gameObject: obj, width: -value.location.x + obj.physicsBody.boundingBox.width)
+                        } else if corner == Corner.BOTTOM_RIGHT || corner == Corner.TOP_RIGHT {
+                            levelDesignerViewModel.updateWidth(gameObject: obj, width: value.location.x + obj.physicsBody.boundingBox.width)
+                        }
+                    }
+            )
     }
 }
 
-struct SelectObjectView_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectObjectView()
-    }
-}

@@ -10,12 +10,12 @@ import CoreGraphics
 import Combine
 
 class LevelDesignerViewModel: ObservableObject {
-    enum PegColor: String {
+    enum PegSelectionColor: String {
         case blue, orange
     }
 
     enum SelectionMode: Equatable {
-        case add(PegColor), delete
+        case add(PegSelectionColor), delete
     }
 
     struct AlertBox {
@@ -31,6 +31,8 @@ class LevelDesignerViewModel: ObservableObject {
                             name: "placeholder"),
             isVisible: false
         )
+    
+    @Published var selectedObj: GameObject?
 
     @Published var alert = AlertBox(visible: false, title: "", message: "")
 
@@ -42,9 +44,19 @@ class LevelDesignerViewModel: ObservableObject {
 
     @Published var objArr: [GameObject] = []
     @Published var boardList = PersistenceUtils.loadBoardList()
+    
+    func selectObj(obj: GameObject) {
+        self.selectedObj = obj
+    }
 
     func deleteObj(obj: GameObject) {
         objArr = objArr.filter { $0 !== obj }
+        selectedObj = nil
+    }
+    
+    
+    func moveObj(obj: GameObject, to endCoord: CGPoint) {
+        obj.coordinates = endCoord
     }
 
     func placeObj(at coordinates: CGPoint) {
@@ -56,20 +68,22 @@ class LevelDesignerViewModel: ObservableObject {
         let physicsBodyArr = objArr.map { $0.physicsBody }
 
         switch color {
-        case PegColor.blue:
+        case PegSelectionColor.blue:
             let bluePeg = BluePeg(coordinates: coordinates, name: GameObject.Types.bluePeg.rawValue)
             if bluePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
             objArr.append(bluePeg)
-        case PegColor.orange:
+            self.selectedObj = bluePeg
+        case PegSelectionColor.orange:
             let orangePeg = OrangePeg(coordinates: coordinates, name: GameObject.Types.orangePeg.rawValue)
             if orangePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
 
             objArr.append(orangePeg)
+            self.selectedObj = orangePeg
         }
     }
 
@@ -108,6 +122,31 @@ class LevelDesignerViewModel: ObservableObject {
         newLocation.y += translation.height
 
         return newLocation
+    }
+    
+    func updateBoard() {
+        objectWillChange.send()
+    }
+    
+    func updateWidth(gameObject: GameObject, width: CGFloat) {
+        guard width >= GameBoardView.DEFAULT_OBJ_LENGTH else {
+            return
+        }
+        
+        var newPhysicsBody = gameObject.physicsBody
+        newPhysicsBody.setWidth(width: width)
+        
+        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) {
+            return
+        }
+
+        var newObjArr = objArr.filter{ $0 !== gameObject }
+        
+        gameObject.physicsBody = newPhysicsBody
+
+        
+        newObjArr.append(gameObject)
+        objArr = newObjArr
     }
 
     // Persistence functions

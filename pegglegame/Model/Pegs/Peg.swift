@@ -12,7 +12,7 @@ class Peg: GameObject {
 
     init(coordinates: CGPoint, radius: Double, imageName: String, imageNameHit: String, name: String) {
         super.init(
-            physicsBody: Circle(
+            physicsBody: CircleBody(
                 coordinates: coordinates,
                 radius: radius,
                 mass: 1.0,
@@ -26,7 +26,7 @@ class Peg: GameObject {
 
     init(coordinates: CGPoint, imageName: String, imageNameHit: String, name: String) {
         super.init(
-            physicsBody: Circle(
+            physicsBody: CircleBody(
                 coordinates: coordinates,
                 radius: defaultRadius,
                 mass: 1.0,
