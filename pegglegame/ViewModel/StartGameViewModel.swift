@@ -23,7 +23,7 @@ class StartGameViewModel: ObservableObject {
     init(objArr: [GameObject]) {
         // Whenever start is pressed, reset all properties
         for gameObj in objArr {
-            gameObj.isHit = false
+            gameObj.getComponent(of: ActivateOnHitComponent.self)?.isHit = false
             gameObj.opacity = 1.0
         }
 
@@ -44,23 +44,20 @@ class StartGameViewModel: ObservableObject {
             obj: Wall(
                 coordinates: CGPoint(x: -WALL_THICKNESS, y: 0),
                 width: WALL_THICKNESS,
-                height: bounds.height * 1.5,
-                name: "leftWall"
+                height: bounds.height * 1.5
                      )
         )
         gameRenderer.addObj(
             obj: Wall(coordinates: CGPoint(x: bounds.maxX + WALL_THICKNESS, y: 0),
                       width: WALL_THICKNESS,
-                      height: bounds.height * 1.5,
-                      name: "rightWall"
+                      height: bounds.height * 1.5
                      )
         )
         gameRenderer.addObj(obj: Wall(coordinates: CGPoint(x: 0,
                                                            y: -WALL_THICKNESS
                                                           ),
                                       width: bounds.width,
-                                      height: WALL_THICKNESS,
-                                      name: "topWall"
+                                      height: WALL_THICKNESS
                                      )
         )
     }
@@ -91,7 +88,7 @@ class StartGameViewModel: ObservableObject {
             return
         }
 
-        let ball = Ball(coordinates: from, name: GameObject.Types.ball.rawValue)
+        let ball = Ball(coordinates: from)
 
         let angle = getCannonAngle(cannonLoc: from, gestureLoc: to)
         let unitVector = CGVector(dx: -sin(angle), dy: cos(angle))

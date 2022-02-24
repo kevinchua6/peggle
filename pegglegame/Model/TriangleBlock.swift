@@ -13,7 +13,7 @@ class TriangleBlock: GameObject {
     let originalCoordinates: CGPoint
     var springRadius: CGFloat
 
-    init(coordinates: CGPoint, name: String, springRadius: CGFloat = 40.0) {
+    init(coordinates: CGPoint, springRadius: CGFloat = 40.0) {
         self.springRadius = springRadius
         self.originalCoordinates = coordinates
         super.init(
@@ -26,7 +26,6 @@ class TriangleBlock: GameObject {
                 velocity: CGVector(),
                 hasGravity: false
             ),
-            name: name,
             imageName: TriangleBlock.imageName
         )
     }

@@ -15,11 +15,11 @@ class ActivateOnHitComponent: Component {
         isHit = false
         isActivated = false
     }
-    
+
     func activate() {
         isActivated = true
     }
-    
+
     func setHit(to isHit: Bool) {
         self.isHit = isHit
     }

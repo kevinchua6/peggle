@@ -103,15 +103,15 @@ struct CircleBody: PhysicsBody {
             hasGravity: hasGravity
         )
     }
-    
+
     mutating func setLength(length: CGFloat) {
         self.radius = length / 2
     }
-    
+
     mutating func setHeight(height: CGFloat) {
         self.radius = height / 2
     }
-    
+
     mutating func applyForce(force: CGVector) {
         forces.append(force)
     }
@@ -155,7 +155,7 @@ extension CircleBody {
 
         return distanceSquared < totalRadiusSquared
     }
-    
+
     func isIntersecting(with triangle: TriangleBody) -> Bool {
         // Do the more trivial version of collision first
         isIntersecting(with: CircleBody(coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []))
@@ -181,7 +181,7 @@ extension CircleBody {
             return
         }
     }
-    
+
     mutating func handleCollision(with triangle: TriangleBody) {
         handleCollision(with: CircleBody(
             coordinates: triangle.coordinates, radius: triangle.width * 0.8, mass: 1.0, isDynamic: false, forces: [])
@@ -196,7 +196,7 @@ extension CircleBody {
         let totalWidth = self.radius + circle.radius
 
         let collisionUnitVector = (self.coordinates - circle.coordinates) / distance
-        
+
         // find the length of the dot product of the normal and the velocity
         // then multiply by the unit vector
         let dotProduct = abs(PhysicsEngineUtils.dotProduct(vector1: collisionUnitVector, vector2: self.velocity))

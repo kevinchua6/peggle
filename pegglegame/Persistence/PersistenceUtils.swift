@@ -9,12 +9,12 @@ import SwiftUI
 
 class PersistenceUtils {
     static let databaseUserDefaultKey = "boardList"
-    
+
     static let preloadedLevelNames = ["Blackrock Mountain", "Happy Land", "Big Block"]
-    
+
     static func createPreloadedLevel1() -> Board {
         var board = Board(name: preloadedLevelNames[0], objArr: [], isProtected: true)
-        
+
         for i in 0..<9 {
             for j in 0..<7 {
                 board.objArr.append(
@@ -32,10 +32,10 @@ class PersistenceUtils {
         }
         return board
     }
-    
+
     static func createPreloadedLevel2() -> Board {
         var board = Board(name: preloadedLevelNames[1], objArr: [], isProtected: true)
-        
+
         for i in 0..<9 {
             board.objArr.append(
                 EncodableObject(
@@ -48,7 +48,7 @@ class PersistenceUtils {
                         : GameObject.Types.orangePeg.rawValue
                 )
             )
-            
+
             if i == 4 {
                 board.objArr.append(
                     EncodableObject(
@@ -61,7 +61,7 @@ class PersistenceUtils {
                             : GameObject.Types.orangePeg.rawValue
                     )
                 )
-                
+
                 board.objArr.append(
                     EncodableObject(
                         xcoord: 750,
@@ -73,10 +73,10 @@ class PersistenceUtils {
                             : GameObject.Types.orangePeg.rawValue
                     )
                 )
-                
+
                 continue
             }
-            
+
             board.objArr.append(
                 EncodableObject(
                     xcoord: 40 + Double(i * 90),
@@ -89,13 +89,13 @@ class PersistenceUtils {
                 )
             )
         }
-        
+
         return board
     }
-    
+
     static func createPreloadedLevel3() -> Board {
         var board = Board(name: preloadedLevelNames[2], objArr: [], isProtected: true)
-        
+
         for i in 0..<13 {
             for j in 0..<10 {
                 board.objArr.append(
@@ -119,7 +119,7 @@ class PersistenceUtils {
         guard let boardList =
                 UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
                     var boardList = BoardList(boards: [:])
-            
+
                     boardList.boards["preloaded1"] = createPreloadedLevel1()
                     boardList.boards["preloaded2"] = createPreloadedLevel2()
                     boardList.boards["preloaded3"] = createPreloadedLevel3()
@@ -178,12 +178,11 @@ class PersistenceUtils {
                 if obj.width != obj.height {
                     continue
                 }
-                
+
                 gameObjBoard.append(
                     BluePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
-                        radius: obj.width / 2,
-                        name: GameObject.Types.bluePeg.rawValue
+                        radius: obj.width / 2
                     )
                 )
             case GameObject.Types.orangePeg.rawValue:
@@ -195,8 +194,7 @@ class PersistenceUtils {
                 gameObjBoard.append(
                     OrangePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
-                        radius: obj.width / 2,
-                        name: GameObject.Types.orangePeg.rawValue
+                        radius: obj.width / 2
                     )
                 )
             default:

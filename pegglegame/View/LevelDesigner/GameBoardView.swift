@@ -25,12 +25,12 @@ struct GameBoardView: View {
                 ForEach(levelDesignerViewModel.objArr) { entity in
                     generateGameObjectView(gameObject: entity, bounds: bounds)
                 }
-                
+
                 if let obj = levelDesignerViewModel.selectedObj {
                     SelectObjectView(obj: obj, bounds: bounds, levelDesignerViewModel: levelDesignerViewModel)
                         .offset(y: -keyboardResponder.currentHeight * 0.9)
                 }
-                
+
                 generatePlaceholderObjView(placeholderObj: placeholderObj)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
@@ -55,11 +55,11 @@ struct GameBoardView: View {
                 }
                 placeholderObj.isVisible = true
                 placeholderObj.object.coordinates = value.location
-                
+
                 placeholderObj.object.physicsBody.setLength(
                     length: GameBoardView.DEFAULT_OBJ_LENGTH
                 )
-                
+
                 self.placeholderObj.isValid =
                     levelDesignerViewModel.isValidPlacement(
                         physicsBody: self.placeholderObj.object.physicsBody, bounds: bounds
@@ -109,7 +109,7 @@ struct GameBoardView: View {
                     if keyboardResponder.isKeyboardOpen {
                         return
                     }
-                    
+
                     if let gameObjImageName = gameObject.imageName {
                         placeholderObj.imageName = gameObjImageName
                     }
@@ -136,7 +136,7 @@ struct GameBoardView: View {
                     if keyboardResponder.isKeyboardOpen {
                         return
                     }
-                    
+
                     // on tap, select it
                     levelDesignerViewModel.selectObj(obj: gameObject)
 
@@ -145,7 +145,7 @@ struct GameBoardView: View {
                     if placeholderObj.isVisible && placeholderObj.isValid {
                         levelDesignerViewModel.moveObj(obj: gameObject, to: placeholderObj.object.coordinates)
                     }
-                    
+
                     placeholderObj.isVisible = false
                     self.placeholderObj.isValid = true
                 })

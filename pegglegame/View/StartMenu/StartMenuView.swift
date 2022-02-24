@@ -22,7 +22,7 @@ struct StartMenuView: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
-    
+
     private func generateStartButtonView() -> some View {
         VStack(spacing: 40) {
             NavigationLink(destination: LazyView {
@@ -31,26 +31,26 @@ struct StartMenuView: View {
                 Text("START GAME")
                     .font(.title)
                     .padding()
-                    .frame(width: 250 , height: 60, alignment: .center)
+                    .frame(width: 250, height: 60, alignment: .center)
                     .background(.blue)
                     .foregroundColor(.white)
                     .cornerRadius(18)
             }
-            
+
             NavigationLink(destination: LazyView {
                 LevelDesignerView(levelDesignerViewModel: LevelDesignerViewModel())
             }) {
                 Text("LEVEL DESIGNER")
                     .font(.title)
                     .padding()
-                    .frame(width: 300 , height: 60, alignment: .center)
+                    .frame(width: 300, height: 60, alignment: .center)
                     .background(.indigo)
                     .foregroundColor(.white)
                     .cornerRadius(18)
             }
         }
     }
-    
+
 }
 
 struct StartMenuView_Previews: PreviewProvider {

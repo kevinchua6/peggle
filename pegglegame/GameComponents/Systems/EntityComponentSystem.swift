@@ -12,12 +12,12 @@ import Foundation
 struct EntityComponentSystem {
     // Each GameObject contains a mapping from the component it has to
     // it's respective data in each component
-    var components: [String : Component] = [:]
-    
+    var components: [String: Component] = [:]
+
     func getComponent<T: Component>(component: T.Type) -> T? {
         components[String(describing: component)] as? T
     }
-    
+
     mutating func setComponent<T: Component>(component: T) {
         components[String(describing: type(of: component))] = component
     }

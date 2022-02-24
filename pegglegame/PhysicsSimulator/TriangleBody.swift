@@ -25,7 +25,7 @@ struct TriangleBody: PhysicsBody {
 
     var width: CGFloat
     var height: CGFloat
-    
+
     var v1: CGPoint {
         CGPoint(x: coordinates.x, y: coordinates.y + width)
     }
@@ -112,16 +112,16 @@ struct TriangleBody: PhysicsBody {
             hasGravity: hasGravity
         )
     }
-    
+
     mutating func setLength(length: CGFloat) {
         self.width = length / 2
         self.height = length / 2
     }
-    
+
     mutating func applyForce(force: CGVector) {
         forces.append(force)
     }
-    
+
 }
 
 extension TriangleBody {

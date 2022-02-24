@@ -12,22 +12,22 @@ class SpookyPeg: Peg {
     static let imageNameHit: String = "SpookyPegGlow"
     static let selectionObject: String = "AddSpookyPeg"
 
-    init(coordinates: CGPoint, radius: Double, name: String) {
+    init(coordinates: CGPoint, radius: Double) {
         super.init(
             coordinates: coordinates,
             radius: radius,
             imageName: SpookyPeg.imageName,
-            imageNameHit: SpookyPeg.imageNameHit,
-            name: name
+            imageNameHit: SpookyPeg.imageNameHit
         )
+        super.setComponent(of: SpookyBallComponent())
     }
 
-    init(coordinates: CGPoint, name: String) {
+    init(coordinates: CGPoint) {
         super.init(
             coordinates: coordinates,
             imageName: SpookyPeg.imageName,
-            imageNameHit: SpookyPeg.imageNameHit,
-            name: name
+            imageNameHit: SpookyPeg.imageNameHit
         )
+        super.setComponent(of: SpookyBallComponent())
     }
 }

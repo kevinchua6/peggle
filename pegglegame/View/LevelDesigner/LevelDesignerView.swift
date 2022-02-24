@@ -20,7 +20,7 @@ struct LevelDesignerView: View {
                 BottomBarView(levelDesignerViewModel: levelDesignerViewModel,
                               placeholderObj: levelDesignerViewModel.placeholderObj
                 )
-            }
+        }
             .alert(isPresented: $levelDesignerViewModel.alert.visible) {
                 Alert(
                     title:

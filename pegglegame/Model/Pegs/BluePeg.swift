@@ -12,22 +12,20 @@ class BluePeg: Peg {
     static let imageNameHit: String = "BluePegGlow"
     static let selectionObject: String = "AddBluePeg"
 
-    init(coordinates: CGPoint, radius: Double, name: String) {
+    init(coordinates: CGPoint, radius: Double) {
         super.init(
             coordinates: coordinates,
             radius: radius,
             imageName: BluePeg.imageName,
-            imageNameHit: BluePeg.imageNameHit,
-            name: name
+            imageNameHit: BluePeg.imageNameHit
         )
     }
 
-    init(coordinates: CGPoint, name: String) {
+    init(coordinates: CGPoint) {
         super.init(
             coordinates: coordinates,
             imageName: BluePeg.imageName,
-            imageNameHit: BluePeg.imageNameHit,
-            name: name
+            imageNameHit: BluePeg.imageNameHit
         )
     }
 }

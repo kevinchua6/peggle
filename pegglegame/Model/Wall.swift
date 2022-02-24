@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 
 class Wall: GameObject {
-    init(coordinates: CGPoint, width: CGFloat, height: CGFloat, name: String) {
+    init(coordinates: CGPoint, width: CGFloat, height: CGFloat) {
         super.init(
             physicsBody: RectangleBody(
                 coordinates: coordinates,
@@ -18,7 +18,6 @@ class Wall: GameObject {
                 mass: 1.0,
                 isDynamic: false
             ),
-            name: name,
             imageName: nil
         )
     }

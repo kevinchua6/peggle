@@ -13,11 +13,11 @@ class SpookyBallComponent: Component {
     init() {
         isSpookyBallActivated = false
     }
-    
+
     func activateSpookyBall() {
         isSpookyBallActivated = true
     }
-    
+
     func deactivateSpookyBall() {
         isSpookyBallActivated = false
     }

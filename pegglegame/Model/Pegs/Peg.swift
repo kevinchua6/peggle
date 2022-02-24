@@ -10,7 +10,7 @@ import CoreGraphics
 class Peg: GameObject {
     private let defaultRadius = 20.0
 
-    init(coordinates: CGPoint, radius: Double, imageName: String, imageNameHit: String, name: String) {
+    init(coordinates: CGPoint, radius: Double, imageName: String, imageNameHit: String) {
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
@@ -20,12 +20,12 @@ class Peg: GameObject {
                 forces: [],
                 velocity: CGVector(),
                 hasGravity: false
-            ), name: name, imageName: imageName, imageNameHit: imageNameHit, isHit: false
+            ), imageName: imageName, imageNameHit: imageNameHit
         )
         super.setComponent(of: ActivateOnHitComponent())
     }
 
-    init(coordinates: CGPoint, imageName: String, imageNameHit: String, name: String) {
+    init(coordinates: CGPoint, imageName: String, imageNameHit: String) {
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
@@ -35,7 +35,7 @@ class Peg: GameObject {
                 forces: [],
                 velocity: CGVector(),
                 hasGravity: false
-            ), name: name, imageName: imageName, imageNameHit: imageNameHit, isHit: false
+            ), imageName: imageName, imageNameHit: imageNameHit
         )
         super.setComponent(of: ActivateOnHitComponent())
     }

@@ -86,7 +86,7 @@ struct BottomBarView: View {
                         }, label: {
                             HStack {
                                 Text(board.name)
-                                
+
                                 if board.isProtected == true {
                                     Spacer()
                                     Image(systemName: "pencil.slash")
@@ -126,7 +126,7 @@ struct BottomBarView: View {
                 .opacity(levelDesignerViewModel.selectionMode == selection ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
         })
     }
-    
+
     private func reset() {
         levelDesignerViewModel.objArr = []
     }
@@ -136,7 +136,7 @@ struct BottomBarView: View {
             levelDesignerViewModel.showAlert(title: "Error", message: "You can't override preloaded levels!")
             return
         }
-        
+
         do {
             try levelDesignerViewModel.saveBoard(gameObjArr: levelDesignerViewModel.objArr, as: levelName)
         } catch {

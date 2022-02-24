@@ -12,7 +12,7 @@ class Ball: GameObject {
     let defaultRadius = 20.0
     static let imageName: String = "Ball"
 
-    init(coordinates: CGPoint, name: String) {
+    init(coordinates: CGPoint) {
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
@@ -23,11 +23,10 @@ class Ball: GameObject {
                 velocity: CGVector(),
                 hasGravity: true
             ),
-            name: name,
             imageName: Ball.imageName
         )
-        
-        super.setComponent(of: SpookyBallComponent())
+
+
         super.setComponent(of: CannonBallComponent())
     }
 }

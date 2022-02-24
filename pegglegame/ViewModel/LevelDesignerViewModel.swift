@@ -23,15 +23,15 @@ class LevelDesignerViewModel: ObservableObject {
         var title: String
         var message: String
     }
-    
+
     @Published var placeholderObj =
         PlaceholderObj(
             imageName: BluePeg.imageName,
-            object: BluePeg(coordinates: CGPoint(x: 0, y: 0),
-                            name: "placeholder"),
+            object: BluePeg(coordinates: CGPoint(x: 0, y: 0)
+               ),
             isVisible: false
         )
-    
+
     @Published var selectedObj: GameObject?
 
     @Published var alert = AlertBox(visible: false, title: "", message: "")
@@ -44,7 +44,7 @@ class LevelDesignerViewModel: ObservableObject {
 
     @Published var objArr: [GameObject] = []
     @Published var boardList = PersistenceUtils.loadBoardList()
-    
+
     func selectObj(obj: GameObject) {
         self.selectedObj = obj
     }
@@ -53,12 +53,11 @@ class LevelDesignerViewModel: ObservableObject {
         objArr = objArr.filter { $0 !== obj }
         selectedObj = nil
     }
-    
-    
+
     func moveObj(obj: GameObject, to endCoord: CGPoint) {
         obj.coordinates = endCoord
     }
-    
+
     func placeObj(at coordinates: CGPoint) {
         if case let .add(color) = selectionMode {
             placePeg(at: coordinates, color: color)
@@ -66,17 +65,17 @@ class LevelDesignerViewModel: ObservableObject {
             placeBlock(at: coordinates)
         }
     }
-    
+
     func placeBlock(at coordinates: CGPoint) {
         // Convert to physics body array to check for intersection
         let physicsBodyArr = objArr.map { $0.physicsBody }
-        
-        let triangleBlock = TriangleBlock(coordinates: coordinates, name: GameObject.Types.block.rawValue)
-        
+
+        let triangleBlock = TriangleBlock(coordinates: coordinates)
+
         if triangleBlock.physicsBody.isIntersecting(with: physicsBodyArr) {
             return
         }
-        
+
         objArr.append(triangleBlock)
         self.selectedObj = triangleBlock
     }
@@ -87,7 +86,7 @@ class LevelDesignerViewModel: ObservableObject {
 
         switch color {
         case PegSelectionColor.blue:
-            let bluePeg = BluePeg(coordinates: coordinates, name: GameObject.Types.bluePeg.rawValue)
+            let bluePeg = BluePeg(coordinates: coordinates)
             if bluePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
@@ -95,7 +94,7 @@ class LevelDesignerViewModel: ObservableObject {
             objArr.append(bluePeg)
             self.selectedObj = bluePeg
         case PegSelectionColor.orange:
-            let orangePeg = OrangePeg(coordinates: coordinates, name: GameObject.Types.orangePeg.rawValue)
+            let orangePeg = OrangePeg(coordinates: coordinates)
             if orangePeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
@@ -103,7 +102,7 @@ class LevelDesignerViewModel: ObservableObject {
             objArr.append(orangePeg)
             self.selectedObj = orangePeg
         case PegSelectionColor.kaboom:
-            let kaboomPeg = KaboomPeg(coordinates: coordinates, name: GameObject.Types.kaboomPeg.rawValue)
+            let kaboomPeg = KaboomPeg(coordinates: coordinates)
             if kaboomPeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
@@ -111,7 +110,7 @@ class LevelDesignerViewModel: ObservableObject {
             objArr.append(kaboomPeg)
             self.selectedObj = kaboomPeg
         case PegSelectionColor.spooky:
-            let spookyPeg = SpookyPeg(coordinates: coordinates, name: GameObject.Types.spookyPeg.rawValue)
+            let spookyPeg = SpookyPeg(coordinates: coordinates)
             if spookyPeg.physicsBody.isIntersecting(with: physicsBodyArr) {
                 return
             }
@@ -157,64 +156,66 @@ class LevelDesignerViewModel: ObservableObject {
 
         return newLocation
     }
-    
+
     func updateBoard() {
         objectWillChange.send()
     }
-    
+
     func updateWidth(gameObject: GameObject, width: CGFloat, bounds: CGRect) {
         guard width >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return
         }
-        
+
         var newPhysicsBody = gameObject.physicsBody
         newPhysicsBody.setLength(length: width)
-        
-        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) || !bounds.contains(newPhysicsBody.boundingBox) {
+
+        if newPhysicsBody.isIntersecting(with: objArr.filter { $0 !== gameObject }.map { $0.physicsBody })
+            || !bounds.contains(newPhysicsBody.boundingBox) {
             return
         }
 
-        var newObjArr = objArr.filter{ $0 !== gameObject }
-        
+        var newObjArr = objArr.filter { $0 !== gameObject }
+
         gameObject.physicsBody = newPhysicsBody
-        
+
         newObjArr.append(gameObject)
         objArr = newObjArr
     }
-    
+
     func updateSpringRadius(triangleBlock: TriangleBlock, radius: CGFloat) {
         guard radius >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return
         }
-        
-        var newObjArr = objArr.filter{ $0 !== triangleBlock }
-        
+
+        var newObjArr = objArr.filter { $0 !== triangleBlock }
+
         triangleBlock.springRadius = radius
-        
+
         newObjArr.append(triangleBlock)
         objArr = newObjArr
     }
-    
+
     func updateHeight(gameObject: GameObject, height: CGFloat, bounds: CGRect) {
         guard height >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return
         }
-        
+
         var newPhysicsBody = gameObject.physicsBody
         newPhysicsBody.setLength(length: height)
-        
-        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) || !bounds.contains(newPhysicsBody.boundingBox) {
+
+        if newPhysicsBody.isIntersecting(with: objArr.filter { $0 !== gameObject }.map { $0.physicsBody })
+            || !bounds.contains(newPhysicsBody.boundingBox) {
             return
         }
 
-        var newObjArr = objArr.filter{ $0 !== gameObject }
-        
+        var newObjArr = objArr.filter { $0 !== gameObject }
+
         gameObject.physicsBody = newPhysicsBody
-        
+
         newObjArr.append(gameObject)
         objArr = newObjArr
     }
-    
+
     func showAlert(title: String, message: String) {
         alert = AlertBox(visible: true, title: title, message: message)
     }

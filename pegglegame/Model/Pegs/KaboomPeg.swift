@@ -12,23 +12,21 @@ class KaboomPeg: Peg {
     static let imageNameHit: String = "KaboomPegGlow"
     static let selectionObject: String = "AddKaboomPeg"
 
-    init(coordinates: CGPoint, radius: Double, name: String) {
+    init(coordinates: CGPoint, radius: Double) {
         super.init(
             coordinates: coordinates,
             radius: radius,
             imageName: KaboomPeg.imageName,
-            imageNameHit: KaboomPeg.imageNameHit,
-            name: name
+            imageNameHit: KaboomPeg.imageNameHit
         )
         super.setComponent(of: KaboomBallComponent())
     }
 
-    init(coordinates: CGPoint, name: String) {
+    init(coordinates: CGPoint) {
         super.init(
             coordinates: coordinates,
             imageName: KaboomPeg.imageName,
-            imageNameHit: KaboomPeg.imageNameHit,
-            name: name
+            imageNameHit: KaboomPeg.imageNameHit
         )
         super.setComponent(of: KaboomBallComponent())
     }

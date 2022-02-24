@@ -42,7 +42,7 @@ extension CGVector {
     static func - (lhs: CGVector, rhs: CGVector) -> CGVector {
         CGVector(dx: lhs.dx - rhs.dx, dy: lhs.dy - rhs.dy)
     }
-    
+
     // Return negative of another vector
     static prefix func - (lhs: CGVector) -> CGVector {
         CGVector(dx: -lhs.dx, dy: -lhs.dy)
@@ -52,7 +52,7 @@ extension CGVector {
     static func <= (lhs: CGVector, rhs: CGFloat) -> Bool {
         sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) <= rhs
     }
-    
+
     // Check if a length of a vector is less than a value
     static func > (lhs: CGVector, rhs: CGFloat) -> Bool {
         sqrt(lhs.dx * lhs.dx + lhs.dy * lhs.dy) > rhs
@@ -63,7 +63,7 @@ extension CGVector {
         let left = lhs
         lhs = left + rhs
     }
-    
+
     static func += (lhs: inout CGVector, rhs: CGVector) {
         // This is done to avoid swiftlint shorthand_operator violation
         let left = lhs

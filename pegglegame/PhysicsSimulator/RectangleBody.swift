@@ -102,15 +102,15 @@ struct RectangleBody: PhysicsBody {
             hasGravity: hasGravity
         )
     }
-    
+
     mutating func setLength(length: CGFloat) {
         self.width = length
     }
-    
+
     mutating func setHeight(height: CGFloat) {
         self.height = height
     }
-    
+
     mutating func applyForce(force: CGVector) {
         forces.append(force)
     }
