@@ -13,16 +13,14 @@ class GameObject: Identifiable {
     enum Types: String {
         case bluePeg, orangePeg, kaboomPeg, spookyPeg, ball, wall, block
     }
-
+    
     var boundingBox: CGRect {
         get {
             self.physicsBody.boundingBox
         }
     }
-
-    var opacity: Double
     var imageName: String?
-    var imageNameHit: String?
+    
     var coordinates: CGPoint {
         get {
             physicsBody.coordinates
@@ -35,7 +33,7 @@ class GameObject: Identifiable {
     var physicsBody: PhysicsBody {
         get {
             self.components.getComponent(component: PhysicsComponent.self)?.physicsBody ??
-            RectangleBody(coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false)
+                RectangleBody(coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false)
         }
         set {
             self.components.setComponent(component: PhysicsComponent(physicsBody: newValue))
@@ -48,20 +46,11 @@ class GameObject: Identifiable {
 
     init(
         physicsBody: PhysicsBody,
-        imageName: String? = nil,
-        imageNameHit: String? = nil,
-        onCollide: (GameObject)? = nil,
-        opacity: Double = 1.0
+        imageName: String? = nil
     ) {
         self.imageName = imageName
-        self.imageNameHit = imageNameHit
-        self.opacity = opacity
         self.components = EntityComponentSystem()
         self.components.setComponent(component: PhysicsComponent(physicsBody: physicsBody))
-
-        if imageNameHit == nil {
-            self.imageNameHit = imageName
-        }
     }
 
     func getComponent<T: Component>(of type: T.Type) -> T? {
@@ -74,5 +63,11 @@ class GameObject: Identifiable {
 
     func hasComponent<T: Component>(of type: T.Type) -> Bool {
         components.getComponent(component: type) != nil
+    }
+    
+    func reset() {
+        for component in self.components.components.values {
+            component.reset()
+        }
     }
 }

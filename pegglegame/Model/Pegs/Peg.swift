@@ -20,9 +20,9 @@ class Peg: GameObject {
                 forces: [],
                 velocity: CGVector(),
                 hasGravity: false
-            ), imageName: imageName, imageNameHit: imageNameHit
+            ), imageName: imageName
         )
-        super.setComponent(of: ActivateOnHitComponent())
+        super.setComponent(of: ActivateOnHitComponent(imageNameHit: imageNameHit))
     }
 
     init(coordinates: CGPoint, imageName: String, imageNameHit: String) {
@@ -35,8 +35,8 @@ class Peg: GameObject {
                 forces: [],
                 velocity: CGVector(),
                 hasGravity: false
-            ), imageName: imageName, imageNameHit: imageNameHit
+            ), imageName: imageName
         )
-        super.setComponent(of: ActivateOnHitComponent())
+        super.setComponent(of: ActivateOnHitComponent(imageNameHit: imageNameHit))
     }
 }

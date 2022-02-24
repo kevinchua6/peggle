@@ -23,8 +23,7 @@ class StartGameViewModel: ObservableObject {
     init(objArr: [GameObject]) {
         // Whenever start is pressed, reset all properties
         for gameObj in objArr {
-            gameObj.getComponent(of: ActivateOnHitComponent.self)?.isHit = false
-            gameObj.opacity = 1.0
+            gameObj.reset()
         }
 
         gameRenderer = GameRenderer(objArr: objArr)

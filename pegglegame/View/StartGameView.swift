@@ -84,7 +84,7 @@ struct StartGameView: View {
 
     @ViewBuilder
     private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
-        if let gameObjectImage = gameObject.imageName, let gameObjectImageHit = gameObject.imageNameHit {
+        if let gameObjectImage = gameObject.imageName {
             if !(gameObject.getComponent(of: ActivateOnHitComponent.self)?.isHit ?? false) {
                 Image(gameObjectImage)
                     .resizable()
@@ -93,19 +93,18 @@ struct StartGameView: View {
                         height: gameObject.boundingBox.height
                     )
                     .position(gameObject.coordinates)
-                    .opacity(gameObject.opacity)
-            } else {
-                Image(gameObjectImageHit)
+            } else if let gameObjectHitComponent = gameObject.getComponent(of: ActivateOnHitComponent.self)  {
+                Image(gameObjectHitComponent.imageNameHit)
                     .resizable()
                     .frame(
                         width: gameObject.boundingBox.width,
                         height: gameObject.boundingBox.height
                     )
                     .position(gameObject.coordinates)
-                    .opacity(gameObject.opacity)
                     .transition(AnyTransition.opacity
                                     .animation(.easeOut(duration: 0.3)))
             }
+
         }
     }
 

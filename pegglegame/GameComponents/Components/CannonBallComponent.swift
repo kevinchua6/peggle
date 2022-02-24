@@ -8,5 +8,6 @@
 import Foundation
 
 class CannonBallComponent: Component {
-
+    func reset() {
+    }
 }

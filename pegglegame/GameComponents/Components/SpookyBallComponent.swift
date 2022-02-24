@@ -21,4 +21,8 @@ class SpookyBallComponent: Component {
     func deactivateSpookyBall() {
         isSpookyBallActivated = false
     }
+    
+    func reset() {
+        isSpookyBallActivated = false
+    }
 }

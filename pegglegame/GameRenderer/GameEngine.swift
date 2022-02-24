@@ -27,8 +27,8 @@ class GameEngine {
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
 
-    private let KABOOM_MAGNITUDE = 3_000.0
-    private let KABOOM_RADIUS = 5_000.0
+    private let KABOOM_MAGNITUDE = 200.0
+    private let KABOOM_RADIUS = 20_000.0
 
     private weak var timer: Timer?
 
@@ -128,7 +128,7 @@ class GameEngine {
 
                 // Set all hittable components to hit
                 if isHit {
-                    gameObj.getComponent(of: ActivateOnHitComponent.self)?.isHit = isHit
+                    gameObj.getComponent(of: ActivateOnHitComponent.self)?.setHit(to: true)
                 }
 
                 // activate spooky ball

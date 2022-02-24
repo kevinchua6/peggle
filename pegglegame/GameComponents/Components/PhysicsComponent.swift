@@ -13,4 +13,8 @@ class PhysicsComponent: Component {
     init(physicsBody: PhysicsBody) {
         self.physicsBody = physicsBody
     }
+    
+    func reset() {
+        
+    }
 }

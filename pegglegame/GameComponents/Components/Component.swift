@@ -8,4 +8,7 @@
 import Foundation
 
 protocol Component {
+    
+    // Resets the component to the original state
+    func reset()
 }

@@ -8,4 +8,7 @@
 import Foundation
 
 class OscillatingComponent: Component {
+    
+    func reset() {
+    }
 }
