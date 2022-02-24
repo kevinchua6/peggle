@@ -118,6 +118,10 @@ struct TriangleBody: PhysicsBody {
         self.height = length / 2
     }
     
+    mutating func applyForce(force: CGVector) {
+        forces.append(force)
+    }
+    
 }
 
 extension TriangleBody {

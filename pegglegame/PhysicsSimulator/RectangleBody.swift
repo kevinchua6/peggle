@@ -110,6 +110,10 @@ struct RectangleBody: PhysicsBody {
     mutating func setHeight(height: CGFloat) {
         self.height = height
     }
+    
+    mutating func applyForce(force: CGVector) {
+        forces.append(force)
+    }
 }
 
 extension RectangleBody {

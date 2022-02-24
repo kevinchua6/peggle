@@ -14,6 +14,8 @@ protocol PhysicsBody {
     var mass: CGFloat { get set }
     var hasGravity: Bool { get set }
     var forces: [CGVector] { get }
+    
+    mutating func applyForce(force: CGVector)
 
     var isDynamic: Bool { get }
 

@@ -111,6 +111,10 @@ struct CircleBody: PhysicsBody {
     mutating func setHeight(height: CGFloat) {
         self.radius = height / 2
     }
+    
+    mutating func applyForce(force: CGVector) {
+        forces.append(force)
+    }
 }
 
 extension CircleBody {
@@ -199,7 +203,7 @@ extension CircleBody {
 
         let minRestitution = min(self.restitution, circle.restitution)
 
-        self.velocity = collisionUnitVector * dotProduct * minRestitution
+        self.velocity = collisionUnitVector * dotProduct * minRestitution - circle.velocity
 
         // When collide, shift the position back to prevent overlapping
         let difference: CGFloat = totalWidth - distance
