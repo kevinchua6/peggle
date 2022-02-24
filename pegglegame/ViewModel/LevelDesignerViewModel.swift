@@ -48,6 +48,10 @@ class LevelDesignerViewModel: ObservableObject {
     func selectObj(obj: GameObject) {
         self.selectedObj = obj
     }
+    
+    func deselectObj() {
+        self.selectedObj = nil
+    }
 
     func deleteObj(obj: GameObject) {
         objArr = objArr.filter { $0 !== obj }
@@ -70,7 +74,7 @@ class LevelDesignerViewModel: ObservableObject {
         // Convert to physics body array to check for intersection
         let physicsBodyArr = objArr.map { $0.physicsBody }
 
-        let triangleBlock = TriangleBlock(coordinates: coordinates)
+        let triangleBlock = TriangleBlock(coordinates: coordinates, radius: 20.0)
 
         if triangleBlock.physicsBody.isIntersecting(with: physicsBodyArr) {
             return
@@ -241,6 +245,9 @@ class LevelDesignerViewModel: ObservableObject {
 
             let data = try encoder.encode(decodedBoardlist)
             UserDefaults.standard.set(data, forKey: PersistenceUtils.databaseUserDefaultKey)
+            
+            print(String(data: data, encoding: .utf8)!)
+            
             showAlert(title: "Saved", message: "Level \(trimmedName) saved!")
         } else {
             // If no existing boardList, create one

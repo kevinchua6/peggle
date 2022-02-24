@@ -89,9 +89,7 @@ struct BottomBarView: View {
 
                                 if board.isProtected == true {
                                     Spacer()
-                                    Image(systemName: "pencil.slash")
-                                        .font(.system(size: 30))
-                                        .foregroundColor(.black)
+                                    Text("Default Level")
                                 }
                             }
 
@@ -129,11 +127,12 @@ struct BottomBarView: View {
 
     private func reset() {
         levelDesignerViewModel.objArr = []
+        levelDesignerViewModel.deselectObj()
     }
 
     private func save() {
         if PersistenceUtils.preloadedLevelNames.contains(levelName) {
-            levelDesignerViewModel.showAlert(title: "Error", message: "You can't override preloaded levels!")
+            levelDesignerViewModel.showAlert(title: "Error", message: "You can't override default levels!")
             return
         }
 
@@ -150,6 +149,7 @@ struct BottomBarView: View {
 
     private func load() {
         levelDesignerViewModel.boardList = PersistenceUtils.loadBoardList()
+        levelDesignerViewModel.deselectObj()
         showLoadPopover = true
     }
 }

@@ -19,6 +19,7 @@ class GameObject: Identifiable {
             self.physicsBody.boundingBox
         }
     }
+    
     var imageName: String?
     
     var coordinates: CGPoint {
@@ -30,10 +31,16 @@ class GameObject: Identifiable {
         }
     }
 
+    // A gameobject can easily access it's physicsBody as every GameObject has a PhysicsBody
     var physicsBody: PhysicsBody {
         get {
-            self.components.getComponent(component: PhysicsComponent.self)?.physicsBody ??
-                RectangleBody(coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false)
+            // A physicsBody definitely exists as it is added on instantiation and there is no way
+            // to remove it from the EntityComponentSystem
+            // However, to be more defensive we still return an empty body here
+            self.components.getComponent(component: PhysicsComponent.self)?.physicsBody
+                ?? RectangleBody(
+                    coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false
+                )
         }
         set {
             self.components.setComponent(component: PhysicsComponent(physicsBody: newValue))
@@ -66,7 +73,7 @@ class GameObject: Identifiable {
     }
     
     func reset() {
-        for component in self.components.components.values {
+        for component in self.components.getAllComponents() {
             component.reset()
         }
     }

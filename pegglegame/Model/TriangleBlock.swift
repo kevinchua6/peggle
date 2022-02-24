@@ -13,13 +13,13 @@ class TriangleBlock: GameObject {
     let originalCoordinates: CGPoint
     var springRadius: CGFloat
 
-    init(coordinates: CGPoint, springRadius: CGFloat = 40.0) {
+    init(coordinates: CGPoint, springRadius: CGFloat = 40.0, radius: CGFloat) {
         self.springRadius = springRadius
         self.originalCoordinates = coordinates
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
-                radius: 20.0,
+                radius: radius,
                 mass: 1.0,
                 isDynamic: true,
                 forces: [],
@@ -28,5 +28,6 @@ class TriangleBlock: GameObject {
             ),
             imageName: TriangleBlock.imageName
         )
+        super.setComponent(of: OscillatingComponent())
     }
 }
