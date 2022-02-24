@@ -152,8 +152,19 @@ class GameEngine {
                                     // launch it away
                                     let distanceVector = obj.coordinates - kaboomPeg.coordinates
                                     let unitVector = PhysicsEngineUtils.getUnitVector(vector: distanceVector)
-                                    let resultantVelocity: CGVector = unitVector * KABOOM_MAGNITUDE
-                                    obj.physicsBody.velocity += resultantVelocity
+                                    let resultantVelocity: CGVector = obj.physicsBody.velocity + unitVector * KABOOM_MAGNITUDE
+                                    
+                                    var velocityMagnitude = PhysicsEngineUtils.getMagnitude(vector: resultantVelocity)
+                                    
+                                    // cap velocity
+                                    velocityMagnitude = min(velocityMagnitude, PhysicsEngine.MAX_VELOCITY)
+                                    
+                                    
+                                    obj.physicsBody.velocity =
+                                        PhysicsEngineUtils.getUnitVector(
+                                            vector: obj.physicsBody.velocity
+                                        ) * velocityMagnitude
+
                                 }
 
                                 obj.getComponent(of: ActivateOnHitComponent.self)?.isHit = true

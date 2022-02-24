@@ -35,7 +35,11 @@ class PhysicsEngineUtils {
     }
 
     static func getUnitVector(vector: CGVector) -> CGVector {
-        let magnitude: CGFloat = vector * 1
+        let magnitude = getMagnitude(vector: vector)
         return vector / magnitude
+    }
+    
+    static func getMagnitude(vector: CGVector) -> CGFloat {
+        vector * 1
     }
 }

@@ -9,6 +9,8 @@ import CoreGraphics
 import Combine
 
 class PhysicsEngine: ObservableObject {
+    static let MAX_VELOCITY = 2000.0
+    
     func updateCoordinates(physicsBody: PhysicsBody, deltaTime seconds: CGFloat) -> PhysicsBody {
         physicsBody.update(deltaTime: seconds)
     }
@@ -30,10 +32,15 @@ class PhysicsEngine: ObservableObject {
                 hasCollided = true
             }
         }
+        
+        let velocityMagnitude = PhysicsEngineUtils.getMagnitude(vector: dynamicBody.velocity)
+        if velocityMagnitude > PhysicsEngine.MAX_VELOCITY {
+            dynamicBody.velocity = PhysicsEngineUtils.getUnitVector(vector: dynamicBody.velocity) * PhysicsEngine.MAX_VELOCITY
+        }
 
         return (dynamicBody, hasCollided)
     }
-
+    
     func updatePreventOverlapping(
         physicsBody: PhysicsBody,
         physicsBodyArr: [PhysicsBody],
