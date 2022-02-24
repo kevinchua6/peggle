@@ -124,8 +124,8 @@ class GameEngine {
                 
                 // activate spooky ball
                 if gameObj.name == GameObject.Types.spookyPeg.rawValue && isHit {
-                    for spookyBalls in objArr.filter({$0.components.getComponent(componentName: ComponentName.SpookyBallComponent) != nil}) {
-                        (spookyBalls.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.activateSpookyBall()
+                    for spookyBall in objArr.filter({$0.hasComponent(of: SpookyBallComponent.self)}) {
+                        spookyBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
                     }
                 }
                 
@@ -203,13 +203,11 @@ class GameEngine {
     }
     
     private func activateSpookyBall(bounds: CGRect) {
-        for spookyBall in objArr.filter(
-            {$0.components.getComponent(
-                componentName: ComponentName.SpookyBallComponent) != nil
-            }) {
-            if (spookyBall.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.isSpookyBallActivated ?? false && !bounds.contains(spookyBall.boundingBox) {
-                spookyBall.coordinates = CGPoint(x: spookyBall.coordinates.x, y: 40)
-                (spookyBall.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.deactivateSpookyBall()
+        for spookyBall in objArr.filter({$0.hasComponent(of: SpookyBallComponent.self)}) {
+            
+            if spookyBall.getComponent(of: SpookyBallComponent.self)?.isSpookyBallActivated ?? false && !bounds.contains(spookyBall.boundingBox) {
+                    spookyBall.coordinates = CGPoint(x: spookyBall.coordinates.x, y: 10)
+                    spookyBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
             }
         }
     }

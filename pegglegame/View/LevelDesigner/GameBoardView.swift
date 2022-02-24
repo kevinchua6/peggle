@@ -54,7 +54,7 @@ struct GameBoardView: View {
                     return
                 }
                 placeholderObj.isVisible = true
-                placeholderObj.object.physicsBody.coordinates = value.location
+                placeholderObj.object.coordinates = value.location
                 
                 placeholderObj.object.physicsBody.setLength(
                     length: GameBoardView.DEFAULT_OBJ_LENGTH

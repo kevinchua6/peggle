@@ -37,14 +37,11 @@ class GameObject: Identifiable {
     
     var physicsBody: PhysicsBody {
         get {
-            (self.components.getComponent(componentName: ComponentName.PhysicsComponent) as? PhysicsComponent)?.physicsBody
-            ??
-                RectangleBody(coordinates: coordinates, width: boundingBox.width, height: boundingBox.height, isDynamic: false)
+            return self.components.getComponent(component: PhysicsComponent.self)?.physicsBody ??
+            RectangleBody(coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false)
         }
         set {
-            self.components.setComponent(componentName: ComponentName.PhysicsComponent,
-                                         as: PhysicsComponent(physicsBody: newValue)
-            )
+            self.components.setComponent(component: PhysicsComponent(physicsBody: newValue))
         }
     }
 
@@ -69,13 +66,23 @@ class GameObject: Identifiable {
         self.isHit = isHit
         self.opacity = opacity
         self.components = EntityComponentSystem()
-
-        self.components.setComponent(componentName: ComponentName.PhysicsComponent,
-                                     as: PhysicsComponent(physicsBody: physicsBody)
-                                     )
+        self.components.setComponent(component: PhysicsComponent(physicsBody: physicsBody))
+        
                                      
         if imageNameHit == nil {
             self.imageNameHit = imageName
         }
+    }
+    
+    func getComponent<T: Component>(of type: T.Type) -> T? {
+        components.getComponent(component: type)
+    }
+    
+    func setComponent<T: Component>(of type: T) {
+        components.setComponent(component: type)
+    }
+    
+    func hasComponent<T: Component>(of type: T.Type) -> Bool {
+        components.getComponent(component: type) != nil
     }
 }
