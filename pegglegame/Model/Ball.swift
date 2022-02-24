@@ -26,5 +26,9 @@ class Ball: GameObject {
             name: name,
             imageName: Ball.imageName
         )
+        
+        super.components.setComponent(
+            componentName: ComponentName.SpookyBallComponent, as: SpookyBallComponent()
+        )
     }
 }

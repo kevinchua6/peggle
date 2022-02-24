@@ -226,8 +226,8 @@ extension CircleBody {
         let totalWidth = self.radius + rectangle.width / 2
         let totalHeight = self.radius + rectangle.height / 2
 
-        let xdifference: CGFloat = totalWidth - abs(xdistance)
-        let ydifference: CGFloat = totalHeight - abs(ydistance)
+        let xdifference: CGFloat = totalWidth - abs(xdistance) + EPSILON
+        let ydifference: CGFloat = totalHeight - abs(ydistance) + EPSILON
 
         // Do rotation in the future
         if rectangle.boundingBox.minY <= self.coordinates.y && self.coordinates.y <= rectangle.boundingBox.maxY {

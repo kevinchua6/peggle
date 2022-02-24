@@ -57,6 +57,8 @@ struct BottomBarView: View {
         HStack {
             generateCreateObjButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
             generateCreateObjButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
+            generateCreateObjButtonView(selection: .add(.kaboom), imageName: KaboomPeg.imageName)
+            generateCreateObjButtonView(selection: .add(.spooky), imageName: SpookyPeg.imageName)
             generateCreateObjButtonView(selection: .addTriangleBlock, imageName: TriangleBlock.imageName)
             Spacer()
             generateDeleteButtonView()

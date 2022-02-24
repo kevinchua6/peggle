@@ -11,7 +11,7 @@ import Combine
 
 class LevelDesignerViewModel: ObservableObject {
     enum PegSelectionColor: String {
-        case blue, orange
+        case blue, orange, kaboom, spooky
     }
 
     enum SelectionMode: Equatable {
@@ -102,6 +102,22 @@ class LevelDesignerViewModel: ObservableObject {
 
             objArr.append(orangePeg)
             self.selectedObj = orangePeg
+        case PegSelectionColor.kaboom:
+            let kaboomPeg = KaboomPeg(coordinates: coordinates, name: GameObject.Types.kaboomPeg.rawValue)
+            if kaboomPeg.physicsBody.isIntersecting(with: physicsBodyArr) {
+                return
+            }
+
+            objArr.append(kaboomPeg)
+            self.selectedObj = kaboomPeg
+        case PegSelectionColor.spooky:
+            let spookyPeg = SpookyPeg(coordinates: coordinates, name: GameObject.Types.spookyPeg.rawValue)
+            if spookyPeg.physicsBody.isIntersecting(with: physicsBodyArr) {
+                return
+            }
+
+            objArr.append(spookyPeg)
+            self.selectedObj = spookyPeg
         }
     }
 

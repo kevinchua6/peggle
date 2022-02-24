@@ -11,7 +11,7 @@ import Foundation
 class GameObject: Identifiable {
     // Types of game objects to be stored in the database
     enum Types: String {
-        case bluePeg, orangePeg, ball, wall, block
+        case bluePeg, orangePeg, kaboomPeg, spookyPeg, ball, wall, block
     }
 
     // Allow easy identification of GameObjects

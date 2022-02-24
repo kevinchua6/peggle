@@ -20,8 +20,8 @@ class GameEngine {
     private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
     
-    private let MIN_VELOCITY = 50.0
-    private let REMOVE_BALL_INTERVAL = 0.8
+    private let MIN_VELOCITY = 150.0
+    private let REMOVE_BALL_INTERVAL = 1.5
     
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
@@ -38,6 +38,7 @@ class GameEngine {
 
     func update() -> [GameObject] {
         if let myBounds = self.bounds {
+            activateSpookyBall(bounds: myBounds)
             removeObjOutsideBoundaries(bounds: myBounds)
             removeLightedUpPegsConditionally(bounds: myBounds)
         }
@@ -62,7 +63,6 @@ class GameEngine {
             var isHit: Bool
             
             if let triangleBlock = gameObj as? TriangleBlock {
-                
                 (gameObj.physicsBody, isHit) =
                     self.physicsEngine.updateVelocities(
                         physicsBody: gameObj.physicsBody,
@@ -115,8 +115,18 @@ class GameEngine {
                     )
                 
                 if (gameObj.name == GameObject.Types.bluePeg.rawValue ||
-                    gameObj.name == GameObject.Types.orangePeg.rawValue) && isHit {
+                    gameObj.name == GameObject.Types.orangePeg.rawValue ||
+                    gameObj.name == GameObject.Types.kaboomPeg.rawValue ||
+                    gameObj.name == GameObject.Types.spookyPeg.rawValue)
+                    && isHit {
                     gameObj.isHit = isHit
+                }
+                
+                // activate spooky ball
+                if gameObj.name == GameObject.Types.spookyPeg.rawValue && isHit {
+                    for spookyBalls in objArr.filter({$0.components.getComponent(componentName: ComponentName.SpookyBallComponent) != nil}) {
+                        (spookyBalls.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.activateSpookyBall()
+                    }
                 }
                 
                 
@@ -169,7 +179,9 @@ class GameEngine {
     private func removeLightedUpPegs() {
         for gameObj in objArr where gameObj.isHit {
             if gameObj.name == GameObject.Types.bluePeg.rawValue ||
-                gameObj.name == GameObject.Types.orangePeg.rawValue {
+                gameObj.name == GameObject.Types.orangePeg.rawValue ||
+                gameObj.name == GameObject.Types.kaboomPeg.rawValue ||
+                gameObj.name == GameObject.Types.spookyPeg.rawValue {
                     objArr = objArr.filter { $0 !== gameObj }
             }
         }
@@ -187,6 +199,18 @@ class GameEngine {
         objArr = objArr.filter {
             outerBounds.contains($0.physicsBody.boundingBox) ||
                 $0.name != GameObject.Types.ball.rawValue
+        }
+    }
+    
+    private func activateSpookyBall(bounds: CGRect) {
+        for spookyBall in objArr.filter(
+            {$0.components.getComponent(
+                componentName: ComponentName.SpookyBallComponent) != nil
+            }) {
+            if (spookyBall.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.isSpookyBallActivated ?? false && !bounds.contains(spookyBall.boundingBox) {
+                spookyBall.coordinates = CGPoint(x: spookyBall.coordinates.x, y: 40)
+                (spookyBall.components.getComponent(componentName: ComponentName.SpookyBallComponent) as? SpookyBallComponent)?.deactivateSpookyBall()
+            }
         }
     }
 }

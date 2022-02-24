@@ -8,5 +8,5 @@
 import Foundation
 
 enum ComponentName: String {
-    case PhysicsComponent
+    case PhysicsComponent, SpookyBallComponent
 }
