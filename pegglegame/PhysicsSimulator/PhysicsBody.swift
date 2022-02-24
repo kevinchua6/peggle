@@ -26,8 +26,7 @@ protocol PhysicsBody {
     // Update body to next position
     func update(deltaTime seconds: CGFloat) -> PhysicsBody
     
-    mutating func setWidth(width: CGFloat)
-    mutating func setHeight(height: CGFloat)
+    mutating func setLength(length: CGFloat)
 
     // Update the coordinates to prevent overlapping
     mutating func preventOverlapBodies()

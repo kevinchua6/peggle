@@ -38,8 +38,6 @@ struct CircleBody: PhysicsBody {
             height: radius * 2
         )
     }
-    
-
 
     init(
         coordinates: CGPoint,
@@ -106,8 +104,8 @@ struct CircleBody: PhysicsBody {
         )
     }
     
-    mutating func setWidth(width: CGFloat) {
-        self.radius = width / 2
+    mutating func setLength(length: CGFloat) {
+        self.radius = length / 2
     }
     
     mutating func setHeight(height: CGFloat) {
@@ -126,6 +124,8 @@ extension CircleBody {
             return isIntersecting(with: physicsBody as! RectangleBody)
         case is CircleBody:
             return isIntersecting(with: physicsBody as! CircleBody)
+        case is TriangleBody:
+            return isIntersecting(with: physicsBody as! TriangleBody)
         default:
             return false
         }
@@ -151,6 +151,11 @@ extension CircleBody {
 
         return distanceSquared < totalRadiusSquared
     }
+    
+    func isIntersecting(with triangle: TriangleBody) -> Bool {
+        // Do the more trivial version of collision first
+        isIntersecting(with: CircleBody(coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []))
+    }
 
     func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool {
         var isIntersectingAll = false
@@ -166,9 +171,15 @@ extension CircleBody {
             handleCollision(with: physicsBody as! RectangleBody)
         case is CircleBody:
             handleCollision(with: physicsBody as! CircleBody)
+        case is TriangleBody:
+            handleCollision(with: physicsBody as! TriangleBody)
         default:
             return
         }
+    }
+    
+    mutating func handleCollision(with triangle: TriangleBody) {
+        handleCollision(with: CircleBody(coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []))
     }
 
     mutating func handleCollision(with circle: CircleBody) {

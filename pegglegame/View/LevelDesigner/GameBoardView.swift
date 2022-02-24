@@ -56,8 +56,8 @@ struct GameBoardView: View {
                 placeholderObj.isVisible = true
                 placeholderObj.object.physicsBody.coordinates = value.location
                 
-                placeholderObj.object.physicsBody.setHeight(
-                    height: GameBoardView.DEFAULT_OBJ_LENGTH
+                placeholderObj.object.physicsBody.setLength(
+                    length: GameBoardView.DEFAULT_OBJ_LENGTH
                 )
                 
                 self.placeholderObj.isValid =
@@ -84,7 +84,7 @@ struct GameBoardView: View {
             Image(gameObjectImage)
                 .resizable()
                 .frame(width: gameObject.physicsBody.boundingBox.width,
-                       height: gameObject.physicsBody.boundingBox.height
+                       height: gameObject.physicsBody.boundingBox.width
                 )
                 .position(gameObject.physicsBody.coordinates)
                 .offset(y: -keyboardResponder.currentHeight * 0.9)
@@ -110,12 +110,11 @@ struct GameBoardView: View {
                         return
                     }
                     
-//                    placeholderObj.object = gameObject
                     if let gameObjImageName = gameObject.imageName {
                         placeholderObj.imageName = gameObjImageName
                     }
-                    placeholderObj.object.physicsBody.setHeight(
-                        height: gameObject.physicsBody.boundingBox.height
+                    placeholderObj.object.physicsBody.setLength(
+                        length: gameObject.physicsBody.boundingBox.height
                     )
 
                     levelDesignerViewModel.dragObj(
@@ -155,10 +154,8 @@ struct GameBoardView: View {
 
     @ViewBuilder
     private func generatePlaceholderObjView(placeholderObj: PlaceholderObj) -> some View {
-        if case .add = levelDesignerViewModel.selectionMode {
-            // If not visible or not in add mode, hide it
+        if levelDesignerViewModel.selectionMode != LevelDesignerViewModel.SelectionMode.delete {
             if self.placeholderObj.isVisible {
-                // If not valid, show red
                 if !placeholderObj.isValid {
                     Image(placeholderObj.imageName)
                         .renderingMode(.template)

@@ -1,13 +1,13 @@
 //
-//  Square.swift
+//  TriangleBody.swift
 //  pegglegame
 //
-//  Created by kevin chua on 22/1/22.
+//  Created by kevin chua on 23/2/22.
 //
 
 import CoreGraphics
 
-struct RectangleBody: PhysicsBody {
+struct TriangleBody: PhysicsBody {
 
     var coordinates: CGPoint
     var nextCoordinates: CGPoint
@@ -25,15 +25,25 @@ struct RectangleBody: PhysicsBody {
 
     var width: CGFloat
     var height: CGFloat
+    
+    var v1: CGPoint {
+        CGPoint(x: coordinates.x, y: coordinates.y + width)
+    }
+    var v2: CGPoint {
+        CGPoint(x: coordinates.x + height, y: coordinates.y + width)
+    }
+    var v3: CGPoint {
+        CGPoint(x: coordinates.x - height, y: coordinates.y + width)
+    }
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {
-        // Set center of bounding box to center of Square
+        // Set center of bounding box to center of Triangle
         CGRect(
-            x: coordinates.x,
-            y: coordinates.y,
-            width: width,
-            height: height
+            x: coordinates.x - width,
+            y: coordinates.y - height,
+            width: width * 2,
+            height: height * 2
         )
     }
 
@@ -104,15 +114,13 @@ struct RectangleBody: PhysicsBody {
     }
     
     mutating func setLength(length: CGFloat) {
-        self.width = length
+        self.width = length / 2
+        self.height = length / 2
     }
     
-    mutating func setHeight(height: CGFloat) {
-        self.height = height
-    }
 }
 
-extension RectangleBody {
+extension TriangleBody {
     // swiftlint:disable force_cast
     // Because we know it is a Rectangle in the switch statement, it is okay to cast it to Square
     // I need to cast it because I need the same method signature to override isIntersecting

@@ -24,6 +24,8 @@
 		6F54931427C62A4900EB9568 /* ComponentNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F54931327C62A4900EB9568 /* ComponentNames.swift */; };
 		6F54931627C62A7B00EB9568 /* PhysicsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F54931527C62A7B00EB9568 /* PhysicsComponent.swift */; };
 		6F54931927C62B9000EB9568 /* EntityComponentSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */; };
+		6F54931E27C68A0E00EB9568 /* TriangleBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F54931D27C68A0E00EB9568 /* TriangleBlock.swift */; };
+		6F54932027C68A5100EB9568 /* TriangleBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F54931F27C68A5100EB9568 /* TriangleBody.swift */; };
 		6F5BD97F27A5582900988D75 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5BD97E27A5582900988D75 /* KeyboardResponder.swift */; };
 		6F67843B2796584F0086CC9A /* PegglegameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F67843A2796584F0086CC9A /* PegglegameApp.swift */; };
 		6F67843F279658510086CC9A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F67843E279658510086CC9A /* Assets.xcassets */; };
@@ -77,6 +79,8 @@
 		6F54931327C62A4900EB9568 /* ComponentNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ComponentNames.swift; path = Pegglegame/GameComponents/Components/ComponentNames.swift; sourceTree = SOURCE_ROOT; };
 		6F54931527C62A7B00EB9568 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsComponent.swift; path = Pegglegame/GameComponents/Components/PhysicsComponent.swift; sourceTree = SOURCE_ROOT; };
 		6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntityComponentSystem.swift; path = Pegglegame/GameComponents/Systems/EntityComponentSystem.swift; sourceTree = SOURCE_ROOT; };
+		6F54931D27C68A0E00EB9568 /* TriangleBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriangleBlock.swift; path = Pegglegame/Model/TriangleBlock.swift; sourceTree = SOURCE_ROOT; };
+		6F54931F27C68A5100EB9568 /* TriangleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriangleBody.swift; path = Pegglegame/PhysicsSimulator/TriangleBody.swift; sourceTree = SOURCE_ROOT; };
 		6F5BD97E27A5582900988D75 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 		6F6784372796584F0086CC9A /* pegglegame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pegglegame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F67843A2796584F0086CC9A /* PegglegameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegglegameApp.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 				6F1C9E94279BF4B50058C36A /* CircleBody.swift */,
 				6F8DC7AC27B52B5400B7D01A /* RectangleBody.swift */,
 				6F8DC7AA27B5238200B7D01A /* PhysicsEngineUtils.swift */,
+				6F54931F27C68A5100EB9568 /* TriangleBody.swift */,
 			);
 			path = PhysicsSimulator;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				6F8DC7B027B5ECBA00B7D01A /* Pegs */,
 				6F19293B27AD8BED00E74D57 /* Ball.swift */,
 				6F8DC7AE27B5EC6F00B7D01A /* Wall.swift */,
+				6F54931D27C68A0E00EB9568 /* TriangleBlock.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -447,12 +453,14 @@
 				6F54931627C62A7B00EB9568 /* PhysicsComponent.swift in Sources */,
 				6FF0C36E27A368070036BE11 /* BoardList.swift in Sources */,
 				6FD6FF7B27997C2D0050141E /* Peg.swift in Sources */,
+				6F54931E27C68A0E00EB9568 /* TriangleBlock.swift in Sources */,
 				6F5BD97F27A5582900988D75 /* KeyboardResponder.swift in Sources */,
 				6FB8011027A29BC300B82496 /* Board.swift in Sources */,
 				6FD6FF7D27997D320050141E /* BluePeg.swift in Sources */,
 				6F54930227C4F33000EB9568 /* StartMenuView.swift in Sources */,
 				6F9B27CD27B6B880001EBF82 /* GameEngine.swift in Sources */,
 				6FDBB80C27AC37670014463B /* LazyView.swift in Sources */,
+				6F54932027C68A5100EB9568 /* TriangleBody.swift in Sources */,
 				6F1C9E95279BF4B50058C36A /* CircleBody.swift in Sources */,
 				6F8DC7AD27B52B5400B7D01A /* RectangleBody.swift in Sources */,
 				6FF0C36C27A2EC600036BE11 /* PersistenceUtils.swift in Sources */,

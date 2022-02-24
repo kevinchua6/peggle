@@ -15,7 +15,7 @@ class LevelDesignerViewModel: ObservableObject {
     }
 
     enum SelectionMode: Equatable {
-        case add(PegSelectionColor), delete
+        case add(PegSelectionColor), delete, addTriangleBlock
     }
 
     struct AlertBox {
@@ -58,12 +58,30 @@ class LevelDesignerViewModel: ObservableObject {
     func moveObj(obj: GameObject, to endCoord: CGPoint) {
         obj.coordinates = endCoord
     }
-
+    
     func placeObj(at coordinates: CGPoint) {
-        guard case let .add(color) = selectionMode else {
+        if case let .add(color) = selectionMode {
+            placePeg(at: coordinates, color: color)
+        } else if selectionMode == LevelDesignerViewModel.SelectionMode.addTriangleBlock {
+            placeBlock(at: coordinates)
+        }
+    }
+    
+    func placeBlock(at coordinates: CGPoint) {
+        // Convert to physics body array to check for intersection
+        let physicsBodyArr = objArr.map { $0.physicsBody }
+        
+        let triangleBlock = TriangleBlock(coordinates: coordinates, name: GameObject.Types.block.rawValue)
+        
+        if triangleBlock.physicsBody.isIntersecting(with: physicsBodyArr) {
             return
         }
+        
+        objArr.append(triangleBlock)
+        self.selectedObj = triangleBlock
+    }
 
+    func placePeg(at coordinates: CGPoint, color: PegSelectionColor) {
         // Convert to physics body array to check for intersection
         let physicsBodyArr = objArr.map { $0.physicsBody }
 
@@ -134,7 +152,7 @@ class LevelDesignerViewModel: ObservableObject {
         }
         
         var newPhysicsBody = gameObject.physicsBody
-        newPhysicsBody.setWidth(width: width)
+        newPhysicsBody.setLength(length: width)
         
         if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) || !bounds.contains(newPhysicsBody.boundingBox) {
             return
@@ -143,7 +161,26 @@ class LevelDesignerViewModel: ObservableObject {
         var newObjArr = objArr.filter{ $0 !== gameObject }
         
         gameObject.physicsBody = newPhysicsBody
+        
+        newObjArr.append(gameObject)
+        objArr = newObjArr
+    }
+    
+    func updateHeight(gameObject: GameObject, height: CGFloat, bounds: CGRect) {
+        guard height >= GameBoardView.DEFAULT_OBJ_LENGTH else {
+            return
+        }
+        
+        var newPhysicsBody = gameObject.physicsBody
+        newPhysicsBody.setLength(length: height)
+        
+        if newPhysicsBody.isIntersecting(with: objArr.filter{$0 !== gameObject}.map{$0.physicsBody}) || !bounds.contains(newPhysicsBody.boundingBox) {
+            return
+        }
 
+        var newObjArr = objArr.filter{ $0 !== gameObject }
+        
+        gameObject.physicsBody = newPhysicsBody
         
         newObjArr.append(gameObject)
         objArr = newObjArr

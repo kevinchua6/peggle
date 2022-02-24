@@ -55,8 +55,9 @@ struct BottomBarView: View {
 
     private func generateSelectionBarView() -> some View {
         HStack {
-            generateCreatePegButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
-            generateCreatePegButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
+            generateCreateObjButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
+            generateCreateObjButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
+            generateCreateObjButtonView(selection: .addTriangleBlock, imageName: TriangleBlock.imageName)
             Spacer()
             generateDeleteButtonView()
         }
@@ -111,7 +112,7 @@ struct BottomBarView: View {
         })
     }
 
-    private func generateCreatePegButtonView
+    private func generateCreateObjButtonView
         (selection: LevelDesignerViewModel.SelectionMode, imageName: String) -> some View {
         Button(action: {
             levelDesignerViewModel.selectionMode = selection
@@ -123,7 +124,7 @@ struct BottomBarView: View {
                 .opacity(levelDesignerViewModel.selectionMode == selection ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
         })
     }
-
+    
     private func reset() {
         levelDesignerViewModel.objArr = []
     }
