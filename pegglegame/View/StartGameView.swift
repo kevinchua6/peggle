@@ -85,7 +85,7 @@ struct StartGameView: View {
     @ViewBuilder
     private func generateGameObjectView(gameObject: GameObject, bounds: CGRect) -> some View {
         if let gameObjectImage = gameObject.imageName, let gameObjectImageHit = gameObject.imageNameHit {
-            if !gameObject.isHit {
+            if !(gameObject.getComponent(of: ActivateOnHitComponent.self)?.isHit ?? false) {
                 Image(gameObjectImage)
                     .resizable()
                     .frame(

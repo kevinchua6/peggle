@@ -63,6 +63,12 @@ extension CGVector {
         let left = lhs
         lhs = left + rhs
     }
+    
+    static func += (lhs: inout CGVector, rhs: CGVector) {
+        // This is done to avoid swiftlint shorthand_operator violation
+        let left = lhs
+        lhs = left + rhs
+    }
 
     // Return a vector divided by the distance
     static func / (lhs: CGVector, rhs: CGFloat) -> CGVector {

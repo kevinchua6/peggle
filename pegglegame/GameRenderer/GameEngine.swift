@@ -27,6 +27,9 @@ class GameEngine {
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
     
+    private let KABOOM_MAGNITUDE = 3000.0
+    private let KABOOM_RADIUS = 5000.0
+    
     private weak var timer: Timer?
 
     var objArr: [GameObject]
@@ -38,9 +41,17 @@ class GameEngine {
 
     func update() -> [GameObject] {
         if let myBounds = self.bounds {
-            activateSpookyBall(bounds: myBounds)
-            removeObjOutsideBoundaries(bounds: myBounds)
-            removeLightedUpPegsConditionally(bounds: myBounds)
+            // Remove pegs only a certain amount away from the bounds
+            let outerBounds = CGRect(
+                x: myBounds.minX - ADDITIONAL_WALL_LENGTH,
+                y: myBounds.minY - ADDITIONAL_WALL_LENGTH,
+                width: myBounds.width + 2 * ADDITIONAL_WALL_LENGTH,
+                height: myBounds.height + 2 * ADDITIONAL_WALL_LENGTH
+            )
+            
+            activateSpookyBall(bounds: outerBounds)
+            removeObjOutsideBoundaries(bounds: outerBounds)
+            removeLightedUpPegsConditionally(bounds: outerBounds)
         }
 
         simulatePhysics()
@@ -114,13 +125,11 @@ class GameEngine {
                         deltaTime: CGFloat(1 / framesPerSecond)
                     )
                 
-                if (gameObj.name == GameObject.Types.bluePeg.rawValue ||
-                    gameObj.name == GameObject.Types.orangePeg.rawValue ||
-                    gameObj.name == GameObject.Types.kaboomPeg.rawValue ||
-                    gameObj.name == GameObject.Types.spookyPeg.rawValue)
-                    && isHit {
-                    gameObj.isHit = isHit
+                // Set all hittable components to hit
+                if isHit {
+                    gameObj.getComponent(of: ActivateOnHitComponent.self)?.isHit = isHit
                 }
+                
                 
                 // activate spooky ball
                 if gameObj.name == GameObject.Types.spookyPeg.rawValue && isHit {
@@ -129,6 +138,30 @@ class GameEngine {
                     }
                 }
                 
+                // if kaboom, boom it
+                if gameObj.hasComponent(of: KaboomBallComponent.self) {
+                    if let activateOnHitComponent = gameObj.getComponent(of: ActivateOnHitComponent.self) {
+                        if activateOnHitComponent.isHit && !activateOnHitComponent.isActivated {
+                            activateOnHitComponent.activate()
+                            
+                            let kaboomPeg = gameObj
+                            for obj in objArr.filter( {
+                                PhysicsEngineUtils.CGPointDistanceSquared(from: kaboomPeg.coordinates, to: $0.coordinates) <= KABOOM_RADIUS
+                            }) {
+                                if obj.hasComponent(of: CannonBallComponent.self) {
+                                    // launch it away
+                                    let distanceVector = obj.coordinates - kaboomPeg.coordinates
+                                    let unitVector = PhysicsEngineUtils.getUnitVector(vector: distanceVector)
+                                    let resultantVelocity: CGVector = unitVector * KABOOM_MAGNITUDE
+                                    obj.physicsBody.velocity += resultantVelocity
+                                }
+                                
+                                obj.getComponent(of: ActivateOnHitComponent.self)?.isHit = true
+                                
+                            }
+                        }
+                    }
+                }
                 
             }
         }
@@ -188,24 +221,16 @@ class GameEngine {
     }
 
     private func removeObjOutsideBoundaries(bounds: CGRect) {
-        // Remove pegs only a certain amount away from the bounds
-        let outerBounds = CGRect(
-            x: bounds.minX - ADDITIONAL_WALL_LENGTH,
-            y: bounds.minY - ADDITIONAL_WALL_LENGTH,
-            width: bounds.width + 2 * ADDITIONAL_WALL_LENGTH,
-            height: bounds.height + 2 * ADDITIONAL_WALL_LENGTH
-        )
-
         objArr = objArr.filter {
-            outerBounds.contains($0.physicsBody.boundingBox) ||
+            bounds.contains($0.physicsBody.boundingBox) ||
                 $0.name != GameObject.Types.ball.rawValue
         }
     }
     
     private func activateSpookyBall(bounds: CGRect) {
         for spookyBall in objArr.filter({$0.hasComponent(of: SpookyBallComponent.self)}) {
-            
             if spookyBall.getComponent(of: SpookyBallComponent.self)?.isSpookyBallActivated ?? false && !bounds.contains(spookyBall.boundingBox) {
+                    removeLightedUpPegs()
                     spookyBall.coordinates = CGPoint(x: spookyBall.coordinates.x, y: 10)
                     spookyBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
             }

@@ -20,6 +20,7 @@ class KaboomPeg: Peg {
             imageNameHit: KaboomPeg.imageNameHit,
             name: name
         )
+        super.setComponent(of: KaboomBallComponent())
     }
 
     init(coordinates: CGPoint, name: String) {
@@ -29,5 +30,6 @@ class KaboomPeg: Peg {
             imageNameHit: KaboomPeg.imageNameHit,
             name: name
         )
+        super.setComponent(of: KaboomBallComponent())
     }
 }

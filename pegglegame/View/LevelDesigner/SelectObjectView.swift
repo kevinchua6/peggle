@@ -34,7 +34,6 @@ struct SelectObjectView: View {
             
             if obj.name == GameObject.Types.block.rawValue {
                 generateSpringynessView()
-                    .zIndex(-1)
             }
         }
     }
@@ -42,8 +41,9 @@ struct SelectObjectView: View {
     private func generateSpringynessView() -> some View {
         Circle()
             .strokeBorder(Color.blue, lineWidth: 30)
-            .frame(width: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2,
-                   height: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2
+            .frame(
+                width: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2,
+                height: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2
             )
             .position(obj.coordinates)
             .opacity(0.4)

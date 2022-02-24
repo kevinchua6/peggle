@@ -33,4 +33,9 @@ class PhysicsEngineUtils {
     static func dotProduct(vector1: CGVector, vector2: CGVector) -> CGFloat {
         vector1.dx * vector2.dx + vector1.dy * vector2.dy
     }
+    
+    static func getUnitVector(vector: CGVector) -> CGVector {
+        let magnitude: CGFloat = vector * 1
+        return vector / magnitude
+    }
 }

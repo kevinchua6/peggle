@@ -22,6 +22,7 @@ class Peg: GameObject {
                 hasGravity: false
             ), name: name, imageName: imageName, imageNameHit: imageNameHit, isHit: false
         )
+        super.setComponent(of: ActivateOnHitComponent())
     }
 
     init(coordinates: CGPoint, imageName: String, imageNameHit: String, name: String) {
@@ -36,5 +37,6 @@ class Peg: GameObject {
                 hasGravity: false
             ), name: name, imageName: imageName, imageNameHit: imageNameHit, isHit: false
         )
+        super.setComponent(of: ActivateOnHitComponent())
     }
 }
