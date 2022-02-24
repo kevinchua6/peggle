@@ -179,7 +179,9 @@ extension CircleBody {
     }
     
     mutating func handleCollision(with triangle: TriangleBody) {
-        handleCollision(with: CircleBody(coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []))
+        handleCollision(with: CircleBody(
+            coordinates: triangle.coordinates, radius: triangle.width * 0.8, mass: 1.0, isDynamic: false, forces: [])
+        )
     }
 
     mutating func handleCollision(with circle: CircleBody) {

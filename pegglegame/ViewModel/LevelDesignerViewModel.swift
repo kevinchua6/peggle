@@ -166,6 +166,19 @@ class LevelDesignerViewModel: ObservableObject {
         objArr = newObjArr
     }
     
+    func updateSpringRadius(triangleBlock: TriangleBlock, radius: CGFloat) {
+        guard radius >= GameBoardView.DEFAULT_OBJ_LENGTH else {
+            return
+        }
+        
+        var newObjArr = objArr.filter{ $0 !== triangleBlock }
+        
+        triangleBlock.springRadius = radius
+        
+        newObjArr.append(triangleBlock)
+        objArr = newObjArr
+    }
+    
     func updateHeight(gameObject: GameObject, height: CGFloat, bounds: CGRect) {
         guard height >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return

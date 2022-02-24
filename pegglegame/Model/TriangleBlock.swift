@@ -10,15 +10,16 @@ import CoreGraphics
 
 class TriangleBlock: GameObject {
     static let imageName: String = "TriangleBlock"
+    var springRadius: CGFloat
 
-    init(coordinates: CGPoint, name: String) {
+    init(coordinates: CGPoint, name: String, springRadius: CGFloat = 40.0) {
+        self.springRadius = springRadius
         super.init(
-            physicsBody: TriangleBody(
+            physicsBody: CircleBody(
                 coordinates: coordinates,
-                width: 20.0,
-                height: 20.0,
+                radius: 20.0,
                 mass: 1.0,
-                isDynamic: false,
+                isDynamic: true,
                 forces: [],
                 velocity: CGVector(),
                 hasGravity: false

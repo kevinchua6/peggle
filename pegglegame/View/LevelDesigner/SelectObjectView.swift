@@ -23,7 +23,6 @@ struct SelectObjectView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .rotation(.radians(Double(0.0)))
                 .stroke(.white, lineWidth: 2)
                 .frame(
                     width: obj.physicsBody.boundingBox.width,
@@ -32,7 +31,33 @@ struct SelectObjectView: View {
                 .position(obj.coordinates)
                 .allowsHitTesting(false)
             generateResizeCornersView()
+            
+            if obj.name == GameObject.Types.block.rawValue {
+                generateSpringynessView()
+                    .zIndex(-1)
+            }
         }
+    }
+    
+    private func generateSpringynessView() -> some View {
+        Circle()
+            .strokeBorder(Color.blue, lineWidth: 30)
+            .frame(width: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2,
+                   height: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2
+            )
+            .position(obj.coordinates)
+            .opacity(0.4)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged{ value in
+                        guard let triangleBlock = obj as? TriangleBlock else {
+                            return
+                        }
+                        
+                        levelDesignerViewModel.updateSpringRadius(triangleBlock: triangleBlock, radius:
+                                PhysicsEngineUtils.CGPointDistance(from: obj.coordinates, to: value.location))
+                    }
+            )
     }
     
     enum Corner {
