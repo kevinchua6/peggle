@@ -38,7 +38,7 @@ class PhysicsEngineUtils {
         let magnitude = getMagnitude(vector: vector)
         return vector / magnitude
     }
-    
+
     static func getMagnitude(vector: CGVector) -> CGFloat {
         abs(vector * 1)
     }

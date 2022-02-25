@@ -41,9 +41,9 @@ struct RectangleBody: PhysicsBody {
         coordinates: CGPoint,
         width: CGFloat,
         height: CGFloat,
-        mass: CGFloat = 1.0,
         isDynamic: Bool,
         forces: [CGVector] = [],
+        mass: CGFloat = 1.0,
         velocity: CGVector = CGVector(dx: 0.0, dy: 0.0),
         restitution: CGFloat = 0.7,
         hasGravity: Bool = false
@@ -96,9 +96,10 @@ struct RectangleBody: PhysicsBody {
             coordinates: newCoord,
             width: width,
             height: height,
-            mass: mass,
             isDynamic: isDynamic,
-            forces: [], velocity: newVelocity,
+            forces: [],
+            mass: mass,
+            velocity: newVelocity,
             hasGravity: hasGravity
         )
     }

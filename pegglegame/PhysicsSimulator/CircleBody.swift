@@ -159,7 +159,11 @@ extension CircleBody {
 
     func isIntersecting(with triangle: TriangleBody) -> Bool {
         // Do the more trivial version of collision first
-        isIntersecting(with: CircleBody(coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []))
+        isIntersecting(
+            with: CircleBody(
+                coordinates: triangle.coordinates, radius: triangle.width * 1.5, mass: 1.0, isDynamic: false, forces: []
+            )
+        )
     }
 
     func isIntersecting(with physicsBodyArr: [PhysicsBody]) -> Bool {
@@ -174,7 +178,7 @@ extension CircleBody {
         guard self.isDynamic else {
             return
         }
-        
+
         switch physicsBody {
         case is RectangleBody:
             handleCollision(with: physicsBody as! RectangleBody)
@@ -207,7 +211,7 @@ extension CircleBody {
         let dotProduct = abs(PhysicsEngineUtils.dotProduct(vector1: collisionUnitVector, vector2: self.velocity))
 
         let minRestitution = min(self.restitution, circle.restitution)
-        
+
         self.velocity = collisionUnitVector * dotProduct * minRestitution - circle.velocity
 
         // When collide, shift the position back to prevent overlapping

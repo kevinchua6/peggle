@@ -15,8 +15,8 @@ class Wall: GameObject {
                 coordinates: coordinates,
                 width: width,
                 height: height,
-                mass: 1.0,
                 isDynamic: false,
+                mass: 1.0,
                 restitution: 1.0
             ),
             imageName: nil

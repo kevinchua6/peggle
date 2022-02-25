@@ -11,22 +11,22 @@ class OscillatingComponent: Component {
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
-    private let INITIAL_SPEED_RATIO: CGFloat = 90/80
+    private let INITIAL_SPEED_RATIO: CGFloat = 90 / 80
     private let DAMP_RATIO: CGFloat = 80
-    
+
     let originalCoordinates: CGPoint
     var springRadius: CGFloat
-    
+
     init(originalCoordinates: CGPoint, springRadius: CGFloat) {
         self.originalCoordinates = originalCoordinates
         self.springRadius = springRadius
     }
-    
+
     func reset() {
     }
-    
+
     func updateVelocityOnHit(gameObj: GameObject, objArr: [GameObject], physicsEngine: PhysicsEngine) {
-        
+
         (gameObj.physicsBody, _) =
             physicsEngine.updateVelocities(
                 physicsBody: gameObj.physicsBody,

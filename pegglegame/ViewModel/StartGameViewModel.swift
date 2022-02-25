@@ -38,10 +38,10 @@ class StartGameViewModel: ObservableObject {
         createBucket(bounds: bounds)
         gameRenderer.setBoundaries(bounds: bounds)
     }
-    
+
     func createBucket(bounds: CGRect) {
         gameRenderer.addObj(
-            obj: Bucket(coordinates: CGPoint(x: 100.0, y: bounds.maxY*18.5/20.0), radius: 30.0)
+            obj: Bucket(coordinates: CGPoint(x: 100.0, y: bounds.maxY * 18.5 / 20.0), radius: 30.0)
         )
     }
 
@@ -102,15 +102,15 @@ class StartGameViewModel: ObservableObject {
         gameRenderer.addObj(obj: ball)
         ball.physicsBody.velocity = unitVector * INITIAL_BALL_SPEED
     }
-    
+
     func getNoOfPegHit() -> Int {
         gameRenderer.getNoOfPegHit()
     }
-    
+
     func getNoOfOrangePegHit() -> Int {
         gameRenderer.getNoOfOrangePegHit()
     }
-    
+
     func getScore() -> Int {
         getNoOfPegHit() * 100 + getNoOfOrangePegHit() * 50
     }

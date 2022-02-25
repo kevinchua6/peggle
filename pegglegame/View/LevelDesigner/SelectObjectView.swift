@@ -35,7 +35,7 @@ struct SelectObjectView: View {
             if obj.hasComponent(of: OscillatingComponent.self) {
                 generateSpringynessView()
             }
-            
+
         }
     }
 
@@ -85,10 +85,12 @@ struct SelectObjectView: View {
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
                         if corner == Corner.BOTTOM_LEFT || corner == Corner.TOP_LEFT {
-                            levelDesignerViewModel.updateWidth(gameObject: obj, width: -value.location.x + obj.physicsBody.boundingBox.width,
+                            levelDesignerViewModel.updateWidth(gameObject: obj, width: -value.location.x
+                                                               + obj.physicsBody.boundingBox.width,
                                                                bounds: self.bounds)
                         } else if corner == Corner.BOTTOM_RIGHT || corner == Corner.TOP_RIGHT {
-                            levelDesignerViewModel.updateWidth(gameObject: obj, width: value.location.x + obj.physicsBody.boundingBox.width,
+                            levelDesignerViewModel.updateWidth(gameObject: obj, width: value.location.x
+                                                               + obj.physicsBody.boundingBox.width,
                                                                bounds: self.bounds)
                         }
                     }

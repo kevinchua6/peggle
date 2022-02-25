@@ -65,12 +65,8 @@ struct StartGameView: View {
             )
             .gesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        gesturePos = value.location
-                    }
-                    .onEnded { value in
-                        startGameViewModel.shootBall(from: cannonLoc, to: value.location)
-                    }
+                    .onChanged { value in gesturePos = value.location }
+                    .onEnded { value in startGameViewModel.shootBall(from: cannonLoc, to: value.location) }
             )
             .onAppear {
                 startGameViewModel.setBoundaries(bounds: bounds)
@@ -89,56 +85,63 @@ struct StartGameView: View {
                         height: gameObject.boundingBox.height
                     )
                     .position(gameObject.coordinates)
-            } else if let gameObjectHitComponent = gameObject.getComponent(of: ActivateOnHitComponent.self)  {
-                ZStack {
-                    Image(gameObjectHitComponent.imageNameHit)
-                        .resizable()
-                        .frame(
-                            width: gameObject.boundingBox.width,
-                            height: gameObject.boundingBox.height
-                        )
-                        .position(gameObject.coordinates)
-                        .transition(AnyTransition.opacity
-                                        .animation(.easeOut(duration: 0.3)))
-                    
-                    // Show score
-                    if gameObject.getComponent(of: ScoreComponent.self)?.isShown ?? false {
-                        Text("+\(gameObject.getComponent(of: ScoreComponent.self)?.score ?? 0)")
-                            .bold()
-                            .shadow(color: .gray, radius: 4)
-                            .foregroundColor(.blue)
-                            .font(.title)
-                            .transition(AnyTransition.opacity
-                                            .animation(.easeInOut(duration: 0.3)))
-                            .position(gameObject.coordinates)
-                            .offset(x: 0, y: 35.0)
-                            .onAppear {
-                                Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { timer in
-                                    gameObject.getComponent(of: ScoreComponent.self)?.hide()
-                                }
-                            }
-                    }
-                }
-            }
-            
-            // Show Free ball
-            if gameObject.getComponent(of: BucketComponent.self)?.freeBallMsgShown ?? false {
-                Text("Free Ball!")
-                    .bold()
-                    .shadow(color: .gray, radius: 4)
-                    .foregroundColor(.orange)
-                    .font(.largeTitle)
-                    .transition(AnyTransition.opacity
-                                    .animation(.easeInOut(duration: 0.1)))
+            } else if let gameObjectHitComponent = gameObject.getComponent(of: ActivateOnHitComponent.self) {
+                Image(gameObjectHitComponent.imageNameHit)
+                    .resizable()
+                    .frame(
+                        width: gameObject.boundingBox.width,
+                        height: gameObject.boundingBox.height
+                    )
                     .position(gameObject.coordinates)
-                    .offset(x: 0, y: -65.0)
-                    .onAppear {
-                        Timer.scheduledTimer(withTimeInterval: 1.4, repeats: false) { timer in
-                            gameObject.getComponent(of: BucketComponent.self)?.hideMsg()
-                        }
-                    }
+                    .transition(AnyTransition.opacity
+                                    .animation(.easeOut(duration: 0.3)))
+
+                // Show score
+                generateScoreMessageView(gameObject: gameObject)
             }
 
+            // Show Free ball
+            generateFreeBallMessageView(gameObject: gameObject)
+        }
+    }
+    
+    @ViewBuilder
+    private func generateScoreMessageView(gameObject: GameObject) -> some View {
+        if gameObject.getComponent(of: ScoreComponent.self)?.isShown ?? false {
+            Text("+\(gameObject.getComponent(of: ScoreComponent.self)?.score ?? 0)")
+                .bold()
+                .shadow(color: .gray, radius: 4)
+                .foregroundColor(.blue)
+                .font(.title)
+                .transition(AnyTransition.opacity
+                                .animation(.easeInOut(duration: 0.3)))
+                .position(gameObject.coordinates)
+                .offset(x: 0, y: 35.0)
+                .onAppear {
+                    Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { _ in
+                        gameObject.getComponent(of: ScoreComponent.self)?.hide()
+                    }
+                }
+        }
+    }
+    
+    @ViewBuilder
+    private func generateFreeBallMessageView(gameObject: GameObject) -> some View {
+        if gameObject.getComponent(of: BucketComponent.self)?.freeBallMsgShown ?? false {
+            Text("Free Ball!")
+                .bold()
+                .shadow(color: .gray, radius: 4)
+                .foregroundColor(.red)
+                .font(.largeTitle)
+                .transition(AnyTransition.opacity
+                                .animation(.easeInOut(duration: 0.1)))
+                .position(gameObject.coordinates)
+                .offset(x: 0, y: -65.0)
+                .onAppear {
+                    Timer.scheduledTimer(withTimeInterval: 1.4, repeats: false) { _ in
+                        gameObject.getComponent(of: BucketComponent.self)?.hideMsg()
+                    }
+                }
         }
     }
 

@@ -26,7 +26,6 @@ class Ball: GameObject {
             imageName: Ball.imageName
         )
 
-
         super.setComponent(of: CannonBallComponent())
         super.setComponent(of: SpookyBallComponent())
     }

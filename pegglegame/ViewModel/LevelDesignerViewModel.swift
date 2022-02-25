@@ -48,7 +48,7 @@ class LevelDesignerViewModel: ObservableObject {
     func selectObj(obj: GameObject) {
         self.selectedObj = obj
     }
-    
+
     func deselectObj() {
         self.selectedObj = nil
     }
@@ -245,9 +245,9 @@ class LevelDesignerViewModel: ObservableObject {
 
             let data = try encoder.encode(decodedBoardlist)
             UserDefaults.standard.set(data, forKey: PersistenceUtils.databaseUserDefaultKey)
-            
+
             print(String(data: data, encoding: .utf8)!)
-            
+
             showAlert(title: "Saved", message: "Level \(trimmedName) saved!")
         } else {
             // If no existing boardList, create one

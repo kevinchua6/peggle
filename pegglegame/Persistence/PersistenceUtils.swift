@@ -23,7 +23,7 @@ class PersistenceUtils {
                         ycoord: 200 + Double(j * 100),
                         width: GameBoardView.DEFAULT_OBJ_LENGTH,
                         height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                        type: (i + j) % 2 == 0
+                        type: (i + j).isMultiple(of: 2)
                             ? GameObject.Types.bluePeg.rawValue
                             : GameObject.Types.orangePeg.rawValue
                     )
@@ -35,55 +35,46 @@ class PersistenceUtils {
 
     static func createPreloadedLevel2() -> Board {
         var board = Board(name: preloadedLevelNames[1], objArr: [], isProtected: true)
-
         for i in 1..<8 {
             board.objArr.append(
                 EncodableObject(
-                    xcoord: 40 + Double(i * 90),
-                    ycoord: 80 + Double(i * 90),
+                    xcoord: 40 + Double(i * 90), ycoord: 80 + Double(i * 90),
                     width: GameBoardView.DEFAULT_OBJ_LENGTH,
                     height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                    type: i % 2 == 0
+                    type: i.isMultiple(of: 2)
                         ? GameObject.Types.bluePeg.rawValue
                         : GameObject.Types.orangePeg.rawValue
                 )
             )
-
             if i == 4 {
                 board.objArr.append(
                     EncodableObject(
-                        xcoord: 130,
-                        ycoord: 440,
+                        xcoord: 130, ycoord: 440,
                         width: GameBoardView.DEFAULT_OBJ_LENGTH,
                         height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                        type: i % 2 == 0
+                        type: i.isMultiple(of: 2)
                             ? GameObject.Types.bluePeg.rawValue
                             : GameObject.Types.orangePeg.rawValue
                     )
                 )
-
                 board.objArr.append(
                     EncodableObject(
-                        xcoord: 750,
-                        ycoord: 440,
+                        xcoord: 750, ycoord: 440,
                         width: GameBoardView.DEFAULT_OBJ_LENGTH,
                         height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                        type: i % 2 == 0
+                        type: i.isMultiple(of: 2)
                             ? GameObject.Types.bluePeg.rawValue
                             : GameObject.Types.orangePeg.rawValue
                     )
                 )
-
                 continue
             }
-
             board.objArr.append(
                 EncodableObject(
-                    xcoord: 40 + Double(i * 90),
-                    ycoord: 9.0 * 90.0 - Double(i * 90),
+                    xcoord: 40 + Double(i * 90), ycoord: 9.0 * 90.0 - Double(i * 90),
                     width: GameBoardView.DEFAULT_OBJ_LENGTH,
                     height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                    type: i % 2 == 0
+                    type: i.isMultiple(of: 2)
                         ? GameObject.Types.bluePeg.rawValue
                         : GameObject.Types.orangePeg.rawValue
                 )
@@ -104,7 +95,7 @@ class PersistenceUtils {
                         ycoord: 200 + Double(j * 60),
                         width: GameBoardView.DEFAULT_OBJ_LENGTH,
                         height: GameBoardView.DEFAULT_OBJ_LENGTH,
-                        type: (i + j) % 2 == 0
+                        type: (i + j).isMultiple(of: 2)
                             ? GameObject.Types.bluePeg.rawValue
                             : GameObject.Types.orangePeg.rawValue
                     )
@@ -113,7 +104,7 @@ class PersistenceUtils {
         }
         return board
     }
-    
+
     static func createPreloadedLevel4() -> Board {
         var board = Board(name: preloadedLevelNames[3], objArr: [], isProtected: true)
 
@@ -126,7 +117,7 @@ class PersistenceUtils {
                 type: GameObject.Types.spookyPeg.rawValue
             )
         )
-        
+
         board.objArr.append(
             EncodableObject(
                 xcoord: 306,
@@ -136,7 +127,7 @@ class PersistenceUtils {
                 type: GameObject.Types.spookyPeg.rawValue
             )
         )
-        
+
         board.objArr.append(
             EncodableObject(
                 xcoord: 401.5,
@@ -148,7 +139,7 @@ class PersistenceUtils {
         )
         let yCoord = [579.5, 609, 638, 659.5, 647.5, 620, 599.5]
         let xCoord = [271, 302, 341.5, 381.5, 422.5, 461, 498.5]
-        
+
         for i in 0..<yCoord.count {
             board.objArr.append(
                 EncodableObject(
@@ -160,11 +151,10 @@ class PersistenceUtils {
                 )
             )
         }
-        
-        
+
         return board
     }
-    
+
     static func createPreloadedLevels() -> [Board] {
         var arr: [Board] = []
         arr.append(createPreloadedLevel1())
@@ -179,7 +169,7 @@ class PersistenceUtils {
         guard let boardList =
             UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
                 var boardList = BoardList(boards: [:])
-                
+
                 var index = 0
                 for i in createPreloadedLevels() {
                     boardList.boards["preloaded" + String(index)] = i
@@ -191,7 +181,7 @@ class PersistenceUtils {
 
         do {
             var decodedBoardList = try JSONDecoder().decode(BoardList.self, from: boardList)
-            
+
             var index = 0
             for i in createPreloadedLevels() {
                 decodedBoardList.boards["preloaded" + String(index)] = i
@@ -245,10 +235,6 @@ class PersistenceUtils {
         for obj in board.objArr {
             switch obj.type {
             case GameObject.Types.bluePeg.rawValue:
-                // defensive checks
-                if obj.width != obj.height {
-                    continue
-                }
                 gameObjBoard.append(
                     BluePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
@@ -256,10 +242,6 @@ class PersistenceUtils {
                     )
                 )
             case GameObject.Types.orangePeg.rawValue:
-                // defensive checks
-                if obj.width != obj.height {
-                    continue
-                }
                 gameObjBoard.append(
                     OrangePeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
@@ -267,10 +249,6 @@ class PersistenceUtils {
                     )
                 )
             case GameObject.Types.spookyPeg.rawValue:
-                // defensive checks
-                if obj.width != obj.height {
-                    continue
-                }
                 gameObjBoard.append(
                     SpookyPeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
@@ -278,10 +256,6 @@ class PersistenceUtils {
                     )
                 )
             case GameObject.Types.kaboomPeg.rawValue:
-                // defensive checks
-                if obj.width != obj.height {
-                    continue
-                }
                 gameObjBoard.append(
                     KaboomPeg(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
@@ -289,18 +263,13 @@ class PersistenceUtils {
                     )
                 )
             case GameObject.Types.block.rawValue:
-                // defensive checks
-                if obj.width != obj.height {
-                    continue
-                }
-                
                 gameObjBoard.append(
                     TriangleBlock(
                         coordinates: CGPoint(x: obj.xcoord, y: obj.ycoord),
                         radius: obj.width / 2
                     )
                 )
-                
+
             default:
                 continue
             }

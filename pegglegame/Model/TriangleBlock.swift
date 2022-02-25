@@ -11,7 +11,7 @@ import CoreGraphics
 class TriangleBlock: GameObject {
     static let imageName: String = "TriangleBlock"
 
-    init(coordinates: CGPoint, springRadius: CGFloat = 40.0, radius: CGFloat) {
+    init(coordinates: CGPoint, radius: CGFloat, springRadius: CGFloat = 40.0) {
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,

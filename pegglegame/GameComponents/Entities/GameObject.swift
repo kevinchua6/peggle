@@ -15,7 +15,7 @@ class GameObject: Identifiable {
     }
 
     var imageName: String?
-    
+
     var coordinates: CGPoint {
         get {
             physicsBody.coordinates
@@ -40,11 +40,9 @@ class GameObject: Identifiable {
             self.setComponent(of: PhysicsComponent(physicsBody: newValue))
         }
     }
-    
+
     var boundingBox: CGRect {
-        get {
-            self.physicsBody.boundingBox
-        }
+        self.physicsBody.boundingBox
     }
 
     // Each GameObject contains a mapping from the component it has to
@@ -71,7 +69,7 @@ class GameObject: Identifiable {
     func hasComponent<T: Component>(of type: T.Type) -> Bool {
         components.getComponent(component: type) != nil
     }
-    
+
     func reset() {
         for component in self.components.getAllComponents() {
             component.reset()
@@ -82,19 +80,15 @@ class GameObject: Identifiable {
 // Commonly used components: Activate on hit components
 extension GameObject {
     var isHit: Bool {
-        get {
-            self.getComponent(of: ActivateOnHitComponent.self)?.isHit
-                ?? false
-        }
+        self.getComponent(of: ActivateOnHitComponent.self)?.isHit
+            ?? false
     }
-    
+
     var isActivated: Bool {
-        get {
-            self.getComponent(of: ActivateOnHitComponent.self)?.isActivated
-                ?? false
-        }
+        self.getComponent(of: ActivateOnHitComponent.self)?.isActivated
+            ?? false
     }
-    
+
     func activate() {
         self.getComponent(of: ActivateOnHitComponent.self)?.activate()
     }

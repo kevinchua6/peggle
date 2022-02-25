@@ -45,11 +45,11 @@ class GameRenderer {
     func hasObj(lambdaFunc: (GameObject) -> Bool) -> Bool {
         gameEngine.hasObj(lambdaFunc: lambdaFunc)
     }
-    
+
     func getNoOfPegHit() -> Int {
         gameEngine.getNoOfPegHit()
     }
-    
+
     func getNoOfOrangePegHit() -> Int {
         gameEngine.getNoOfOrangePegHit()
     }

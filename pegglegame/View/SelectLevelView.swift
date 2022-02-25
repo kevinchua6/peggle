@@ -28,7 +28,11 @@ struct SelectLevelView: View {
                 List {
                     ForEach(selectLevelViewModel.boardList.toSortedArray(), id: \.name) { board in
                         NavigationLink(destination: LazyView {
-                            StartGameView(startGameViewModel: StartGameViewModel(objArr: PersistenceUtils.decodeBoardToGameObjArr(board: board)))
+                            StartGameView(
+                                startGameViewModel: StartGameViewModel(
+                                    objArr: PersistenceUtils.decodeBoardToGameObjArr(board: board)
+                                )
+                            )
                         }) {
                             Text(board.name)
                         }

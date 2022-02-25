@@ -21,7 +21,7 @@ struct EntityComponentSystem {
     mutating func setComponent<T: Component>(component: T) {
         components[String(describing: type(of: component))] = component
     }
-    
+
     func getAllComponents() -> [Component] {
         Array(self.components.values)
     }

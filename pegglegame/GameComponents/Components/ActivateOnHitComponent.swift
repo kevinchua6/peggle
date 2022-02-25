@@ -25,7 +25,7 @@ class ActivateOnHitComponent: Component {
     func setHit(to isHit: Bool) {
         self.isHit = isHit
     }
-    
+
     func reset() {
         isHit = false
         isActivated = false

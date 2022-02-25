@@ -16,7 +16,7 @@ class GameEngine {
     private var bounds: CGRect?
 
     private let framesPerSecond: CGFloat = 60
-    
+
     private var noPegHit = 0
     private var noOrangePegHit = 0
 
@@ -29,7 +29,7 @@ class GameEngine {
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
-    
+
     private weak var timer: Timer?
 
     var objArr: [GameObject]
@@ -58,22 +58,22 @@ class GameEngine {
 
         return self.objArr
     }
-    
+
     func updateScoreHitCount(objArr: [GameObject]) {
-        noPegHit = objArr.filter({$0.hasComponent(of: PegComponent.self)}).count
-        noOrangePegHit = objArr.filter({$0.hasComponent(of: OrangePegComponent.self)}).count
+        noPegHit = objArr.filter({ $0.hasComponent(of: PegComponent.self) }).count
+        noOrangePegHit = objArr.filter({ $0.hasComponent(of: OrangePegComponent.self) }).count
         print(noOrangePegHit)
         print(noPegHit)
     }
-    
+
     func getNoOfPegHit() -> Int {
         noPegHit
     }
-    
+
     func getNoOfOrangePegHit() -> Int {
         noOrangePegHit
     }
-    
+
     func increaseHitCount(gameObj: GameObject) {
         if gameObj.hasComponent(of: OrangePegComponent.self) {
             noOrangePegHit += 1
@@ -95,15 +95,15 @@ class GameEngine {
         // Update dynamic bodies' velocities upon collision
         for gameObj in objArr {
             var isHit: Bool
-            
+
             // Don't make bucket collide with other things
             if let bucketComponent = gameObj.getComponent(of: BucketComponent.self) {
                 gameObj.physicsBody = bucketComponent.updateVelocity(
                     gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine
                 )
-                
+
                 objArr = bucketComponent.removeBall(bucket: gameObj, objArr: objArr)
-                
+
             } else if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
                 triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine)
             } else {
@@ -123,7 +123,9 @@ class GameEngine {
 
                 // activate spooky ball
                 if gameObj.hasComponent(of: SpookyPegComponent.self) && isHit {
-                    for cannonBall in objArr.filter({ !($0.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false) }) {
+                    for cannonBall in objArr.filter({
+                        !($0.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false)
+                    }) {
                         cannonBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
                     }
                 }
@@ -166,23 +168,24 @@ class GameEngine {
     }
 
     private func removeLightedUpPegsConditionally(bounds: CGRect) {
-        let ballArr = objArr.filter( {
+        let ballArr = objArr.filter({
             $0.hasComponent(of: CannonBallComponent.self)
         })
 
-        guard ballArr.count > 0 else {
+        guard !ballArr.isEmpty else {
             // Remove lighted up pegs when no balls exist
             removeLightedUpPegs()
             timer?.invalidate()
             return
         }
-        
+
         for ball in ballArr {
             if ball.physicsBody.velocity <= MIN_VELOCITY {
                 if timer == nil || !(timer?.isValid ?? true) {
-                    timer = Timer.scheduledTimer(withTimeInterval: REMOVE_BALL_INTERVAL, repeats: false, block: { [self] _ in
-                        self.removeLightedUpPegs()
-                    })
+                    timer = Timer.scheduledTimer(
+                        withTimeInterval: REMOVE_BALL_INTERVAL, repeats: false, block: { [self] _ in
+                            self.removeLightedUpPegs()
+                        })
                 }
             } else {
                 timer?.invalidate()
@@ -212,6 +215,6 @@ class GameEngine {
                 cannonBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
             }
         }
-        
+
     }
 }
