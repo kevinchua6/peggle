@@ -40,6 +40,6 @@ class PhysicsEngineUtils {
     }
     
     static func getMagnitude(vector: CGVector) -> CGFloat {
-        vector * 1
+        abs(vector * 1)
     }
 }

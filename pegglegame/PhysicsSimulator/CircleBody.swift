@@ -170,6 +170,10 @@ extension CircleBody {
     }
 
     mutating func handleCollision(with physicsBody: PhysicsBody) {
+        guard self.isDynamic else {
+            return
+        }
+        
         switch physicsBody {
         case is RectangleBody:
             handleCollision(with: physicsBody as! RectangleBody)
@@ -202,7 +206,7 @@ extension CircleBody {
         let dotProduct = abs(PhysicsEngineUtils.dotProduct(vector1: collisionUnitVector, vector2: self.velocity))
 
         let minRestitution = min(self.restitution, circle.restitution)
-
+        
         self.velocity = collisionUnitVector * dotProduct * minRestitution - circle.velocity
 
         // When collide, shift the position back to prevent overlapping

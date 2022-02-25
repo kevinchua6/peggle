@@ -16,7 +16,8 @@ class Wall: GameObject {
                 width: width,
                 height: height,
                 mass: 1.0,
-                isDynamic: false
+                isDynamic: false,
+                restitution: 1.0
             ),
             imageName: nil
         )

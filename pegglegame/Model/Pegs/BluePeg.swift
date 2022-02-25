@@ -19,6 +19,8 @@ class BluePeg: Peg {
             imageName: BluePeg.imageName,
             imageNameHit: BluePeg.imageNameHit
         )
+        super.setComponent(of: BluePegComponent())
+        super.setComponent(of: ScoreComponent(score: 100))
     }
 
     init(coordinates: CGPoint) {
@@ -27,5 +29,7 @@ class BluePeg: Peg {
             imageName: BluePeg.imageName,
             imageNameHit: BluePeg.imageNameHit
         )
+        super.setComponent(of: BluePegComponent())
+        super.setComponent(of: ScoreComponent(score: 100))
     }
 }

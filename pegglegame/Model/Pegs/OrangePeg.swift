@@ -19,6 +19,8 @@ class OrangePeg: Peg {
             imageName: OrangePeg.imageName,
             imageNameHit: OrangePeg.imageNameHit
         )
+        super.setComponent(of: OrangePegComponent())
+        super.setComponent(of: ScoreComponent(score: 150))
     }
 
     init(coordinates: CGPoint) {
@@ -27,5 +29,7 @@ class OrangePeg: Peg {
             imageName: OrangePeg.imageName,
             imageNameHit: OrangePeg.imageNameHit
         )
+        super.setComponent(of: OrangePegComponent())
+        super.setComponent(of: ScoreComponent(score: 150))
     }
 }

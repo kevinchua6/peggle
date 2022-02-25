@@ -11,6 +11,8 @@ class OscillatingComponent: Component {
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
+    private let INITIAL_SPEED_RATIO: CGFloat = 90/80
+    private let DAMP_RATIO: CGFloat = 80
     
     let originalCoordinates: CGPoint
     var springRadius: CGFloat
@@ -23,8 +25,7 @@ class OscillatingComponent: Component {
     func reset() {
     }
     
-    func updateVelocityOnHit(gameObj: GameObject, objArr: [GameObject]) {
-        let physicsEngine = PhysicsEngine()
+    func updateVelocityOnHit(gameObj: GameObject, objArr: [GameObject], physicsEngine: PhysicsEngine) {
         
         (gameObj.physicsBody, _) =
             physicsEngine.updateVelocities(
@@ -33,20 +34,21 @@ class OscillatingComponent: Component {
                     objArr.filter { $0.hasComponent(of: CannonBallComponent.self) }.map { $0.physicsBody },
                 deltaTime: CGFloat(1 / 60.0))
 
-        let magnitude: CGFloat = abs(gameObj.physicsBody.velocity * 1)
+        let magnitude: CGFloat = PhysicsEngineUtils.getMagnitude(vector: gameObj.physicsBody.velocity)
 
-        let dampAmount = springRadius / 80
+        let dampAmount = springRadius / DAMP_RATIO
 
         // Limit the velocity
-        let maxVelocityMagnitude = 90 * dampAmount
+        let maxVelocityMagnitude = springRadius * INITIAL_SPEED_RATIO
         if magnitude >= maxVelocityMagnitude {
             let unitVector: CGVector = gameObj.physicsBody.velocity / magnitude
             let velocityMagnitude = min(maxVelocityMagnitude, magnitude)
             gameObj.physicsBody.velocity = -(unitVector * velocityMagnitude)
         }
 
+        // force to move back to original position
         let force: CGVector = (originalCoordinates - gameObj.coordinates) * SPRING_CONSTANT
-        let forceMagnitude: CGFloat = abs(force * 1)
+        let forceMagnitude = PhysicsEngineUtils.getMagnitude(vector: force)
         if forceMagnitude > 0 {
             let forceUnitVector: CGVector = force / forceMagnitude
             let dampedForceMagnitude = max(0, forceMagnitude * DAMPING_CONSTANT / dampAmount)
@@ -57,7 +59,7 @@ class OscillatingComponent: Component {
             )
         }
 
-        // Add air resistence
+        // Add damping
         let velocity: CGVector = gameObj.physicsBody.velocity
         let velocityMagnitude: CGFloat = abs(velocity * 1)
 

@@ -17,7 +17,7 @@ class GameEngine {
 
     private let framesPerSecond: CGFloat = 60
     
-    private var noBluePegHit = 0
+    private var noPegHit = 0
     private var noOrangePegHit = 0
 
     private let ADDITIONAL_WALL_LENGTH = 50.0
@@ -55,8 +55,33 @@ class GameEngine {
         }
 
         simulatePhysics()
+//        updateScoreHitCount(objArr: objArr)
 
         return self.objArr
+    }
+    
+    func updateScoreHitCount(objArr: [GameObject]) {
+        noPegHit = objArr.filter({$0.hasComponent(of: PegComponent.self)}).count
+        noOrangePegHit = objArr.filter({$0.hasComponent(of: OrangePegComponent.self)}).count
+        print(noOrangePegHit)
+        print(noPegHit)
+    }
+    
+    func getNoOfPegHit() -> Int {
+        noPegHit
+    }
+    
+    func getNoOfOrangePegHit() -> Int {
+        noOrangePegHit
+    }
+    
+    func increaseHitCount(gameObj: GameObject) {
+        if gameObj.hasComponent(of: OrangePegComponent.self) {
+            noOrangePegHit += 1
+        }
+        if gameObj.hasComponent(of: PegComponent.self) {
+            noPegHit += 1
+        }
     }
 
     private func simulatePhysics() {
@@ -70,11 +95,16 @@ class GameEngine {
 
         // Update dynamic bodies' velocities upon collision
         for gameObj in objArr {
+            // Don't make bucket collide with other things
+            if gameObj.hasComponent(of: BucketComponent.self) {
+                continue
+            }
+            
             // Objects stay hit
             var isHit: Bool
 
             if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
-                triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr)
+                triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine)
             } else {
                 (gameObj.physicsBody, isHit) =
                     self.physicsEngine.updateVelocities(
@@ -84,8 +114,10 @@ class GameEngine {
                     )
 
                 // Set all hittable components to hit
-                if isHit {
+                if isHit && !gameObj.isHit {
                     gameObj.getComponent(of: ActivateOnHitComponent.self)?.setHit(to: true)
+                    gameObj.getComponent(of: ScoreComponent.self)?.show()
+                    increaseHitCount(gameObj: gameObj)
                 }
 
                 // activate spooky ball

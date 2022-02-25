@@ -20,6 +20,7 @@ class SpookyPeg: Peg {
             imageNameHit: SpookyPeg.imageNameHit
         )
         super.setComponent(of: SpookyPegComponent())
+        super.setComponent(of: ScoreComponent(score: 100))
     }
 
     init(coordinates: CGPoint) {
@@ -29,5 +30,6 @@ class SpookyPeg: Peg {
             imageNameHit: SpookyPeg.imageNameHit
         )
         super.setComponent(of: SpookyPegComponent())
+        super.setComponent(of: ScoreComponent(score: 100))
     }
 }

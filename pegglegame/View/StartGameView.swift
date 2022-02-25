@@ -10,11 +10,6 @@ import SwiftUI
 struct StartGameView: View {
     @ObservedObject var startGameViewModel: StartGameViewModel
 
-    // calculation of score done in viewmodel
-    @State var score = 0
-    var noBluePegHit = 0
-    var noOrangePegHit = 0
-
     // Initial positions
     @State var gCannonPos = CGPoint(x: 0.0, y: 0.0)
     @State var gesturePos = CGPoint(x: 0.0, y: 0.0)
@@ -105,14 +100,23 @@ struct StartGameView: View {
                         .position(gameObject.coordinates)
                         .transition(AnyTransition.opacity
                                         .animation(.easeOut(duration: 0.3)))
-                    Text("+100")
-                        .bold()
-                        .foregroundColor(.blue)
-                        .font(.title)
-                        .transition(AnyTransition.opacity
-                                        .animation(.easeInOut(duration: 0.3)))
-                        .position(gameObject.coordinates)
-                        .offset(x: 0, y: 30.0)
+                    
+                    if gameObject.getComponent(of: ScoreComponent.self)?.isShown ?? false {
+                        Text("+\(gameObject.getComponent(of: ScoreComponent.self)?.score ?? 0)")
+                            .bold()
+                            .shadow(color: .gray, radius: 4)
+                            .foregroundColor(.blue)
+                            .font(.title)
+                            .transition(AnyTransition.opacity
+                                            .animation(.easeInOut(duration: 0.3)))
+                            .position(gameObject.coordinates)
+                            .offset(x: 0, y: 35.0)
+                            .onAppear {
+                                Timer.scheduledTimer(withTimeInterval: 0.4, repeats: false) { timer in
+                                    gameObject.getComponent(of: ScoreComponent.self)?.hide()
+                                }
+                            }
+                    }
                 }
             }
 
@@ -121,16 +125,20 @@ struct StartGameView: View {
 
     private func generateBottomBarView() -> some View {
         HStack {
-            Text("Score: \(score)")
-                .font(.largeTitle)
+            VStack {
+                Text("Score:")
+                Text("\(startGameViewModel.getScore())")
+                    .font(.largeTitle)
+            }
                 .padding()
             Spacer()
             VStack {
-                Text("Blue Pegs hit: \(noBluePegHit)")
+                Text("Pegs hit: \(startGameViewModel.getNoOfPegHit())")
                     .font(.body)
-                Text("Orange Pegs hit: \(noOrangePegHit)")
+                Text("Orange Pegs hit: \(startGameViewModel.getNoOfOrangePegHit())")
                     .font(.body)
             }
+            .padding()
         }
         .background(Color.white)
     }
