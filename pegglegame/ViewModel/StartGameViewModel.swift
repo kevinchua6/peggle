@@ -41,7 +41,7 @@ class StartGameViewModel: ObservableObject {
     
     func createBucket(bounds: CGRect) {
         gameRenderer.addObj(
-            obj: Bucket(coordinates: CGPoint(x: 100.0, y: bounds.maxY*9.0/10.0), radius: 30.0)
+            obj: Bucket(coordinates: CGPoint(x: 100.0, y: bounds.maxY*18.5/20.0), radius: 30.0)
         )
     }
 

@@ -100,6 +100,7 @@ struct CircleBody: PhysicsBody {
             isDynamic: isDynamic,
             forces: [],
             velocity: newVelocity,
+            restitution: restitution,
             hasGravity: hasGravity
         )
     }

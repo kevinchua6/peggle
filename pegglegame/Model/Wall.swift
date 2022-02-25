@@ -21,5 +21,6 @@ class Wall: GameObject {
             ),
             imageName: nil
         )
+        super.setComponent(of: WallComponent())
     }
 }

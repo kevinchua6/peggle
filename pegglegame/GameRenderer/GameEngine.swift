@@ -95,15 +95,17 @@ class GameEngine {
 
         // Update dynamic bodies' velocities upon collision
         for gameObj in objArr {
-            // Don't make bucket collide with other things
-            if gameObj.hasComponent(of: BucketComponent.self) {
-                continue
-            }
-            
-            // Objects stay hit
             var isHit: Bool
-
-            if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
+            
+            // Don't make bucket collide with other things
+            if let bucketComponent = gameObj.getComponent(of: BucketComponent.self) {
+                gameObj.physicsBody = bucketComponent.updateVelocity(
+                    gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine
+                )
+                
+                objArr = bucketComponent.removeBall(bucket: gameObj, objArr: objArr)
+                
+            } else if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
                 triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine)
             } else {
                 (gameObj.physicsBody, isHit) =
@@ -127,7 +129,7 @@ class GameEngine {
                     }
                 }
 
-                // if kaboom, boom it
+                // activate kaboom
                 if let kaboomPeg = gameObj.getComponent(of: KaboomPegComponent.self) {
                     if gameObj.isHit && !gameObj.isActivated {
                         gameObj.activate()

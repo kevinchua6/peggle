@@ -19,12 +19,12 @@ class Bucket: GameObject {
                 mass: 1.0,
                 isDynamic: true,
                 forces: [],
-                velocity: CGVector(dx: 300.0, dy: 0),
+                velocity: CGVector(dx: 100.0, dy: 0),
                 restitution: 1.0,
                 hasGravity: false
             ),
             imageName: Bucket.imageName
         )
-        
+        super.setComponent(of: BucketComponent())
     }
 }
