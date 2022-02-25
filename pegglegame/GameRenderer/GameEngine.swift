@@ -16,6 +16,9 @@ class GameEngine {
     private var bounds: CGRect?
 
     private let framesPerSecond: CGFloat = 60
+    
+    private var noBluePegHit = 0
+    private var noOrangePegHit = 0
 
     private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
@@ -26,9 +29,6 @@ class GameEngine {
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
-
-    private let KABOOM_MAGNITUDE = 200.0
-    private let KABOOM_RADIUS = 20_000.0
     
     private weak var timer: Timer?
 
@@ -73,51 +73,8 @@ class GameEngine {
             // Objects stay hit
             var isHit: Bool
 
-            if let triangleBlock = gameObj as? TriangleBlock {
-                (gameObj.physicsBody, isHit) =
-                    self.physicsEngine.updateVelocities(
-                        physicsBody: gameObj.physicsBody,
-                        physicsBodyArr:
-                            objArr.filter { $0.hasComponent(of: CannonBallComponent.self) }.map { $0.physicsBody },
-                        deltaTime: CGFloat(1 / framesPerSecond))
-
-                let magnitude: CGFloat = abs(gameObj.physicsBody.velocity * 1)
-
-                let springRadius = triangleBlock.springRadius
-                let dampAmount = springRadius / 80
-
-                // Limit the velocity
-                let maxVelocityMagnitude = 90 * dampAmount
-                if magnitude >= maxVelocityMagnitude {
-                    let unitVector: CGVector = gameObj.physicsBody.velocity / magnitude
-                    let velocityMagnitude = min(maxVelocityMagnitude, magnitude)
-                    gameObj.physicsBody.velocity = -(unitVector * velocityMagnitude)
-                }
-
-                let force: CGVector = (triangleBlock.originalCoordinates - gameObj.coordinates) * SPRING_CONSTANT
-                let forceMagnitude: CGFloat = abs(force * 1)
-                if forceMagnitude > 0 {
-                    let forceUnitVector: CGVector = force / forceMagnitude
-                    let dampedForceMagnitude = max(0, forceMagnitude * DAMPING_CONSTANT / dampAmount)
-                    let resultantForce: CGVector = forceUnitVector * dampedForceMagnitude
-
-                    gameObj.physicsBody.applyForce(
-                        force: resultantForce
-                    )
-                }
-
-                // Add air resistence
-                let velocity: CGVector = gameObj.physicsBody.velocity
-                let velocityMagnitude: CGFloat = abs(velocity * 1)
-
-                if velocityMagnitude > 0 {
-                    let velocityUnitVector: CGVector = velocity / velocityMagnitude
-                    let dampedVelocityMagnitude = max(0, velocityMagnitude * 0.99)
-
-                    let resultantVeloctity: CGVector = velocityUnitVector * dampedVelocityMagnitude
-                    gameObj.physicsBody.velocity = resultantVeloctity
-                }
-
+            if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
+                triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr)
             } else {
                 (gameObj.physicsBody, isHit) =
                     self.physicsEngine.updateVelocities(
@@ -139,38 +96,10 @@ class GameEngine {
                 }
 
                 // if kaboom, boom it
-                if gameObj.hasComponent(of: KaboomPegComponent.self) {
-                    if let activateOnHitComponent = gameObj.getComponent(of: ActivateOnHitComponent.self) {
-                        if activateOnHitComponent.isHit && !activateOnHitComponent.isActivated {
-                            activateOnHitComponent.activate()
-
-                            let kaboomPeg = gameObj
-                            for obj in objArr.filter({
-                                PhysicsEngineUtils.CGPointDistanceSquared(from: kaboomPeg.coordinates, to: $0.coordinates) <= KABOOM_RADIUS
-                            }) {
-                                if obj.hasComponent(of: CannonBallComponent.self) {
-                                    // launch it away
-                                    let distanceVector = obj.coordinates - kaboomPeg.coordinates
-                                    let unitVector = PhysicsEngineUtils.getUnitVector(vector: distanceVector)
-                                    let resultantVelocity: CGVector = obj.physicsBody.velocity + unitVector * KABOOM_MAGNITUDE
-                                    
-                                    var velocityMagnitude = PhysicsEngineUtils.getMagnitude(vector: resultantVelocity)
-                                    
-                                    // cap velocity
-                                    velocityMagnitude = min(velocityMagnitude, PhysicsEngine.MAX_VELOCITY)
-                                    
-                                    
-                                    obj.physicsBody.velocity =
-                                        PhysicsEngineUtils.getUnitVector(
-                                            vector: obj.physicsBody.velocity
-                                        ) * velocityMagnitude
-
-                                }
-
-                                obj.getComponent(of: ActivateOnHitComponent.self)?.isHit = true
-
-                            }
-                        }
+                if let kaboomPeg = gameObj.getComponent(of: KaboomPegComponent.self) {
+                    if gameObj.isHit && !gameObj.isActivated {
+                        gameObj.activate()
+                        objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr)
                     }
                 }
 

@@ -15,8 +15,8 @@ class PersistenceUtils {
     static func createPreloadedLevel1() -> Board {
         var board = Board(name: preloadedLevelNames[0], objArr: [], isProtected: true)
 
-        for i in 0..<9 {
-            for j in 0..<7 {
+        for i in 0..<8 {
+            for j in 0..<6 {
                 board.objArr.append(
                     EncodableObject(
                         xcoord: 40 + Double(i * 90),
@@ -36,7 +36,7 @@ class PersistenceUtils {
     static func createPreloadedLevel2() -> Board {
         var board = Board(name: preloadedLevelNames[1], objArr: [], isProtected: true)
 
-        for i in 0..<9 {
+        for i in 1..<8 {
             board.objArr.append(
                 EncodableObject(
                     xcoord: 40 + Double(i * 90),
@@ -177,16 +177,16 @@ class PersistenceUtils {
     static func loadBoardList() -> BoardList {
         // Decode data to object
         guard let boardList =
-                UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
-                    var boardList = BoardList(boards: [:])
-                    
-                    var index = 0
-                    for i in createPreloadedLevels() {
-                        boardList.boards["preloaded" + String(index)] = i
-                        index += 1
-                    }
+            UserDefaults.standard.value(forKey: PersistenceUtils.databaseUserDefaultKey) as? Data else {
+                var boardList = BoardList(boards: [:])
+                
+                var index = 0
+                for i in createPreloadedLevels() {
+                    boardList.boards["preloaded" + String(index)] = i
+                    index += 1
+                }
 
-                    return BoardList(boards: [:])
+                return boardList
         }
 
         do {

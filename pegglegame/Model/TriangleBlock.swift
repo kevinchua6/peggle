@@ -10,12 +10,8 @@ import CoreGraphics
 
 class TriangleBlock: GameObject {
     static let imageName: String = "TriangleBlock"
-    let originalCoordinates: CGPoint
-    var springRadius: CGFloat
 
     init(coordinates: CGPoint, springRadius: CGFloat = 40.0, radius: CGFloat) {
-        self.springRadius = springRadius
-        self.originalCoordinates = coordinates
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
@@ -28,6 +24,6 @@ class TriangleBlock: GameObject {
             ),
             imageName: TriangleBlock.imageName
         )
-        super.setComponent(of: OscillatingComponent())
+        super.setComponent(of: OscillatingComponent(originalCoordinates: coordinates, springRadius: springRadius))
     }
 }

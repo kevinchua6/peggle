@@ -43,19 +43,15 @@ struct SelectObjectView: View {
         Circle()
             .strokeBorder(Color.blue, lineWidth: 30)
             .frame(
-                width: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2,
-                height: ((obj as? TriangleBlock)?.springRadius ?? 0) * 2
+                width: (( obj.getComponent(of: OscillatingComponent.self)?.springRadius ?? 0 ) * 2),
+                height: (( obj.getComponent(of: OscillatingComponent.self)?.springRadius ?? 0 ) * 2)
             )
             .position(obj.coordinates)
             .opacity(0.4)
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        guard let triangleBlock = obj as? TriangleBlock else {
-                            return
-                        }
-
-                        levelDesignerViewModel.updateSpringRadius(triangleBlock: triangleBlock, radius:
+                        levelDesignerViewModel.updateSpringRadius(obj: obj, radius:
                                 PhysicsEngineUtils.CGPointDistance(from: obj.coordinates, to: value.location))
                     }
             )

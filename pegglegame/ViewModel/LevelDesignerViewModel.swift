@@ -186,16 +186,16 @@ class LevelDesignerViewModel: ObservableObject {
         objArr = newObjArr
     }
 
-    func updateSpringRadius(triangleBlock: TriangleBlock, radius: CGFloat) {
+    func updateSpringRadius(obj: GameObject, radius: CGFloat) {
         guard radius >= GameBoardView.DEFAULT_OBJ_LENGTH else {
             return
         }
 
-        var newObjArr = objArr.filter { $0 !== triangleBlock }
+        var newObjArr = objArr.filter { $0 !== obj }
 
-        triangleBlock.springRadius = radius
+        obj.getComponent(of: OscillatingComponent.self)?.springRadius = radius
 
-        newObjArr.append(triangleBlock)
+        newObjArr.append(obj)
         objArr = newObjArr
     }
 

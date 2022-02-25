@@ -13,13 +13,7 @@ class GameObject: Identifiable {
     enum Types: String {
         case bluePeg, orangePeg, kaboomPeg, spookyPeg, ball, wall, block
     }
-    
-    var boundingBox: CGRect {
-        get {
-            self.physicsBody.boundingBox
-        }
-    }
-    
+
     var imageName: String?
     
     var coordinates: CGPoint {
@@ -37,13 +31,19 @@ class GameObject: Identifiable {
             // A physicsBody definitely exists as it is added on instantiation and there is no way
             // to remove it from the EntityComponentSystem
             // However, to be more defensive we still return an empty body here
-            self.components.getComponent(component: PhysicsComponent.self)?.physicsBody
+            self.getComponent(of: PhysicsComponent.self)?.physicsBody
                 ?? RectangleBody(
                     coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false
                 )
         }
         set {
-            self.components.setComponent(component: PhysicsComponent(physicsBody: newValue))
+            self.setComponent(of: PhysicsComponent(physicsBody: newValue))
+        }
+    }
+    
+    var boundingBox: CGRect {
+        get {
+            self.physicsBody.boundingBox
         }
     }
 
@@ -76,5 +76,26 @@ class GameObject: Identifiable {
         for component in self.components.getAllComponents() {
             component.reset()
         }
+    }
+}
+
+// Commonly used components: Activate on hit components
+extension GameObject {
+    var isHit: Bool {
+        get {
+            self.getComponent(of: ActivateOnHitComponent.self)?.isHit
+                ?? false
+        }
+    }
+    
+    var isActivated: Bool {
+        get {
+            self.getComponent(of: ActivateOnHitComponent.self)?.isActivated
+                ?? false
+        }
+    }
+    
+    func activate() {
+        self.getComponent(of: ActivateOnHitComponent.self)?.activate()
     }
 }

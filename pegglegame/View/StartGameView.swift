@@ -10,6 +10,7 @@ import SwiftUI
 struct StartGameView: View {
     @ObservedObject var startGameViewModel: StartGameViewModel
 
+    // calculation of score done in viewmodel
     @State var score = 0
     var noBluePegHit = 0
     var noOrangePegHit = 0
@@ -94,15 +95,25 @@ struct StartGameView: View {
                     )
                     .position(gameObject.coordinates)
             } else if let gameObjectHitComponent = gameObject.getComponent(of: ActivateOnHitComponent.self)  {
-                Image(gameObjectHitComponent.imageNameHit)
-                    .resizable()
-                    .frame(
-                        width: gameObject.boundingBox.width,
-                        height: gameObject.boundingBox.height
-                    )
-                    .position(gameObject.coordinates)
-                    .transition(AnyTransition.opacity
-                                    .animation(.easeOut(duration: 0.3)))
+                ZStack {
+                    Image(gameObjectHitComponent.imageNameHit)
+                        .resizable()
+                        .frame(
+                            width: gameObject.boundingBox.width,
+                            height: gameObject.boundingBox.height
+                        )
+                        .position(gameObject.coordinates)
+                        .transition(AnyTransition.opacity
+                                        .animation(.easeOut(duration: 0.3)))
+                    Text("+100")
+                        .bold()
+                        .foregroundColor(.blue)
+                        .font(.title)
+                        .transition(AnyTransition.opacity
+                                        .animation(.easeInOut(duration: 0.3)))
+                        .position(gameObject.coordinates)
+                        .offset(x: 0, y: 30.0)
+                }
             }
 
         }
