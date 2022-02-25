@@ -55,7 +55,6 @@ class GameEngine {
         }
 
         simulatePhysics()
-//        updateScoreHitCount(objArr: objArr)
 
         return self.objArr
     }

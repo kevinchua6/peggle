@@ -101,6 +101,7 @@ struct StartGameView: View {
                         .transition(AnyTransition.opacity
                                         .animation(.easeOut(duration: 0.3)))
                     
+                    // Show score
                     if gameObject.getComponent(of: ScoreComponent.self)?.isShown ?? false {
                         Text("+\(gameObject.getComponent(of: ScoreComponent.self)?.score ?? 0)")
                             .bold()
@@ -118,6 +119,24 @@ struct StartGameView: View {
                             }
                     }
                 }
+            }
+            
+            // Show Free ball
+            if gameObject.getComponent(of: BucketComponent.self)?.freeBallMsgShown ?? false {
+                Text("Free Ball!")
+                    .bold()
+                    .shadow(color: .gray, radius: 4)
+                    .foregroundColor(.orange)
+                    .font(.largeTitle)
+                    .transition(AnyTransition.opacity
+                                    .animation(.easeInOut(duration: 0.1)))
+                    .position(gameObject.coordinates)
+                    .offset(x: 0, y: -65.0)
+                    .onAppear {
+                        Timer.scheduledTimer(withTimeInterval: 1.4, repeats: false) { timer in
+                            gameObject.getComponent(of: BucketComponent.self)?.hideMsg()
+                        }
+                    }
             }
 
         }

@@ -9,7 +9,18 @@ import Foundation
 import CoreGraphics
 
 class BucketComponent: Component {
-    func reset() {
+    var freeBallMsgShown: Bool
+    
+    init() {
+        freeBallMsgShown = false
+    }
+    
+    func showMsg() {
+        freeBallMsgShown = true
+    }
+    
+    func hideMsg() {
+        freeBallMsgShown = false
     }
     
     func updateVelocity(gameObj: GameObject, objArr: [GameObject], physicsEngine: PhysicsEngine) -> PhysicsBody {
@@ -29,12 +40,17 @@ class BucketComponent: Component {
         // check if a ball exists a few inches above the bucket to remove it
         // then create a free ball
         for ball in objArr.filter({$0.hasComponent(of: CannonBallComponent.self)}) {
-            if ball.coordinates.y >= bucket.coordinates.y - 40
-                && ball.coordinates.x > bucket.coordinates.x - 25
-                && ball.coordinates.x < bucket.coordinates.x + 25 {
+            if ball.coordinates.y >= bucket.coordinates.y - 45
+                && ball.coordinates.x > bucket.coordinates.x - 28
+                && ball.coordinates.x < bucket.coordinates.x + 28 {
                 newObjArr = objArr.filter {$0 !== ball}
+                showMsg()
             }
         }
         return newObjArr
+    }
+    
+    func reset() {
+        freeBallMsgShown = false
     }
 }
