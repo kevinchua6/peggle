@@ -28,5 +28,6 @@ class Ball: GameObject {
 
 
         super.setComponent(of: CannonBallComponent())
+        super.setComponent(of: SpookyBallComponent())
     }
 }

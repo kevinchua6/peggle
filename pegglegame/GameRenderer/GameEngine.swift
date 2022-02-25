@@ -29,7 +29,7 @@ class GameEngine {
 
     private let KABOOM_MAGNITUDE = 200.0
     private let KABOOM_RADIUS = 20_000.0
-
+    
     private weak var timer: Timer?
 
     var objArr: [GameObject]
@@ -132,14 +132,14 @@ class GameEngine {
                 }
 
                 // activate spooky ball
-                if gameObj.hasComponent(of: SpookyBallComponent.self) && isHit {
-                    for spookyBall in objArr.filter({ $0.hasComponent(of: SpookyBallComponent.self) }) {
-                        spookyBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
+                if gameObj.hasComponent(of: SpookyPegComponent.self) && isHit {
+                    for cannonBall in objArr.filter({ !($0.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false) }) {
+                        cannonBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
                     }
                 }
 
                 // if kaboom, boom it
-                if gameObj.hasComponent(of: KaboomBallComponent.self) {
+                if gameObj.hasComponent(of: KaboomPegComponent.self) {
                     if let activateOnHitComponent = gameObj.getComponent(of: ActivateOnHitComponent.self) {
                         if activateOnHitComponent.isHit && !activateOnHitComponent.isActivated {
                             activateOnHitComponent.activate()
@@ -207,8 +207,9 @@ class GameEngine {
         let ballArr = objArr.filter( {
             $0.hasComponent(of: CannonBallComponent.self)
         })
-        
+
         guard ballArr.count > 0 else {
+            // Remove lighted up pegs when no balls exist
             removeLightedUpPegs()
             timer?.invalidate()
             return
@@ -228,7 +229,9 @@ class GameEngine {
     }
 
     private func removeLightedUpPegs() {
-        objArr = objArr.filter { !($0.getComponent(of: ActivateOnHitComponent.self)?.isHit ?? false) }
+        objArr = objArr.filter {
+            !($0.getComponent(of: ActivateOnHitComponent.self)?.isHit ?? false)
+        }
     }
 
     private func removeObjOutsideBoundaries(bounds: CGRect) {
@@ -239,14 +242,12 @@ class GameEngine {
     }
 
     private func activateSpookyBall(bounds: CGRect) {
-        for spookyPeg in objArr.filter({ $0.hasComponent(of: SpookyBallComponent.self) }) {
-            for cannonBall in objArr.filter({ $0.hasComponent(of: CannonBallComponent.self) }) {
-                if spookyPeg.getComponent(of: SpookyBallComponent.self)?.isSpookyBallActivated ?? false
-                    && !bounds.contains(cannonBall.boundingBox) {
-                    removeLightedUpPegs()
-                    cannonBall.coordinates = CGPoint(x: cannonBall.coordinates.x, y: 10)
-                    cannonBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
-                }
+        for cannonBall in objArr.filter({ $0.hasComponent(of: CannonBallComponent.self) }) {
+            if (cannonBall.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false)
+                && !bounds.contains(cannonBall.boundingBox) {
+                removeLightedUpPegs()
+                cannonBall.coordinates = CGPoint(x: cannonBall.coordinates.x, y: 10)
+                cannonBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
             }
         }
         

@@ -2,27 +2,30 @@
 //  SpookyBallComponent.swift
 //  pegglegame
 //
-//  Created by kevin chua on 24/2/22.
+//  Created by kevin chua on 25/2/22.
 //
 
 import Foundation
 
+// Spooky ball is a property attached to the cannon ball for the effect
 class SpookyBallComponent: Component {
-    var isSpookyBallActivated: Bool
+    var shouldSpookyBallActivate: Bool
 
     init() {
-        isSpookyBallActivated = false
+        shouldSpookyBallActivate = false
     }
 
     func activateSpookyBall() {
-        isSpookyBallActivated = true
+        shouldSpookyBallActivate = true
     }
 
     func deactivateSpookyBall() {
-        isSpookyBallActivated = false
+        shouldSpookyBallActivate = false
     }
     
     func reset() {
-        isSpookyBallActivated = false
+        shouldSpookyBallActivate = false
     }
 }
+
+

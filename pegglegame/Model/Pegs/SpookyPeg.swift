@@ -19,7 +19,7 @@ class SpookyPeg: Peg {
             imageName: SpookyPeg.imageName,
             imageNameHit: SpookyPeg.imageNameHit
         )
-        super.setComponent(of: SpookyBallComponent())
+        super.setComponent(of: SpookyPegComponent())
     }
 
     init(coordinates: CGPoint) {
@@ -28,6 +28,6 @@ class SpookyPeg: Peg {
             imageName: SpookyPeg.imageName,
             imageNameHit: SpookyPeg.imageNameHit
         )
-        super.setComponent(of: SpookyBallComponent())
+        super.setComponent(of: SpookyPegComponent())
     }
 }
