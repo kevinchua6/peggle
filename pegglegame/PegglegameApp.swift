@@ -11,7 +11,6 @@ struct PegglegameApp: App {
     var body: some Scene {
         WindowGroup {
             StartMenuView()
-//            LevelDesignerView(levelDesignerViewModel: LevelDesignerViewModel())
         }
     }
 }
