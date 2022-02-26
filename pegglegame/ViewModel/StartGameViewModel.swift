@@ -34,6 +34,14 @@ class StartGameViewModel: ObservableObject {
     @Published var alert = AlertBox(visible: false, title: "", message: "")
 
     init(objArr: [GameObject], effect: Effects) {
+        // Whenever start is pressed, reset all properties
+        for gameObj in objArr {
+            gameObj.reset()
+            if let oscillatingComponent = gameObj.getComponent(of: OscillatingComponent.self) {
+                gameObj.coordinates = oscillatingComponent.originalCoordinates
+            }
+        }
+
         self.effect = effect
 
         self.scoreEngine = ScoreEngine(initialNoOrangePeg: 0, initialNoPeg: 0, gameStatus: .playing)
@@ -63,8 +71,6 @@ class StartGameViewModel: ObservableObject {
             self?.alert.message = "Score: \(scoreEngine.score)"
 
         }
-        // Whenever start is pressed, reset all properties
-        self.resetAllProperties()
     }
 
     func resetAllProperties() {
