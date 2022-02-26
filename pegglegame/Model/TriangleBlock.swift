@@ -25,5 +25,6 @@ class TriangleBlock: GameObject {
             imageName: TriangleBlock.imageName
         )
         super.setComponent(of: OscillatingComponent(originalCoordinates: coordinates, springRadius: springRadius))
+        super.setComponent(of: TriangleBlockComponent())
     }
 }

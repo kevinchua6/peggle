@@ -44,6 +44,10 @@ class LevelDesignerViewModel: ObservableObject {
 
     @Published var objArr: [GameObject] = []
     @Published var boardList = PersistenceUtils.loadBoardList()
+    
+    func getCount<T: Component>(of component: T.Type) -> Int {
+        objArr.filter({$0.hasComponent(of: component)}).count
+    }
 
     func selectObj(obj: GameObject) {
         self.selectedObj = obj
@@ -67,6 +71,12 @@ class LevelDesignerViewModel: ObservableObject {
             placePeg(at: coordinates, color: color)
         } else if selectionMode == LevelDesignerViewModel.SelectionMode.addTriangleBlock {
             placeBlock(at: coordinates)
+        }
+    }
+    
+    func deleteIfButtonSelected(gameObject: GameObject) {
+        if selectionMode == .delete {
+            deleteObj(obj: gameObject)
         }
     }
 

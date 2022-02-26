@@ -55,11 +55,16 @@ struct BottomBarView: View {
 
     private func generateSelectionBarView() -> some View {
         HStack {
-            generateCreateObjButtonView(selection: .add(.blue), imageName: BluePeg.imageName)
-            generateCreateObjButtonView(selection: .add(.orange), imageName: OrangePeg.imageName)
-            generateCreateObjButtonView(selection: .add(.kaboom), imageName: KaboomPeg.imageName)
-            generateCreateObjButtonView(selection: .add(.spooky), imageName: SpookyPeg.imageName)
-            generateCreateObjButtonView(selection: .addTriangleBlock, imageName: TriangleBlock.imageName)
+            generateCreateObjButtonView(selection: .add(.blue), imageName: BluePeg.imageName,
+                                        count: levelDesignerViewModel.getCount(of: BluePegComponent.self))
+            generateCreateObjButtonView(selection: .add(.orange), imageName: OrangePeg.imageName,
+                                        count: levelDesignerViewModel.getCount(of: OrangePegComponent.self))
+            generateCreateObjButtonView(selection: .add(.kaboom), imageName: KaboomPeg.imageName,
+                                        count: levelDesignerViewModel.getCount(of: KaboomPegComponent.self))
+            generateCreateObjButtonView(selection: .add(.spooky), imageName: SpookyPeg.imageName,
+                                        count: levelDesignerViewModel.getCount(of: SpookyPegComponent.self))
+            generateCreateObjButtonView(selection: .addTriangleBlock, imageName: TriangleBlock.imageName,
+                                        count: levelDesignerViewModel.getCount(of: TriangleBlockComponent.self))
             Spacer()
             generateDeleteButtonView()
         }
@@ -113,16 +118,24 @@ struct BottomBarView: View {
     }
 
     private func generateCreateObjButtonView
-        (selection: LevelDesignerViewModel.SelectionMode, imageName: String) -> some View {
-        Button(action: {
-            levelDesignerViewModel.selectionMode = selection
-            placeholderObj.imageName = imageName
-        }, label: {
-            Image(imageName)
-                .resizable()
-                .frame(width: PEG_BUTTON_LENGTH, height: PEG_BUTTON_LENGTH)
-                .opacity(levelDesignerViewModel.selectionMode == selection ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
-        })
+    (selection: LevelDesignerViewModel.SelectionMode, imageName: String, count: Int) -> some View {
+        ZStack {
+            Button(action: {
+                levelDesignerViewModel.selectionMode = selection
+                placeholderObj.imageName = imageName
+            }, label: {
+                Image(imageName)
+                    .resizable()
+                    .frame(width: PEG_BUTTON_LENGTH, height: PEG_BUTTON_LENGTH)
+                    .opacity(levelDesignerViewModel.selectionMode == selection
+                             ? SELECTED_OPACITY : NOT_SELECTED_OPACITY)
+            })
+            Text("\(count)")
+                .font(.system(size: 38, weight: .bold))
+                .foregroundColor(.white)
+                .shadow(color: .black, radius: 5)
+        }
+
     }
 
     private func reset() {
