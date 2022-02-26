@@ -26,7 +26,7 @@ struct CircleBody: PhysicsBody {
     var restitution: CGFloat
 
     // A small number to ensure that the velocity does not equal to 0
-    let EPSILON = 1.0
+    let EPSILON = 1.5
 
     // Bounding box to detect going out of screen
     var boundingBox: CGRect {

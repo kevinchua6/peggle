@@ -11,10 +11,15 @@ import SwiftUI
 
 class GameRenderer {
     var publisher: AnyPublisher<[GameObject], Never> {
-        subject.eraseToAnyPublisher()
+        objArrSubject.eraseToAnyPublisher()
+    }
+    var scorePublisher: AnyPublisher<ScoreEngine, Never> {
+        scoreSubject.eraseToAnyPublisher()
     }
 
-    private let subject = PassthroughSubject<[GameObject], Never>()
+    private let objArrSubject = PassthroughSubject<[GameObject], Never>()
+
+    private let scoreSubject = PassthroughSubject<ScoreEngine, Never>()
 
     private let gameEngine: GameEngine
     private var displaylink: CADisplayLink!
@@ -26,16 +31,13 @@ class GameRenderer {
     }
 
     @objc func update() {
-        subject.send(gameEngine.update())
+        objArrSubject.send(gameEngine.update())
+
+        scoreSubject.send(gameEngine.updateGameState())
     }
 
     func addObj(obj: GameObject) {
         self.gameEngine.addObj(obj: obj)
-    }
-
-    func stop() {
-        displaylink.invalidate()
-        displaylink = nil
     }
 
     func setBoundaries(bounds: CGRect) {
@@ -46,11 +48,7 @@ class GameRenderer {
         gameEngine.hasObj(lambdaFunc: lambdaFunc)
     }
 
-    func getNoOfPegHit() -> Int {
-        gameEngine.getNoOfPegHit()
-    }
-
-    func getNoOfOrangePegHit() -> Int {
-        gameEngine.getNoOfOrangePegHit()
+    func stop() {
+        displaylink.invalidate()
     }
 }

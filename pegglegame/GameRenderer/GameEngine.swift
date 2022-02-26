@@ -19,12 +19,13 @@ class GameEngine {
 
     private var noPegHit = 0
     private var noOrangePegHit = 0
+    private var noOfBallsRemaining = 10
 
     private let ADDITIONAL_WALL_LENGTH = 50.0
     private let RATE_OF_FADING = 0.1
 
     private let MIN_VELOCITY = 150.0
-    private let REMOVE_BALL_INTERVAL = 1.5
+    private let REMOVE_BALL_INTERVAL = 1.7
 
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
@@ -32,11 +33,18 @@ class GameEngine {
 
     private weak var timer: Timer?
 
+    var scoreEngine: ScoreEngine
+
     var objArr: [GameObject]
 
     init(objArr: [GameObject]) {
         self.objArr = objArr
         self.physicsEngine = PhysicsEngine()
+        self.scoreEngine = ScoreEngine(
+            initialNoOrangePeg: objArr.filter({ $0.hasComponent(of: OrangePegComponent.self) }).count,
+            initialNoPeg: objArr.filter({ $0.hasComponent(of: PegComponent.self) }).count,
+            gameStatus: .playing
+        )
     }
 
     func update() -> [GameObject] {
@@ -59,27 +67,25 @@ class GameEngine {
         return self.objArr
     }
 
-    func updateScoreHitCount(objArr: [GameObject]) {
-        noPegHit = objArr.filter({ $0.hasComponent(of: PegComponent.self) }).count
-        noOrangePegHit = objArr.filter({ $0.hasComponent(of: OrangePegComponent.self) }).count
-        print(noOrangePegHit)
-        print(noPegHit)
+    func updateGameState() -> ScoreEngine {
+
+        if scoreEngine.noPegHit == 200 {
+            scoreEngine.gameStatus = .won
+        }
+
+        return scoreEngine
     }
 
-    func getNoOfPegHit() -> Int {
-        noPegHit
-    }
-
-    func getNoOfOrangePegHit() -> Int {
-        noOrangePegHit
+    func getNoOfBallsRemaining() -> Int {
+        noOfBallsRemaining
     }
 
     func increaseHitCount(gameObj: GameObject) {
         if gameObj.hasComponent(of: OrangePegComponent.self) {
-            noOrangePegHit += 1
+            scoreEngine.noOrangePegHit += 1
         }
         if gameObj.hasComponent(of: PegComponent.self) {
-            noPegHit += 1
+            scoreEngine.noPegHit += 1
         }
     }
 
@@ -137,7 +143,6 @@ class GameEngine {
                         objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr)
                     }
                 }
-
             }
         }
 
@@ -200,10 +205,21 @@ class GameEngine {
     }
 
     private func removeObjOutsideBoundaries(bounds: CGRect) {
+        let ballArr = objArr.filter({
+            $0.hasComponent(of: CannonBallComponent.self) && !bounds.contains($0.physicsBody.boundingBox)
+        })
+
+        if !ballArr.isEmpty {
+            scoreEngine.noOfBallsRemaining -= 1
+        } else {
+            checkWinConditions()
+        }
+
         objArr = objArr.filter {
             bounds.contains($0.physicsBody.boundingBox)
                 || !$0.hasComponent(of: CannonBallComponent.self)
         }
+
     }
 
     private func activateSpookyBall(bounds: CGRect) {
@@ -215,6 +231,17 @@ class GameEngine {
                 cannonBall.getComponent(of: SpookyBallComponent.self)?.deactivateSpookyBall()
             }
         }
+    }
 
+    private func checkWinConditions() {
+        if scoreEngine.noOfBallsRemaining <= 0 {
+            scoreEngine.gameStatus = .lost
+        }
+
+        let noOfOrangePegsOnScreen = objArr.filter({ $0.hasComponent(of: OrangePegComponent.self) }).count
+
+        if noOfOrangePegsOnScreen <= 0 {
+            scoreEngine.gameStatus = .won
+        }
     }
 }

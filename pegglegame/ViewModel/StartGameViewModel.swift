@@ -10,26 +10,56 @@ import Combine
 
 class StartGameViewModel: ObservableObject {
 
-    private var cancellable: AnyCancellable?
+    private var objArrCancellable: AnyCancellable?
+    private var scoreEngineCancellable: AnyCancellable?
 
     @Published var objArr: [GameObject] = []
 
     var gameRenderer: GameRenderer
 
+    @Published var scoreEngine: ScoreEngine
+
     let MAX_ANGLE = Double.pi / 2
     let INITIAL_BALL_SPEED = 1_000.0
     let WALL_THICKNESS = 2.0
+
+    struct AlertBox {
+        var visible: Bool
+        var title: String
+        var message: String
+    }
+
+    @Published var alert = AlertBox(visible: false, title: "", message: "")
 
     init(objArr: [GameObject]) {
         // Whenever start is pressed, reset all properties
         for gameObj in objArr {
             gameObj.reset()
         }
-
+        self.scoreEngine = ScoreEngine(initialNoOrangePeg: 0, initialNoPeg: 0, gameStatus: .playing)
         gameRenderer = GameRenderer(objArr: objArr)
 
-        cancellable = gameRenderer.publisher.sink { [weak self] objArr in
+        objArrCancellable = gameRenderer.publisher.sink { [weak self] objArr in
             self?.objArr = objArr
+        }
+
+        scoreEngineCancellable = gameRenderer.scorePublisher.sink { [weak self] scoreEngine in
+            self?.scoreEngine = scoreEngine
+
+            switch scoreEngine.gameStatus {
+            case .won:
+                self?.alert.title = "You win!"
+                self?.alert.visible = true
+                self?.gameRenderer.stop()
+            case .lost:
+                self?.alert.title = "You lost!"
+                self?.alert.visible = true
+                self?.gameRenderer.stop()
+            case .playing:
+                self?.alert.visible = false
+            }
+
+            self?.alert.message = "Score: \(scoreEngine.score)"
         }
     }
 
@@ -104,15 +134,19 @@ class StartGameViewModel: ObservableObject {
     }
 
     func getNoOfPegHit() -> Int {
-        gameRenderer.getNoOfPegHit()
+        scoreEngine.noPegHit
     }
 
-    func getNoOfOrangePegHit() -> Int {
-        gameRenderer.getNoOfOrangePegHit()
+    func noOrngePegHit() -> Int {
+        scoreEngine.noOrangePegHit
     }
 
-    func getScore() -> Int {
-        getNoOfPegHit() * 100 + getNoOfOrangePegHit() * 50
+    func initialNoOrngePeg() -> Int {
+        scoreEngine.initialNoOrangePeg
+    }
+
+    func getInitialNoOfPegHit() -> Int {
+        scoreEngine.initialNoPeg
     }
 
     deinit {

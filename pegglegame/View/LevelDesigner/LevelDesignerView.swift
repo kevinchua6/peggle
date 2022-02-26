@@ -9,6 +9,7 @@ import SwiftUI
 import CoreGraphics
 
 struct LevelDesignerView: View {
+
     @ObservedObject var levelDesignerViewModel: LevelDesignerViewModel
 
     var body: some View {

@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct StartGameView: View {
+
+    /// Adapted from: https://stackoverflow.com/a/57333873
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     @ObservedObject var startGameViewModel: StartGameViewModel
 
     // Initial positions
@@ -27,7 +31,20 @@ struct StartGameView: View {
                 }
             }
             generateBottomBarView()
-        }.navigationBarTitleDisplayMode(.inline)
+        }
+        .alert(isPresented: $startGameViewModel.alert.visible) {
+            Alert(
+                title:
+                    Text(
+                        startGameViewModel.alert.title
+                    ),
+                message: Text(startGameViewModel.alert.message),
+                dismissButton: .default(Text("Go back")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private func generateCannonView(position: CGPoint) -> some View {
@@ -104,7 +121,7 @@ struct StartGameView: View {
             generateFreeBallMessageView(gameObject: gameObject)
         }
     }
-    
+
     @ViewBuilder
     private func generateScoreMessageView(gameObject: GameObject) -> some View {
         if gameObject.getComponent(of: ScoreComponent.self)?.isShown ?? false {
@@ -124,7 +141,7 @@ struct StartGameView: View {
                 }
         }
     }
-    
+
     @ViewBuilder
     private func generateFreeBallMessageView(gameObject: GameObject) -> some View {
         if gameObject.getComponent(of: BucketComponent.self)?.freeBallMsgShown ?? false {
@@ -149,15 +166,22 @@ struct StartGameView: View {
         HStack {
             VStack {
                 Text("Score:")
-                Text("\(startGameViewModel.getScore())")
+                Text("\(startGameViewModel.scoreEngine.score)")
                     .font(.largeTitle)
             }
                 .padding()
             Spacer()
+
+            Text("Balls remaining: \(startGameViewModel.scoreEngine.noOfBallsRemaining)")
+                .font(.body)
             VStack {
-                Text("Pegs hit: \(startGameViewModel.getNoOfPegHit())")
+                Text(
+                    "Pegs hit: \(startGameViewModel.getNoOfPegHit())/\(startGameViewModel.getInitialNoOfPegHit())"
+                )
                     .font(.body)
-                Text("Orange Pegs hit: \(startGameViewModel.getNoOfOrangePegHit())")
+                Text("""
+                     Orange Pegs hit: \(startGameViewModel.noOrngePegHit())/\(startGameViewModel.initialNoOrngePeg())
+                     """)
                     .font(.body)
             }
             .padding()
