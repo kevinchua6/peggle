@@ -44,6 +44,24 @@ struct BottomBarView: View {
             }
             TextField("Level Name", text: $levelName)
                 .textFieldStyle(.roundedBorder)
+            generateStartButton()
+        }
+        .padding(.horizontal, SIDE_PADDING)
+    }
+
+    @ViewBuilder
+    private func generateStartButton() -> some View {
+        if levelDesignerViewModel
+            .getCount(of: OrangePegComponent.self) <= 0 {
+            Button(action: {
+                levelDesignerViewModel.showAlert(title: "Error",
+                                                 message: "You can't start a level that has no orange pegs!"
+                )
+            }) {
+                Text("START")
+                    .foregroundColor(.red)
+            }
+        } else {
             NavigationLink(destination: LazyView {
                 StartGameView(startGameViewModel:
                                 StartGameViewModel(objArr: levelDesignerViewModel.objArr, effect: .normal))
@@ -51,7 +69,6 @@ struct BottomBarView: View {
                 Text("START")
             }
         }
-        .padding(.horizontal, SIDE_PADDING)
     }
 
     private func generateSelectionBarView() -> some View {
@@ -147,6 +164,14 @@ struct BottomBarView: View {
     private func save() {
         if PersistenceUtils.preloadedLevelNames.contains(levelName) {
             levelDesignerViewModel.showAlert(title: "Error", message: "You can't override default levels!")
+            return
+        }
+
+        if levelDesignerViewModel
+            .getCount(of: OrangePegComponent.self) <= 0 {
+                levelDesignerViewModel.showAlert(title: "Error",
+                                                 message: "You can't save a level that has no orange pegs!"
+                )
             return
         }
 

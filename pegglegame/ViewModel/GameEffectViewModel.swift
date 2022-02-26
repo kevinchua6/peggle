@@ -8,5 +8,5 @@
 import Foundation
 
 class GameEffectViewModel: ObservableObject {
-    @Published var effect: Effects = Effects.normal
+    @Published var effect = Effects.normal
 }

@@ -107,7 +107,7 @@ struct GameBoardView: View {
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     levelDesignerViewModel.deleteIfButtonSelected(gameObject: gameObject)
-                    
+
                     if keyboardResponder.isKeyboardOpen {
                         return
                     }
@@ -115,7 +115,7 @@ struct GameBoardView: View {
                     if let gameObjImageName = gameObject.imageName {
                         placeholderObj.imageName = gameObjImageName
                     }
-                    
+
                     placeholderObj.object.physicsBody.setLength(
                         length: gameObject.physicsBody.boundingBox.height
                     )
@@ -149,7 +149,7 @@ struct GameBoardView: View {
 
                     placeholderObj.isVisible = false
                     self.placeholderObj.isValid = true
-                    
+
                     levelDesignerViewModel.deleteIfButtonSelected(gameObject: gameObject)
                 })
             )

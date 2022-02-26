@@ -30,13 +30,13 @@ struct SelectLevelView: View {
                         ForEach(Effects.allCases, id: \.self) {
                             Text($0.rawValue)
                                 .font(.system(size: 20))
+                                .foregroundColor($0.getColor())
                         }
                     }
                     .pickerStyle(WheelPickerStyle())
                     .padding()
                 }
                 .padding()
-
                 List {
                     ForEach(selectLevelViewModel.boardList.toSortedArray(), id: \.name) { board in
                         NavigationLink(destination: LazyView {

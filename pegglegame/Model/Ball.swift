@@ -9,14 +9,13 @@ import Foundation
 import CoreGraphics
 
 class Ball: GameObject {
-    let defaultRadius = 20.0
     static let imageName: String = "Ball"
 
-    init(coordinates: CGPoint) {
+    init(coordinates: CGPoint, radius: CGFloat = 20.0) {
         super.init(
             physicsBody: CircleBody(
                 coordinates: coordinates,
-                radius: defaultRadius,
+                radius: radius,
                 mass: 1.0,
                 isDynamic: true,
                 forces: [],

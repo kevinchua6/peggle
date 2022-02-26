@@ -22,7 +22,7 @@ class StartGameViewModel: ObservableObject {
     let MAX_ANGLE = Double.pi / 2
     let INITIAL_BALL_SPEED = 1_000.0
     let WALL_THICKNESS = 2.0
-    
+
     var effect: Effects
 
     struct AlertBox {
@@ -38,12 +38,11 @@ class StartGameViewModel: ObservableObject {
         for gameObj in objArr {
             gameObj.reset()
         }
-        
+
         self.effect = effect
-        
+
         self.scoreEngine = ScoreEngine(initialNoOrangePeg: 0, initialNoPeg: 0, gameStatus: .playing)
-        
-        
+
         gameRenderer = GameRenderer(objArr: objArr, effect: effect)
 
         objArrCancellable = gameRenderer.publisher.sink { [weak self] objArr in
@@ -132,7 +131,7 @@ class StartGameViewModel: ObservableObject {
         }
 
         let ball = Ball(coordinates: from)
-        
+
         // if windy, make the ball have a windy property
         if effect == .windy {
             ball.setComponent(of: WindyComponent())

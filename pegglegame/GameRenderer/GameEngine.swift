@@ -33,14 +33,13 @@ class GameEngine {
 
     // Use boolean to indicate direction
     private var windDirection = 1.0
-    private let WIND_STRENGTH = 500.0
 
     private weak var timer: Timer?
 
     var scoreEngine: ScoreEngine
 
     var objArr: [GameObject]
-    
+
     var effect: Effects
 
     init(objArr: [GameObject], effect: Effects) {
@@ -52,7 +51,7 @@ class GameEngine {
             initialNoPeg: objArr.filter({ $0.hasComponent(of: PegComponent.self) }).count,
             gameStatus: .playing
         )
-        
+
         // Set direction after initialisation
         if effect == .windy {
             windDirection = Bool.random() ? 1.0 : -1.0
@@ -78,12 +77,15 @@ class GameEngine {
             for gameObj in objArr.filter({
                 $0.physicsBody.isDynamic
                 && $0.hasComponent(of: WindyComponent.self) }) {
-                gameObj.physicsBody.applyForce(
-                    force: CGVector(dx: windDirection * WIND_STRENGTH, dy: 0)
-                )
+                guard let windyComponent = gameObj.getComponent(of: WindyComponent.self) else {
+                    continue
+                }
+
+                gameObj.physicsBody = windyComponent
+                    .applyWind(gameObj: gameObj, windDirection: windDirection)
             }
         }
-        
+
         simulatePhysics()
 
         return self.objArr
@@ -122,8 +124,6 @@ class GameEngine {
 
         // Update dynamic bodies' velocities upon collision
         for gameObj in objArr {
-            var isHit: Bool
-
             // Don't make bucket collide with other things
             if let bucketComponent = gameObj.getComponent(of: BucketComponent.self) {
                 gameObj.physicsBody = bucketComponent.updateVelocity(
@@ -135,6 +135,8 @@ class GameEngine {
             } else if let triangleBlock = gameObj.getComponent(of: OscillatingComponent.self) {
                 triangleBlock.updateVelocityOnHit(gameObj: gameObj, objArr: objArr, physicsEngine: physicsEngine)
             } else {
+                var isHit: Bool
+
                 (gameObj.physicsBody, isHit) =
                     self.physicsEngine.updateVelocities(
                         physicsBody: gameObj.physicsBody,
@@ -142,29 +144,7 @@ class GameEngine {
                         deltaTime: CGFloat(1 / framesPerSecond)
                     )
 
-                // Set all hittable components to hit
-                if isHit && !gameObj.isHit {
-                    gameObj.getComponent(of: ActivateOnHitComponent.self)?.setHit(to: true)
-                    gameObj.getComponent(of: ScoreComponent.self)?.show()
-                    increaseHitCount(gameObj: gameObj)
-                }
-
-                // activate spooky ball
-                if gameObj.hasComponent(of: SpookyPegComponent.self) && isHit {
-                    for cannonBall in objArr.filter({
-                        !($0.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false)
-                    }) {
-                        cannonBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
-                    }
-                }
-
-                // activate kaboom
-                if let kaboomPeg = gameObj.getComponent(of: KaboomPegComponent.self) {
-                    if gameObj.isHit && !gameObj.isActivated {
-                        gameObj.activate()
-                        objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr)
-                    }
-                }
+                gameSpecificLogic(gameObj: gameObj, isHit: isHit)
             }
         }
 
@@ -179,6 +159,38 @@ class GameEngine {
                     physicsBodyArr: objArr.map { $0.physicsBody },
                     deltaTime: CGFloat(1 / framesPerSecond)
                 )
+        }
+    }
+
+    private func gameSpecificLogic(gameObj: GameObject, isHit: Bool) {
+        // Set all hittable components to hit
+        if isHit && !gameObj.isHit && !gameObj.hasComponent(of: CannonBallComponent.self) {
+            gameObj.getComponent(of: ActivateOnHitComponent.self)?.setHit(to: true)
+            gameObj.getComponent(of: ScoreComponent.self)?.show()
+            increaseHitCount(gameObj: gameObj)
+
+            // If nonsense mode, convert it to a ball of the same size
+            if effect == .nonsense && !gameObj.hasComponent(of: WallComponent.self) {
+                objArr = NonsenseComponent.replacePegWithBall(gameObj: gameObj, objArr: objArr)
+                scoreEngine.noOfBallsRemaining += 1
+            }
+        }
+
+        // activate spooky ball
+        if gameObj.hasComponent(of: SpookyPegComponent.self) && isHit {
+            for cannonBall in objArr.filter({
+                !($0.getComponent(of: SpookyBallComponent.self)?.shouldSpookyBallActivate ?? false)
+            }) {
+                cannonBall.getComponent(of: SpookyBallComponent.self)?.activateSpookyBall()
+            }
+        }
+
+        // activate kaboom
+        if let kaboomPeg = gameObj.getComponent(of: KaboomPegComponent.self) {
+            if gameObj.isHit && !gameObj.isActivated {
+                gameObj.activate()
+                objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr)
+            }
         }
     }
 
