@@ -24,8 +24,8 @@ class GameRenderer {
     private let gameEngine: GameEngine
     private var displaylink: CADisplayLink!
 
-    init(objArr: [GameObject]) {
-        self.gameEngine = GameEngine(objArr: objArr)
+    init(objArr: [GameObject], effect: Effects) {
+        self.gameEngine = GameEngine(objArr: objArr, effect: effect)
         self.displaylink = CADisplayLink(target: self, selector: #selector(update))
         displaylink.add(to: .current, forMode: .default)
     }

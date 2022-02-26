@@ -45,7 +45,8 @@ struct BottomBarView: View {
             TextField("Level Name", text: $levelName)
                 .textFieldStyle(.roundedBorder)
             NavigationLink(destination: LazyView {
-                StartGameView(startGameViewModel: StartGameViewModel(objArr: levelDesignerViewModel.objArr))
+                StartGameView(startGameViewModel:
+                                StartGameViewModel(objArr: levelDesignerViewModel.objArr, effect: .normal))
             }) {
                 Text("START")
             }

@@ -26,7 +26,7 @@ struct StartMenuView: View {
     private func generateStartButtonView() -> some View {
         VStack(spacing: 40) {
             NavigationLink(destination: LazyView {
-                SelectLevelView(selectLevelViewModel: SelectLevelViewModel())
+                SelectLevelView(selectLevelViewModel: SelectLevelViewModel(), gameEffectViewModel: GameEffectViewModel())
             }) {
                 Text("START GAME")
                     .font(.title)

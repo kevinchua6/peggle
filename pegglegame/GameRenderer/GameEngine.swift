@@ -31,20 +31,32 @@ class GameEngine {
     private let SPRING_CONSTANT = 1.0
     private let DAMPING_CONSTANT = 10.0
 
+    // Use boolean to indicate direction
+    private var windDirection = 1.0
+    private let WIND_STRENGTH = 500.0
+
     private weak var timer: Timer?
 
     var scoreEngine: ScoreEngine
 
     var objArr: [GameObject]
+    
+    var effect: Effects
 
-    init(objArr: [GameObject]) {
+    init(objArr: [GameObject], effect: Effects) {
         self.objArr = objArr
         self.physicsEngine = PhysicsEngine()
+        self.effect = effect
         self.scoreEngine = ScoreEngine(
             initialNoOrangePeg: objArr.filter({ $0.hasComponent(of: OrangePegComponent.self) }).count,
             initialNoPeg: objArr.filter({ $0.hasComponent(of: PegComponent.self) }).count,
             gameStatus: .playing
         )
+        
+        // Set direction after initialisation
+        if effect == .windy {
+            windDirection = Bool.random() ? 1.0 : -1.0
+        }
     }
 
     func update() -> [GameObject] {
@@ -56,12 +68,22 @@ class GameEngine {
                 width: myBounds.width + 2 * ADDITIONAL_WALL_LENGTH,
                 height: myBounds.height + 2 * ADDITIONAL_WALL_LENGTH
             )
-
             activateSpookyBall(bounds: outerBounds)
             removeObjOutsideBoundaries(bounds: outerBounds)
             removeLightedUpPegsConditionally(bounds: outerBounds)
         }
 
+        // If windy, then exert a force randomly on all windy objects
+        if effect == .windy {
+            for gameObj in objArr.filter({
+                $0.physicsBody.isDynamic
+                && $0.hasComponent(of: WindyComponent.self) }) {
+                gameObj.physicsBody.applyForce(
+                    force: CGVector(dx: windDirection * WIND_STRENGTH, dy: 0)
+                )
+            }
+        }
+        
         simulatePhysics()
 
         return self.objArr
