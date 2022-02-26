@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScoreEngine {
+class ScoreEngine {
     var noPegHit = 0
     var noOrangePegHit = 0
     var noOfBallsRemaining = 10
@@ -16,6 +16,12 @@ struct ScoreEngine {
     let initialNoPeg: Int
 
     var gameStatus: Status
+
+    init(initialNoOrangePeg: Int, initialNoPeg: Int, gameStatus: Status) {
+        self.initialNoOrangePeg = initialNoOrangePeg
+        self.initialNoPeg = initialNoPeg
+        self.gameStatus = gameStatus
+    }
 
     enum Status {
         case won, lost, playing

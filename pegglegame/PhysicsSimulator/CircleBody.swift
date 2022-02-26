@@ -116,6 +116,10 @@ struct CircleBody: PhysicsBody {
     mutating func applyForce(force: CGVector) {
         forces.append(force)
     }
+
+    mutating func removeForces() {
+        forces = []
+    }
 }
 
 extension CircleBody {

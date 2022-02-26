@@ -13,6 +13,7 @@ class OscillatingComponent: Component {
     private let DAMPING_CONSTANT = 10.0
     private let INITIAL_SPEED_RATIO: CGFloat = 90 / 80
     private let DAMP_RATIO: CGFloat = 80
+    private let MINIMUM_SPRING_RADIUS = 40.0
 
     let originalCoordinates: CGPoint
     var springRadius: CGFloat
@@ -26,6 +27,9 @@ class OscillatingComponent: Component {
     }
 
     func updateVelocityOnHit(gameObj: GameObject, objArr: [GameObject], physicsEngine: PhysicsEngine) {
+        if self.springRadius <= MINIMUM_SPRING_RADIUS {
+            return
+        }
 
         (gameObj.physicsBody, _) =
             physicsEngine.updateVelocities(

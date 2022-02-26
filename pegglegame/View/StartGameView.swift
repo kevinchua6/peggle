@@ -11,6 +11,7 @@ struct StartGameView: View {
 
     /// Adapted from: https://stackoverflow.com/a/57333873
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.isPresented) var isPresented
 
     @ObservedObject var startGameViewModel: StartGameViewModel
 
@@ -31,6 +32,11 @@ struct StartGameView: View {
                 }
             }
             generateBottomBarView()
+        }
+        .onChange(of: isPresented) { newValue in
+            if !newValue {
+                startGameViewModel.resetAllProperties()
+            }
         }
         .alert(isPresented: $startGameViewModel.alert.visible) {
             Alert(

@@ -87,7 +87,7 @@ class PersistenceUtils {
     static func createPreloadedLevel3() -> Board {
         var board = Board(name: preloadedLevelNames[2], objArr: [], isProtected: true)
 
-        for i in 0..<13 {
+        for i in 0..<12 {
             for j in 0..<10 {
                 board.objArr.append(
                     EncodableObject(

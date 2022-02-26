@@ -35,4 +35,6 @@ protocol PhysicsBody {
 
     // Adds the force when two bodies are colliding
     mutating func handleCollision(with: PhysicsBody)
+
+    mutating func removeForces()
 }

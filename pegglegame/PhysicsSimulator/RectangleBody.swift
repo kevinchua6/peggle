@@ -115,6 +115,10 @@ struct RectangleBody: PhysicsBody {
     mutating func applyForce(force: CGVector) {
         forces.append(force)
     }
+
+    mutating func removeForces() {
+        forces = []
+    }
 }
 
 extension RectangleBody {

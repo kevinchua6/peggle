@@ -113,7 +113,7 @@
 		6F54930A27C518E300EB9568 /* SelectObjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SelectObjectView.swift; path = Pegglegame/View/LevelDesigner/SelectObjectView.swift; sourceTree = SOURCE_ROOT; };
 		6F54931127C6297B00EB9568 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Component.swift; path = Pegglegame/GameComponents/Components/Component.swift; sourceTree = SOURCE_ROOT; };
 		6F54931527C62A7B00EB9568 /* PhysicsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhysicsComponent.swift; path = Pegglegame/GameComponents/Components/PhysicsComponent.swift; sourceTree = SOURCE_ROOT; };
-		6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntityComponentSystem.swift; path = Pegglegame/GameComponents/Systems/EntityComponentSystem.swift; sourceTree = SOURCE_ROOT; };
+		6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntityComponentSystem.swift; path = pegglegame/GameComponents/EntityComponentSystem.swift; sourceTree = SOURCE_ROOT; };
 		6F54931D27C68A0E00EB9568 /* TriangleBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriangleBlock.swift; path = Pegglegame/Model/TriangleBlock.swift; sourceTree = SOURCE_ROOT; };
 		6F54931F27C68A5100EB9568 /* TriangleBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TriangleBody.swift; path = Pegglegame/PhysicsSimulator/TriangleBody.swift; sourceTree = SOURCE_ROOT; };
 		6F5BD97E27A5582900988D75 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 		6F54930C27C6274C00EB9568 /* GameComponents */ = {
 			isa = PBXGroup;
 			children = (
-				6F54931727C62B7300EB9568 /* Systems */,
+				6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */,
 				6F54930E27C6280000EB9568 /* Components */,
 				6F54930D27C627D000EB9568 /* Entities */,
 			);
@@ -238,14 +238,6 @@
 				6F14248027CA4BB600B6B396 /* NonsenseComponent.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		6F54931727C62B7300EB9568 /* Systems */ = {
-			isa = PBXGroup;
-			children = (
-				6F54931827C62B9000EB9568 /* EntityComponentSystem.swift */,
-			);
-			path = Systems;
 			sourceTree = "<group>";
 		};
 		6F67842E2796584F0086CC9A = {

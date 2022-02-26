@@ -16,35 +16,6 @@ class GameObject: Identifiable {
 
     var imageName: String?
 
-    var coordinates: CGPoint {
-        get {
-            physicsBody.coordinates
-        }
-        set {
-            physicsBody.coordinates = newValue
-        }
-    }
-
-    // A gameobject can easily access it's physicsBody as every GameObject has a PhysicsBody
-    var physicsBody: PhysicsBody {
-        get {
-            // A physicsBody definitely exists as it is added on instantiation and there is no way
-            // to remove it from the EntityComponentSystem
-            // However, to be more defensive we still return an empty body here
-            self.getComponent(of: PhysicsComponent.self)?.physicsBody
-                ?? RectangleBody(
-                    coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false
-                )
-        }
-        set {
-            self.setComponent(of: PhysicsComponent(physicsBody: newValue))
-        }
-    }
-
-    var boundingBox: CGRect {
-        self.physicsBody.boundingBox
-    }
-
     // Each GameObject contains a mapping from the component it has to
     // it's respective data in each component
     var components: EntityComponentSystem
@@ -91,5 +62,37 @@ extension GameObject {
 
     func activate() {
         self.getComponent(of: ActivateOnHitComponent.self)?.activate()
+    }
+}
+
+extension GameObject {
+
+    var boundingBox: CGRect {
+        self.physicsBody.boundingBox
+    }
+
+    var coordinates: CGPoint {
+        get {
+            physicsBody.coordinates
+        }
+        set {
+            physicsBody.coordinates = newValue
+        }
+    }
+
+    // A gameobject can easily access it's physicsBody as every GameObject has a PhysicsBody
+    var physicsBody: PhysicsBody {
+        get {
+            // A physicsBody definitely exists as it is added on instantiation and there is no way
+            // to remove it from the EntityComponentSystem
+            // However, to be more defensive we still return an empty body here
+            self.getComponent(of: PhysicsComponent.self)?.physicsBody
+                ?? RectangleBody(
+                    coordinates: CGPoint(x: 0.0, y: 0.0), width: 0.0, height: 0.0, isDynamic: false
+                )
+        }
+        set {
+            self.setComponent(of: PhysicsComponent(physicsBody: newValue))
+        }
     }
 }

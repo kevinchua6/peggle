@@ -25,7 +25,7 @@ class GameEngine {
     private let RATE_OF_FADING = 0.1
 
     private let MIN_VELOCITY = 150.0
-    private let REMOVE_BALL_INTERVAL = 1.7
+    private let REMOVE_BALL_INTERVAL = 2.3
 
     private let HOOKS_CONSTANT = 200.0
     private let SPRING_CONSTANT = 1.0
@@ -92,7 +92,6 @@ class GameEngine {
     }
 
     func updateGameState() -> ScoreEngine {
-
         if scoreEngine.noPegHit == 200 {
             scoreEngine.gameStatus = .won
         }
@@ -189,7 +188,7 @@ class GameEngine {
         if let kaboomPeg = gameObj.getComponent(of: KaboomPegComponent.self) {
             if gameObj.isHit && !gameObj.isActivated {
                 gameObj.activate()
-                objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr)
+                objArr = kaboomPeg.explodeSurroundingPegs(kaboomPeg: gameObj, objArr: objArr, scoreEngine: scoreEngine)
             }
         }
     }
@@ -224,6 +223,15 @@ class GameEngine {
                     timer = Timer.scheduledTimer(
                         withTimeInterval: REMOVE_BALL_INTERVAL, repeats: false, block: { [self] _ in
                             self.removeLightedUpPegs()
+                            // Remove all triangle pegs with 200 pixels
+                            objArr = objArr.filter({!(
+                                $0.hasComponent(of: TriangleBlockComponent.self)
+                                && PhysicsEngineUtils.CGPointDistanceSquared(
+                                    from: ball.coordinates,
+                                    to: $0.coordinates) <= 40_000
+                                )
+                            })
+
                         })
                 }
             } else {

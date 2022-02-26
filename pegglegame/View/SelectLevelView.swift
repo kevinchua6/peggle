@@ -15,6 +15,29 @@ struct SelectLevelView: View {
         generateLoadLevelView()
     }
 
+    private func generateLevelList() -> some View {
+        List {
+            ForEach(selectLevelViewModel.boardList.toSortedArray(), id: \.name) { board in
+                NavigationLink(destination: LazyView {
+                    StartGameView(
+                        startGameViewModel: StartGameViewModel(
+                            objArr: PersistenceUtils.decodeBoardToGameObjArr(board: board),
+                            effect: gameEffectViewModel.effect
+                        )
+                    )
+                }) {
+                    HStack {
+                        Text(board.name)
+                        if board.isProtected == true {
+                            Spacer()
+                            Text("Default Level")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @ViewBuilder
     private func generateLoadLevelView() -> some View {
         if selectLevelViewModel.boardList.boards.isEmpty {
@@ -37,20 +60,7 @@ struct SelectLevelView: View {
                     .padding()
                 }
                 .padding()
-                List {
-                    ForEach(selectLevelViewModel.boardList.toSortedArray(), id: \.name) { board in
-                        NavigationLink(destination: LazyView {
-                            StartGameView(
-                                startGameViewModel: StartGameViewModel(
-                                    objArr: PersistenceUtils.decodeBoardToGameObjArr(board: board),
-                                    effect: gameEffectViewModel.effect
-                                )
-                            )
-                        }) {
-                            Text(board.name)
-                        }
-                    }
-                }
+                generateLevelList()
             }
         }
     }

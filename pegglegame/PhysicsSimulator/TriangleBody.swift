@@ -123,6 +123,9 @@ struct TriangleBody: PhysicsBody {
         forces.append(force)
     }
 
+    mutating func removeForces() {
+        forces = []
+    }
 }
 
 extension TriangleBody {
